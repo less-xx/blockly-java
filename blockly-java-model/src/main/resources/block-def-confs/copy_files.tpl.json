@@ -1,0 +1,24 @@
+{
+	"type": "copy_files",
+	"lastDummyAlign0": "RIGHT",
+	"message0": "copy %1 to %2",
+	"args0": [
+		{
+			"type": "input_value",
+			"name": "files",
+			"check": "FileList"
+		},
+		{
+			"type": "field_dropdown",
+			"name": "customFilePathId",
+			"options": [
+			]
+		}
+	],
+	"inputsInline": true,
+	"previousStatement": null,
+	"nextStatement": null,
+	"colour": 210,
+	"tooltip": "",
+	"helpUrl": ""
+}
