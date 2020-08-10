@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 /**
  * @author jiangl
@@ -19,12 +20,23 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 public class Shadow {
 
 	@XmlAttribute
+	@JacksonXmlProperty
 	private String type;
 
 	@XmlAttribute
+	@JacksonXmlProperty
 	private String id;
 
+	@XmlAttribute
+	@JacksonXmlProperty
+	private Integer x;
+
+	@XmlAttribute
+	@JacksonXmlProperty
+	private Integer y;
+
 	@XmlElement(name = "field")
+	@JacksonXmlProperty(isAttribute = false)
 	private Field field;
 
 	public String getType() {
@@ -49,6 +61,22 @@ public class Shadow {
 
 	public void setField(Field field) {
 		this.field = field;
+	}
+
+	public Integer getX() {
+		return x;
+	}
+
+	public void setX(Integer x) {
+		this.x = x;
+	}
+
+	public Integer getY() {
+		return y;
+	}
+
+	public void setY(Integer y) {
+		this.y = y;
 	}
 
 }

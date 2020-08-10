@@ -5,16 +5,22 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlValue;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlText;
+
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Variable {
 
 	@XmlAttribute
+	@JacksonXmlProperty
 	private String type = "";
 
 	@XmlAttribute
+	@JacksonXmlProperty
 	private String id;
 
 	@XmlValue
+	@JacksonXmlText(value = true)
 	private String value;
 
 	public String getType() {

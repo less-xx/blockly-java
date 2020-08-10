@@ -17,4 +17,25 @@ public class GetEventParameterBlock extends CustomBlockDefinition {
 		return Category.ID_EVENTS;
 	}
 
+	@Override
+	public String getConfiguration() {
+		return """
+				{
+					"type": "get_event_param",
+					"message0": "get parameter from %1",
+					"args0": [
+						{
+							"type": "field_input",
+							"name": "event_name",
+							"text": "event_name"
+						}
+					],
+					"output": null,
+					"tooltip": "",
+					"helpUrl": "",
+					"colour": 52
+				}
+				""";
+	}
+
 }

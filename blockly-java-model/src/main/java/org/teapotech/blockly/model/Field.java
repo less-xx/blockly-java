@@ -6,6 +6,8 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlValue;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlText;
 
 /**
  * 
@@ -17,15 +19,18 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 public class Field {
 
 	@XmlAttribute
+	@JacksonXmlProperty
 	private String id;
 
 	@XmlAttribute
+	@JacksonXmlProperty
 	private String name;
 
 	@XmlAttribute
 	private String variableType;
 
 	@XmlValue
+	@JacksonXmlText(value = true)
 	private String value;
 
 	public String getName() {

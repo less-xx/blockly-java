@@ -12,6 +12,8 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
 /**
  * 
@@ -20,21 +22,35 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
  */
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name = "xml")
+@JacksonXmlRootElement(localName = "xml")
 public class Workspace {
+
+	@JacksonXmlProperty
+	private String id;
+
+	@XmlAttribute
+	@JacksonXmlProperty
+	private String style = "display: none";
 
 	@XmlElementWrapper(name = "variables")
 	@XmlElement(name = "variable")
+	@JacksonXmlProperty(isAttribute = false)
 	private List<Variable> variables;
 
 	@XmlElement(name = "category")
+	@JacksonXmlProperty
 	@JacksonXmlElementWrapper(useWrapping = false)
 	private List<Category> categories = new ArrayList<>();
 
+	@JacksonXmlProperty(localName = "block", isAttribute = false)
+	@JacksonXmlElementWrapper(useWrapping = false)
 	@XmlElement(name = "block")
 	private List<Block> blocks = null;
 
-	@XmlAttribute
-	private String style = "display: none";
+	@JacksonXmlProperty(localName = "shadow", isAttribute = false)
+	@JacksonXmlElementWrapper(useWrapping = false)
+	@XmlElement(name = "shadow")
+	private List<Shadow> shadows = null;
 
 	public List<Variable> getVariables() {
 		return variables;
@@ -66,6 +82,22 @@ public class Workspace {
 
 	public void setStyle(String style) {
 		this.style = style;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public List<Shadow> getShadows() {
+		return shadows;
+	}
+
+	public void setShadows(List<Shadow> shadows) {
+		this.shadows = shadows;
 	}
 
 	public Category findCategoryById(String idChain) {

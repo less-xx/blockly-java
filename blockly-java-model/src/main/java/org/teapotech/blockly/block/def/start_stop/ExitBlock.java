@@ -17,4 +17,17 @@ public class ExitBlock extends CustomBlockDefinition {
 		return Category.ID_START_STOP;
 	}
 
+	@Override
+	public String getConfiguration() {
+		return """
+				{
+					"type": "exit",
+					"message0": "Exit",
+					"previousStatement": null,
+					"tooltip": "",
+					"helpUrl": "",
+					"colour": 359
+				}
+				""";
+	}
 }

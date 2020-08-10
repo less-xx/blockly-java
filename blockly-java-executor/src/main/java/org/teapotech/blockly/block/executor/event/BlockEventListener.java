@@ -1,4 +1,4 @@
-package org.teapotech.blockly.block.support;
+package org.teapotech.blockly.block.executor.event;
 
 import org.teapotech.blockly.block.event.NamedBlockEvent;
 

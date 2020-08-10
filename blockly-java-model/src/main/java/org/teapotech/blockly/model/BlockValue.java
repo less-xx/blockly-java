@@ -8,7 +8,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 /**
  * @author jiangl
@@ -16,15 +18,19 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties
 public class BlockValue {
 
 	@XmlAttribute
+	@JacksonXmlProperty
 	private String name;
 
 	@XmlElement
+	@JacksonXmlProperty(isAttribute = false)
 	private Shadow shadow;
 
 	@XmlElement
+	@JacksonXmlProperty(isAttribute = false)
 	private Block block;
 
 	public String getName() {

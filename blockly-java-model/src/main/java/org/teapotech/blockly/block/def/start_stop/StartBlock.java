@@ -17,4 +17,19 @@ public class StartBlock extends CustomBlockDefinition {
 		return Category.ID_START_STOP;
 	}
 
+	@Override
+	public String getConfiguration() {
+		return """
+				{
+					"type": "start",
+					"message0": "when started",
+					"nextStatement": null,
+					"tooltip": "",
+					"helpUrl": "",
+					"colour": 140,
+					"hat": "cap"
+				}
+				""";
+	}
+
 }

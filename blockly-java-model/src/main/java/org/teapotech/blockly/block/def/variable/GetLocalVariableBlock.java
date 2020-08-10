@@ -17,4 +17,25 @@ public class GetLocalVariableBlock extends CustomBlockDefinition {
 		return Category.ID_VARIABLES;
 	}
 
+	@Override
+	public String getConfiguration() {
+		return """
+				{
+					"type": "get_local_variable",
+					"message0": "%1",
+					"args0": [
+						{
+							"type": "field_input",
+							"name": "var",
+							"text": "dynamic_variable"
+						}
+					],
+					"inputsInline": true,
+					"output": null,
+					"colour": 32,
+					"tooltip": "",
+					"helpUrl": ""
+				}
+				""";
+	}
 }

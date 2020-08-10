@@ -17,4 +17,27 @@ public class WaitSecondsBlock extends CustomBlockDefinition {
 		return Category.ID_BASIC + "/" + Category.ID_CONTROL;
 	}
 
+	@Override
+	public String getConfiguration() {
+		return """
+				{
+					"type": "wait_seconds",
+					"message0": "wait %1 seconds",
+					"args0": [
+						{
+							"type": "input_value",
+							"name": "value",
+							"check": "Number"
+						}
+					],
+					"inputsInline": true,
+					"previousStatement": null,
+					"nextStatement": null,
+					"colour": 42,
+					"tooltip": "",
+					"helpUrl": ""
+				}
+				""";
+	}
+
 }

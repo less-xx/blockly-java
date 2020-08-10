@@ -10,7 +10,10 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 /**
  * @author jiangl
@@ -18,33 +21,46 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties
 public class Block {
 
 	@XmlAttribute
+	@JacksonXmlProperty
 	private String type;
 
 	@XmlAttribute
+	@JacksonXmlProperty
 	private String id;
 
 	@XmlAttribute
+	@JacksonXmlProperty
 	private Integer x;
 
 	@XmlAttribute
+	@JacksonXmlProperty
 	private Integer y;
 
 	@XmlElement(name = "value")
+	@JacksonXmlProperty(isAttribute = false, localName = "value")
+	@JacksonXmlElementWrapper(useWrapping = false)
 	private List<BlockValue> values;
 
 	@XmlElement(name = "statement")
+	@JacksonXmlProperty(isAttribute = false, localName = "statement")
+	@JacksonXmlElementWrapper(useWrapping = false)
 	private List<Statement> statements;
 
 	@XmlElement
+	@JacksonXmlProperty(isAttribute = false)
 	private Next next;
 
 	@XmlElement(name = "mutation")
+	@JacksonXmlProperty(isAttribute = false)
 	private BlockMutation mutation;
 
 	@XmlElement(name = "field")
+	@JacksonXmlProperty(isAttribute = false, localName = "field")
+	@JacksonXmlElementWrapper(useWrapping = false)
 	private List<Field> fields;
 
 	public String getType() {

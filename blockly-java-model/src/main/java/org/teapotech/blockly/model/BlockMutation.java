@@ -7,6 +7,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+
 /**
  * @author jiangl
  *
@@ -15,12 +17,15 @@ import javax.xml.bind.annotation.XmlAttribute;
 public class BlockMutation {
 
 	@XmlAttribute
+	@JacksonXmlProperty
 	private Integer items;
 
 	@XmlAttribute(name = "elseif")
+	@JacksonXmlProperty
 	private Integer elseif;
 
 	@XmlAttribute(name = "else")
+	@JacksonXmlProperty
 	private Integer _else;
 
 	public Integer getItems() {

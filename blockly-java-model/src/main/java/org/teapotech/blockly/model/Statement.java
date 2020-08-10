@@ -8,6 +8,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+
 /**
  * @author jiangl
  *
@@ -16,9 +18,11 @@ import javax.xml.bind.annotation.XmlElement;
 public class Statement {
 
 	@XmlAttribute
+	@JacksonXmlProperty
 	private String name;
 
 	@XmlElement(name = "block")
+	@JacksonXmlProperty(isAttribute = false)
 	private Block block;
 
 	public String getName() {
