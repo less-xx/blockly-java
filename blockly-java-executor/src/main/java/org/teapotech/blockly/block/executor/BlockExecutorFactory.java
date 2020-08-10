@@ -7,7 +7,7 @@ import java.lang.reflect.Constructor;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.teapotech.blockly.block.def.BlockDefinitionObjectRegistry;
+import org.teapotech.blockly.block.def.BlockExecutorRegistry;
 import org.teapotech.blockly.exception.BlockExecutorNotFoundException;
 import org.teapotech.blockly.exception.InvalidBlockException;
 import org.teapotech.blockly.exception.InvalidBlockExecutorException;
@@ -22,14 +22,14 @@ public class BlockExecutorFactory {
 
 	private static Logger LOG = LoggerFactory.getLogger(BlockExecutorFactory.class);
 
-	private final BlockDefinitionObjectRegistry blockDefinitionObjectRegistry;
+	private final BlockExecutorRegistry blockDefinitionObjectRegistry;
 
-	public static BlockExecutorFactory build(BlockDefinitionObjectRegistry blockDefinitionObjectRegistry) {
+	public static BlockExecutorFactory build(BlockExecutorRegistry blockDefinitionObjectRegistry) {
 		BlockExecutorFactory fac = new BlockExecutorFactory(blockDefinitionObjectRegistry);
 		return fac;
 	}
 
-	private BlockExecutorFactory(BlockDefinitionObjectRegistry blockDefinitionObjectRegistry) {
+	private BlockExecutorFactory(BlockExecutorRegistry blockDefinitionObjectRegistry) {
 		this.blockDefinitionObjectRegistry = blockDefinitionObjectRegistry;
 	}
 
@@ -84,7 +84,22 @@ public class BlockExecutorFactory {
 			throw new BlockExecutorNotFoundException("Block executor not register for type " + blockType);
 		}
 
-		return createBlockExecutor(workspaceId, blockValue.getBlock());
-	}
+		try {
 
+			BlockExecutor be = null;
+
+			Constructor<? extends AbstractBlockExecutor> constructor = c.getConstructor(BlockValue.class);
+			if (constructor == null) {
+				throw new InvalidBlockExecutorException(
+						"The block executor's constructor should have argument of BlockValue type");
+			}
+
+			be = constructor.newInstance(blockValue);
+
+			return be;
+
+		} catch (Exception e) {
+			throw new InvalidBlockExecutorException(e.getMessage(), e);
+		}
+	}
 }

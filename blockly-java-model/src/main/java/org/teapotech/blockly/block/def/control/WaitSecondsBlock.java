@@ -1,6 +1,5 @@
 package org.teapotech.blockly.block.def.control;
 
-import org.teapotech.blockly.block.def.Category;
 import org.teapotech.blockly.block.def.CustomBlockDefinition;
 
 public class WaitSecondsBlock extends CustomBlockDefinition {

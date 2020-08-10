@@ -10,7 +10,7 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.teapotech.blockly.block.executor.event.EventDispatcher;
+import org.teapotech.blockly.event.EventDispatcher;
 import org.teapotech.blockly.execution.provider.FileStorageProvider;
 import org.teapotech.blockly.execution.provider.KeyValueStorageProvider;
 

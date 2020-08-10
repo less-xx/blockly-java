@@ -12,7 +12,7 @@ import org.teapotech.blockly.exception.BlockExecutionException;
 public interface BlockExecutor {
 
 
-	String getBlockType();
+	// String getBlockType();
 
 	Object execute(BlockExecutionContext context) throws BlockExecutionException;
 }

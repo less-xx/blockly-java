@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.Map;
 
 import org.slf4j.Logger;
-import org.teapotech.blockly.block.executor.event.EventDispatcher;
+import org.teapotech.blockly.event.EventDispatcher;
 
 /**
  * @author jiangl

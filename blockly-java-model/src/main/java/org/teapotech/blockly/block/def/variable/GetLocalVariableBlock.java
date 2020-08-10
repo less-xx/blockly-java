@@ -1,6 +1,5 @@
 package org.teapotech.blockly.block.def.variable;
 
-import org.teapotech.blockly.block.def.Category;
 import org.teapotech.blockly.block.def.CustomBlockDefinition;
 
 public class GetLocalVariableBlock extends CustomBlockDefinition {

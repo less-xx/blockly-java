@@ -37,9 +37,9 @@ public class WorkspaceExecutor {
 	public WorkspaceExecutor(Workspace workspace, BlockExecutionContext context) {
 		this.context = context;
 		this.workspace = workspace;
-		this.threadGroup = new ThreadGroup("workspace-" + context.getWorkspaceId());
+		this.threadGroup = new ThreadGroup("wexec-" + context.getWorkspaceId() + "-" + context.getInstanceId());
 		this.threadGroup.setDaemon(true);
-		LOG.info("Created workspace executor. ID: {}", context.getWorkspaceId());
+		LOG.info("Created workspace executor. ID: {}-{}", context.getWorkspaceId(), context.getInstanceId());
 	}
 
 	public BlockExecutionContext getBlockExecutionContext() {
@@ -107,11 +107,14 @@ public class WorkspaceExecutor {
 
 			entryPointThread.start();
 			startMonitoring();
+		} else {
+			LOG.warn("Cannot find start block");
 		}
 	}
 
 	public void startMonitoring() {
-		monitoringThread = new BlockExecutionMonitoringThread("monitoring-" + context.getWorkspaceId());
+		monitoringThread = new BlockExecutionMonitoringThread(
+				"monitoring-" + context.getWorkspaceId() + "-" + context.getInstanceId());
 		monitoringThread.start();
 	}
 
@@ -166,7 +169,8 @@ public class WorkspaceExecutor {
 				Thread[] blockExecutionThreads = new Thread[threadGroup.activeCount()];
 				threadGroup.enumerate(blockExecutionThreads);
 				if (blockExecutionThreads.length < 1) {
-					LOG.warn("The workspace executor is not running.");
+					LOG.warn("The workspace executor {} is not running.",
+							context.getWorkspaceId() + "-" + context.getInstanceId());
 					break;
 				}
 				for (Thread t : blockExecutionThreads) {
@@ -185,7 +189,8 @@ public class WorkspaceExecutor {
 					break;
 				}
 			}
-			LOG.info("All block execution threads are stopped.");
+			LOG.info("All block execution threads are stopped. Ouput dir: {}",
+					context.getWorkingDir().getAbsolutePath());
 			context.getEventDispatcher().dispatchWorkspaceEvent(
 					new WorkspaceEvent(context.getWorkspaceId(), getWorkspaceInstanceId(), Status.Stopped));
 			if (!context.isStopped()) {

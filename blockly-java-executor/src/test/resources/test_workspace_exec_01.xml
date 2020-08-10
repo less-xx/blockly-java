@@ -1,0 +1,32 @@
+<xml xmlns="https://developers.google.com/blockly/xml" id="workspaceBlocks" style="display: none">
+	<block type="start" id="start_01">
+		<next>
+			<block type="controls_repeat_ext" id="BQJLwZ3WDj0gBLx$R[F`" x="38" y="12">
+				<value name="TIMES">
+					<shadow type="math_number" id="seYJb3R^k%3Yvb]4RuF9">
+						<field name="NUM">10</field>
+					</shadow>
+				</value>
+				<statement name="DO">
+					<block type="text_print" id="88Ili((dl8v*P+QxblEg">
+						<value name="TEXT">
+							<block type="text_join" id="kwt=QM9_/VSg~2GR}H;]">
+								<mutation items="2"></mutation>
+								<value name="ADD0">
+									<block type="text" id="3ttLVG6zK8i5lCHfOKiJ">
+										<field name="TEXT">a</field>
+									</block>
+								</value>
+								<value name="ADD1">
+									<block type="text" id=",~M@Nn^;mXBS?qmyF|e%">
+										<field name="TEXT">b</field>
+									</block>
+								</value>
+							</block>
+						</value>
+					</block>
+				</statement>
+			</block>
+		</next>
+	</block>
+</xml>

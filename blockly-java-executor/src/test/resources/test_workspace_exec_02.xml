@@ -1,0 +1,54 @@
+<xml xmlns="https://developers.google.com/blockly/xml" id="workspaceBlocks" style="display: none">
+	<variables>
+		<variable id="5d({#/uLhfM;00Y`c-0a">x</variable>
+	</variables>
+	<block type="variables_set" id="zRF.}(A!yo{r,N5_Z-r[" x="62" y="-363">
+		<field name="VAR" id="5d({#/uLhfM;00Y`c-0a">x</field>
+		<value name="VALUE">
+			<block type="math_number" id="oC4ZCBl1YwGw8YhA=2;l">
+				<field name="NUM">1</field>
+			</block>
+		</value>
+		<next>
+			<block type="controls_if" id="@qNZoHw.K|Sv9Jn_eTos">
+				<value name="IF0">
+					<block type="logic_compare" id="M#bv$G!ahTDVdFw^f}(J">
+						<field name="OP">GT</field>
+						<value name="A">
+							<block type="variables_get" id=")c7~qK,TqZcv7f@9`Je+">
+								<field name="VAR" id="5d({#/uLhfM;00Y`c-0a">x</field>
+							</block>
+						</value>
+						<value name="B">
+							<block type="math_number" id="UB!,qf$EEV!sD!0DH+eL">
+								<field name="NUM">0</field>
+							</block>
+						</value>
+					</block>
+				</value>
+				<statement name="DO0">
+					<block type="text_print" id="X*PwMSvRzr]|EG(Is}F4">
+						<value name="TEXT">
+							<block type="text_join" id="RQ{Z#yuwY8k-l$xF:wts">
+								<mutation items="2"></mutation>
+								<value name="ADD0">
+									<block type="text" id="3ttLVG6zK8i5lCHfOKiJ">
+										<field name="TEXT">a</field>
+									</block>
+								</value>
+								<value name="ADD1">
+									<block type="text" id=",~M@Nn^;mXBS?qmyF|e%">
+										<field name="TEXT">b</field>
+									</block>
+								</value>
+							</block>
+						</value>
+					</block>
+				</statement>
+			</block>
+		</next>
+	</block>
+	<shadow type="text" id="~h%Zw#%z-bN[CZ8lr1,@" x="149" y="-296">
+		<field name="TEXT">abc</field>
+	</shadow>
+</xml>

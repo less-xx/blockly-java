@@ -17,9 +17,9 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 
-import org.teapotech.blockly.block.def.Category;
 import org.teapotech.blockly.model.Block;
 import org.teapotech.blockly.model.BlockValue;
+import org.teapotech.blockly.model.Category;
 import org.teapotech.blockly.model.Shadow;
 import org.teapotech.blockly.model.Variable;
 import org.teapotech.blockly.model.Workspace;
