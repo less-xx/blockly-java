@@ -37,6 +37,7 @@ public class DefaultBlockExecutionContext implements BlockExecutionContext {
 			return new HashMap<>();
 		}
 	};
+	private Map<String, Object> globalVariables = new HashMap<String, Object>();
 	private final Map<String, BlockExecutionProgress> executionThreadInfo = new HashMap<>();
 
 	public DefaultBlockExecutionContext(String workspaceId, long instanceId, File workingDir,
@@ -98,20 +99,17 @@ public class DefaultBlockExecutionContext implements BlockExecutionContext {
 
 	@Override
 	public Object getVariable(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		return globalVariables.get(id);
 	}
 
 	@Override
 	public void setVariable(String id, Object value) {
-		// TODO Auto-generated method stub
-
+		globalVariables.put(id, value);
 	}
 
 	@Override
 	public Collection<String> getAllVariableNames() {
-		// TODO Auto-generated method stub
-		return null;
+		return globalVariables.keySet();
 	}
 
 	@Override

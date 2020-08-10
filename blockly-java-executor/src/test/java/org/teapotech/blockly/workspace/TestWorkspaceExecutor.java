@@ -58,7 +58,22 @@ public class TestWorkspaceExecutor {
 			WorkspaceExecutor wExecutor = new WorkspaceExecutor(w, context);
 			wExecutor.execute();
 
-			Thread.sleep(50000);
+			Thread.sleep(5000);
+		}
+	}
+
+	@Test
+	public void testRunWorkspace_02() throws Exception {
+		try (InputStream in = getClass().getClassLoader().getResourceAsStream("test_workspace_exec_02.xml");) {
+			long testInstanceId = 1;
+			Workspace w = BlockXmlUtils.loadWorkspace(in);
+			File workingDir = new File(workingDirPath);
+			DefaultBlockExecutionContext context = new DefaultBlockExecutionContext(testWorkspaceId, testInstanceId,
+					workingDir, factory, kvStorageProvider, fileStorageProvider, eventDispatcher);
+			WorkspaceExecutor wExecutor = new WorkspaceExecutor(w, context);
+			wExecutor.execute();
+
+			Thread.sleep(5000);
 		}
 	}
 
