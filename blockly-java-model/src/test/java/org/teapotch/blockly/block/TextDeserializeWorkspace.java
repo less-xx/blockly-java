@@ -81,5 +81,7 @@ public class TextDeserializeWorkspace {
 		assertEquals("logic_compare", b3.getType());
 		assertEquals(2, b3.getValues().size());
 
+		System.out.println(xmlMapper.writeValueAsString(w));
+
 	}
 }

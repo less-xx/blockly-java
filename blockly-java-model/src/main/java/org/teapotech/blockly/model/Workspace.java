@@ -1,16 +1,9 @@
 package org.teapotech.blockly.model;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
-
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
@@ -20,36 +13,30 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
  * @author jiangl
  *
  */
-@XmlAccessorType(XmlAccessType.NONE)
-@XmlRootElement(name = "xml")
-@JacksonXmlRootElement(localName = "xml")
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JacksonXmlRootElement(localName = "xml", namespace = BlocklyConstants.NAMESPACE)
 public class Workspace {
 
-	@JacksonXmlProperty
+	@JacksonXmlProperty(isAttribute = true)
 	private String id;
 
-	@XmlAttribute
-	@JacksonXmlProperty
+	@JacksonXmlProperty(isAttribute = true)
 	private String style = "display: none";
 
-	@XmlElementWrapper(name = "variables")
-	@XmlElement(name = "variable")
-	@JacksonXmlProperty(isAttribute = false)
+	@JacksonXmlProperty(isAttribute = false, localName = "variable", namespace = BlocklyConstants.NAMESPACE)
+	@JacksonXmlElementWrapper(useWrapping = true, localName = "variables", namespace = BlocklyConstants.NAMESPACE)
 	private List<Variable> variables;
 
-	@XmlElement(name = "category")
-	@JacksonXmlProperty
+	@JacksonXmlProperty(localName = "category", isAttribute = false, namespace = BlocklyConstants.NAMESPACE)
 	@JacksonXmlElementWrapper(useWrapping = false)
-	private List<Category> categories = new ArrayList<>();
+	private List<Category> categories;
 
-	@JacksonXmlProperty(localName = "block", isAttribute = false)
+	@JacksonXmlProperty(localName = "block", isAttribute = false, namespace = BlocklyConstants.NAMESPACE)
 	@JacksonXmlElementWrapper(useWrapping = false)
-	@XmlElement(name = "block")
 	private List<Block> blocks = null;
 
-	@JacksonXmlProperty(localName = "shadow", isAttribute = false)
+	@JacksonXmlProperty(localName = "shadow", isAttribute = false, namespace = BlocklyConstants.NAMESPACE)
 	@JacksonXmlElementWrapper(useWrapping = false)
-	@XmlElement(name = "shadow")
 	private List<Shadow> shadows = null;
 
 	public List<Variable> getVariables() {

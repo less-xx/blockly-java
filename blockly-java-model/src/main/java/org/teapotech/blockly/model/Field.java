@@ -1,10 +1,5 @@
 package org.teapotech.blockly.model;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlValue;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlText;
@@ -14,22 +9,18 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlText;
  * @author jiangl
  *
  */
-@XmlAccessorType(XmlAccessType.FIELD)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Field {
 
-	@XmlAttribute
-	@JacksonXmlProperty
+	@JacksonXmlProperty(isAttribute = true)
 	private String id;
 
-	@XmlAttribute
-	@JacksonXmlProperty
+	@JacksonXmlProperty(isAttribute = true)
 	private String name;
 
-	@XmlAttribute
+	@JacksonXmlProperty(isAttribute = true)
 	private String variableType;
 
-	@XmlValue
 	@JacksonXmlText(value = true)
 	private String value;
 

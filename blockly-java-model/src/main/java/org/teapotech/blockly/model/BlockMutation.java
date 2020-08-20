@@ -3,29 +3,23 @@
  */
 package org.teapotech.blockly.model;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 /**
  * @author jiangl
  *
  */
-@XmlAccessorType(XmlAccessType.FIELD)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class BlockMutation {
 
-	@XmlAttribute
-	@JacksonXmlProperty
+	@JacksonXmlProperty(isAttribute = true)
 	private Integer items;
 
-	@XmlAttribute(name = "elseif")
-	@JacksonXmlProperty
+	@JacksonXmlProperty(isAttribute = true)
 	private Integer elseif;
 
-	@XmlAttribute(name = "else")
-	@JacksonXmlProperty
+	@JacksonXmlProperty(isAttribute = true, localName = "else")
 	private Integer _else;
 
 	public Integer getItems() {

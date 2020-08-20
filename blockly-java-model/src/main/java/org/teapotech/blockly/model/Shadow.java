@@ -3,11 +3,6 @@
  */
 package org.teapotech.blockly.model;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
@@ -15,28 +10,22 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
  * @author jiangl
  *
  */
-@XmlAccessorType(XmlAccessType.FIELD)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Shadow {
 
-	@XmlAttribute
-	@JacksonXmlProperty
+	@JacksonXmlProperty(isAttribute = true)
 	private String type;
 
-	@XmlAttribute
-	@JacksonXmlProperty
+	@JacksonXmlProperty(isAttribute = true)
 	private String id;
 
-	@XmlAttribute
-	@JacksonXmlProperty
+	@JacksonXmlProperty(isAttribute = true)
 	private Integer x;
 
-	@XmlAttribute
-	@JacksonXmlProperty
+	@JacksonXmlProperty(isAttribute = true)
 	private Integer y;
 
-	@XmlElement(name = "field")
-	@JacksonXmlProperty(isAttribute = false)
+	@JacksonXmlProperty(isAttribute = false, namespace = BlocklyConstants.NAMESPACE)
 	private Field field;
 
 	public String getType() {

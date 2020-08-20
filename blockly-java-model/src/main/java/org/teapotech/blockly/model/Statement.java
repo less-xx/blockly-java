@@ -3,26 +3,20 @@
  */
 package org.teapotech.blockly.model;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 /**
  * @author jiangl
  *
  */
-@XmlAccessorType(XmlAccessType.FIELD)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Statement {
 
-	@XmlAttribute
-	@JacksonXmlProperty
+	@JacksonXmlProperty(isAttribute = true)
 	private String name;
 
-	@XmlElement(name = "block")
-	@JacksonXmlProperty(isAttribute = false)
+	@JacksonXmlProperty(isAttribute = false, namespace = BlocklyConstants.NAMESPACE)
 	private Block block;
 
 	public String getName() {

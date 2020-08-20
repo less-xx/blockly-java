@@ -4,6 +4,7 @@ import java.io.InputStream;
 
 import org.teapotech.blockly.model.Workspace;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 public class WorkspaceXmlParser {
@@ -18,6 +19,10 @@ public class WorkspaceXmlParser {
 	public static Workspace loadWorkspace(InputStream in) throws Exception {
 		Workspace w = xmlMapper.readValue(in, Workspace.class);
 		return w;
+	}
+
+	public static String getXml(Workspace workspace) throws JsonProcessingException {
+		return xmlMapper.writeValueAsString(workspace);
 	}
 
 }

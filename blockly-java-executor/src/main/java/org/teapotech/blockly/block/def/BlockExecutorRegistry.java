@@ -138,6 +138,10 @@ public class BlockExecutorRegistry {
 		String[] cc = idChain.split("\\s*/\\s*");
 		Category cat = null;
 		List<Category> cl = workspace.getCategories();
+		if (cl == null) {
+			cl = new ArrayList<>();
+			workspace.setCategories(cl);
+		}
 		for (String cid : cc) {
 			Optional<Category> op = cl.stream().filter(c -> c.getId().equalsIgnoreCase(cid)).findFirst();
 			if (op.isPresent()) {

@@ -5,11 +5,6 @@ package org.teapotech.blockly.model;
 
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
@@ -19,48 +14,38 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
  * @author jiangl
  *
  */
-@XmlAccessorType(XmlAccessType.FIELD)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties
 public class Block {
 
-	@XmlAttribute
-	@JacksonXmlProperty
+	@JacksonXmlProperty(isAttribute = true)
 	private String type;
 
-	@XmlAttribute
-	@JacksonXmlProperty
+	@JacksonXmlProperty(isAttribute = true)
 	private String id;
 
-	@XmlAttribute
-	@JacksonXmlProperty
+	@JacksonXmlProperty(isAttribute = true)
 	private Integer x;
 
-	@XmlAttribute
-	@JacksonXmlProperty
+	@JacksonXmlProperty(isAttribute = true)
 	private Integer y;
 
-	@XmlElement(name = "value")
-	@JacksonXmlProperty(isAttribute = false, localName = "value")
-	@JacksonXmlElementWrapper(useWrapping = false)
+	@JacksonXmlProperty(isAttribute = false, localName = "value", namespace = BlocklyConstants.NAMESPACE)
+	@JacksonXmlElementWrapper(useWrapping = false, namespace = BlocklyConstants.NAMESPACE)
 	private List<BlockValue> values;
 
-	@XmlElement(name = "statement")
-	@JacksonXmlProperty(isAttribute = false, localName = "statement")
-	@JacksonXmlElementWrapper(useWrapping = false)
+	@JacksonXmlProperty(isAttribute = false, localName = "statement", namespace = BlocklyConstants.NAMESPACE)
+	@JacksonXmlElementWrapper(useWrapping = false, namespace = BlocklyConstants.NAMESPACE)
 	private List<Statement> statements;
 
-	@XmlElement
-	@JacksonXmlProperty(isAttribute = false)
+	@JacksonXmlProperty(isAttribute = false, namespace = BlocklyConstants.NAMESPACE)
 	private Next next;
 
-	@XmlElement(name = "mutation")
-	@JacksonXmlProperty(isAttribute = false)
+	@JacksonXmlProperty(isAttribute = false, namespace = BlocklyConstants.NAMESPACE)
 	private BlockMutation mutation;
 
-	@XmlElement(name = "field")
-	@JacksonXmlProperty(isAttribute = false, localName = "field")
-	@JacksonXmlElementWrapper(useWrapping = false)
+	@JacksonXmlProperty(isAttribute = false, localName = "field", namespace = BlocklyConstants.NAMESPACE)
+	@JacksonXmlElementWrapper(useWrapping = false, namespace = BlocklyConstants.NAMESPACE)
 	private List<Field> fields;
 
 	public String getType() {
@@ -162,10 +147,10 @@ public class Block {
 		return "Block, id: " + this.id + ", type: " + this.type;
 	}
 
-	@XmlAccessorType(XmlAccessType.FIELD)
+	@JsonInclude(JsonInclude.Include.NON_NULL)
 	public static class Next {
 
-		@XmlElement(name = "block")
+		@JacksonXmlProperty(isAttribute = false, namespace = BlocklyConstants.NAMESPACE)
 		private Block block;
 
 		public Block getBlock() {

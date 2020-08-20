@@ -8,6 +8,8 @@ import org.teapotech.blockly.block.def.BlockExecutorRegistry;
 import org.teapotech.blockly.model.Category;
 import org.teapotech.blockly.model.Workspace;
 
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+
 public class TestBlockExecutorRegistry {
 
 	@Test
@@ -20,6 +22,10 @@ public class TestBlockExecutorRegistry {
 		Category cat = w.getCategories().get(0);
 		assertNotNull(cat.getBlocks());
 		assertTrue(!cat.getBlocks().isEmpty());
+
+		XmlMapper xmlMapper = new XmlMapper();
+		String xml = xmlMapper.writeValueAsString(w);
+		System.out.println(xml);
 	}
 
 }

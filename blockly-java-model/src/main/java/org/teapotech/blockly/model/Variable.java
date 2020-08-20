@@ -1,25 +1,18 @@
 package org.teapotech.blockly.model;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlValue;
-
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlText;
 
-@XmlAccessorType(XmlAccessType.FIELD)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Variable {
 
-	@XmlAttribute
-	@JacksonXmlProperty
-	private String type = "";
+	@JacksonXmlProperty(isAttribute = true)
+	private String type;
 
-	@XmlAttribute
-	@JacksonXmlProperty
+	@JacksonXmlProperty(isAttribute = true)
 	private String id;
 
-	@XmlValue
 	@JacksonXmlText(value = true)
 	private String value;
 

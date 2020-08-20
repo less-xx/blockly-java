@@ -5,42 +5,35 @@ package org.teapotech.blockly.model;
 
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlTransient;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 /**
  * @author jiangl
  *
  */
-@XmlAccessorType(XmlAccessType.FIELD)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Category {
 
-	@XmlTransient
 	@JsonIgnore
 	private String id;
 
-	@XmlAttribute
+	@JacksonXmlProperty(isAttribute = true)
 	private String name;
 
-	@XmlAttribute(name = "categorystyle")
+	@JacksonXmlProperty(localName = "categorystyle", isAttribute = true)
 	private String style;
 
-	@XmlAttribute
+	@JacksonXmlProperty(isAttribute = true)
 	private String colour;
 
-	@XmlElement(name = "category")
+	@JacksonXmlProperty(localName = "category", isAttribute = false, namespace = BlocklyConstants.NAMESPACE)
 	@JacksonXmlElementWrapper(useWrapping = false)
 	private List<Category> categories;
 
-	@XmlElement(name = "block")
+	@JacksonXmlProperty(localName = "block", isAttribute = false, namespace = BlocklyConstants.NAMESPACE)
 	@JacksonXmlElementWrapper(useWrapping = false)
 	private List<Block> blocks;
 
