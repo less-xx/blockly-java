@@ -168,4 +168,22 @@ public class BlockExecutorRegistry {
 		return cat;
 	}
 
+	public List<CustomBlockTemplate> getCustomBlockDefinitions() {
+		List<CustomBlockTemplate> result = new ArrayList<>();
+		blockExecutors.keySet().stream().filter(bdef -> bdef instanceof CustomBlockDefinition).forEach(bdef -> {
+			CustomBlockDefinition cbDef = (CustomBlockDefinition) bdef;
+			try {
+				String blockTemplate = cbDef.getBlockDefinitionTemplate();
+				if (StringUtils.isBlank(blockTemplate)) {
+					return;
+				}
+				JsonNode json = JSONUtils.getObject(blockTemplate);
+				result.add(new CustomBlockTemplate(cbDef.getBlockType(), json));
+			} catch (Exception e) {
+				LOG.error("Invalid block definition. Ignore it. \n{}", e.getMessage());
+			}
+		});
+
+		return result;
+	}
 }

@@ -3,10 +3,14 @@ package org.teapotech.blockly.workspace;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.teapotech.blockly.block.def.BlockExecutorRegistry;
+import org.teapotech.blockly.block.def.CustomBlockTemplate;
 import org.teapotech.blockly.model.Category;
 import org.teapotech.blockly.model.Workspace;
+import org.teapotech.blockly.util.JSONUtils;
 
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
@@ -28,4 +32,13 @@ public class TestBlockExecutorRegistry {
 		System.out.println(xml);
 	}
 
+	@Test
+	public void test02() throws Exception {
+		BlockExecutorRegistry blockDefRegistry = new BlockExecutorRegistry();
+		List<CustomBlockTemplate> blockDefs = blockDefRegistry.getCustomBlockDefinitions();
+		assertTrue(blockDefs.size() > 0);
+
+		String json = JSONUtils.getJSON(blockDefs);
+		System.out.println(json);
+	}
 }
