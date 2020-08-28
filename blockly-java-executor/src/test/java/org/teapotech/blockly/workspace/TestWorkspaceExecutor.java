@@ -94,4 +94,20 @@ public class TestWorkspaceExecutor {
 		}
 	}
 
+	@Test
+	public void testFindAllPrimesInRange() throws Exception {
+		try (InputStream in = getClass().getClassLoader().getResourceAsStream("test_workspace_exec_04.xml");) {
+			long testInstanceId = 1;
+			Workspace w = BlockXmlUtils.loadWorkspace(in);
+			File workingDir = new File(workingDirPath);
+			DefaultBlockExecutionContext context = new DefaultBlockExecutionContext(w.getId(), testInstanceId,
+					executedBy, workingDir, factory, kvStorageProvider, fileStorageProvider, eventDispatcher);
+			WorkspaceExecutor wExecutor = new WorkspaceExecutor(w, context);
+			wExecutor.execute();
+			wExecutor.waitFor(35000);
+			WorkspaceExecution wexec = wExecutor.getWorkspaceExecution();
+			System.out.println(wexec);
+		}
+	}
+
 }

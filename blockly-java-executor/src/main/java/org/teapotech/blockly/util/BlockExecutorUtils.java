@@ -30,8 +30,8 @@ public class BlockExecutorUtils {
 		}
 		BlockExecutor executor = context.getBlockExecutorFactory().createBlockExecutor(context.getWorkspaceId(), block);
 		beg.setBlock(block);
-		context.getLogger().info("Block id: [{}], type: [{}] is [{}]", block.getId(), block.getType(),
-				beg.getBlockStatus());
+		// context.getLogger().info("Block id: [{}], type: [{}] is [{}]", block.getId(),
+		// block.getType(),beg.getBlockStatus());
 
 		Object result = executor.execute(context);
 
@@ -61,8 +61,8 @@ public class BlockExecutorUtils {
 				context.getLogger().error("Cannot find block execution thread by name: {}", name);
 			}
 			beg.setBlock(block);
-			context.getLogger().info("Block id: [{}], type: [{}] is [{}]", block.getId(), block.getType(),
-					beg.getBlockStatus());
+//			context.getLogger().info("Block id: [{}], type: [{}] is [{}]", block.getId(), block.getType(),
+//					beg.getBlockStatus());
 		}
 
 		return executor.execute(context);

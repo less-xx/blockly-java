@@ -42,20 +42,22 @@ public abstract class AbstractBlockExecutor implements BlockExecutor {
 			return null;
 		}
 		try {
-			if (this.block != null) {
-				LOG.debug("Executing block, type: {}, id: {}", block.getType(), block.getId());
-			} else {
-				LOG.debug("Executing shadow, type: {}, id: {}", shadow.getType(), shadow.getId());
-			}
+			/*
+			 * if (this.block != null) { LOG.debug("Executing block, type: {}, id: {}",
+			 * block.getType(), block.getId()); } else {
+			 * LOG.debug("Executing shadow, type: {}, id: {}", shadow.getType(),
+			 * shadow.getId()); }
+			 */
 			updateBlockStatus(context, BlockStatus.Enter);
 			Object result = doExecute(context);
 			updateBlockStatus(context, BlockStatus.Exit);
 
-			if (this.block != null) {
-				LOG.debug("Block executed, type: {}, id: {}", block.getType(), block.getId());
-			} else {
-				LOG.debug("Shadow executed, type: {}, id: {}", shadow.getType(), shadow.getId());
-			}
+			/*
+			 * if (this.block != null) { LOG.debug("Block executed, type: {}, id: {}",
+			 * block.getType(), block.getId()); } else {
+			 * LOG.debug("Shadow executed, type: {}, id: {}", shadow.getType(),
+			 * shadow.getId()); }
+			 */
 			return result;
 		} catch (Exception e) {
 			if (context.isStopped()) {

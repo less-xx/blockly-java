@@ -1,4 +1,3 @@
-const workspaceXml = `
 <xml xmlns="https://developers.google.com/blockly/xml" id="find_all_primes_in_range" >
 	<variables>
 		<variable id="var_HYOfkg93">primeCount</variable>
@@ -19,7 +18,7 @@ const workspaceXml = `
 						<field name="VAR" id="var_SMMKzenW">start</field>
 						<value name="VALUE">
 							<block type="math_number" id="math_number_GWCGHhi9">
-								<field name="NUM">1</field>
+								<field name="NUM">2</field>
 							</block>
 						</value>
 						<next>
@@ -27,7 +26,7 @@ const workspaceXml = `
 								<field name="VAR" id="var_hLDCskx3">end</field>
 								<value name="VALUE">
 									<block type="math_number" id="math_number_wKfjB6Lg">
-										<field name="NUM">100</field>
+										<field name="NUM">300</field>
 									</block>
 								</value>
 								<next>
@@ -289,6 +288,11 @@ const workspaceXml = `
 																	</block>
 																</value>
 																<value name="ADD4">
+																	<block type="text" id="text_reqwqq">
+																		<field name="TEXT"> and </field>
+																	</block>
+																</value>
+																<value name="ADD5">
 																	<block type="variables_get" id="variables_get_qyScRWRu">
 																		<field name="VAR" id="var_hLDCskx3">end</field>
 																	</block>
@@ -309,5 +313,3 @@ const workspaceXml = `
 		</next>
 	</block>
 </xml>
-`
-export default workspaceXml;
