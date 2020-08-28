@@ -13,7 +13,7 @@ public class GetEventParameterBlock extends CustomBlockDefinition {
 
 	@Override
 	public String getCategory() {
-		return Category.ID_EVENTS;
+		return CategoryID.ID_EVENTS;
 	}
 
 	@Override
@@ -32,7 +32,7 @@ public class GetEventParameterBlock extends CustomBlockDefinition {
 					"output": null,
 					"tooltip": "",
 					"helpUrl": "",
-					"colour": 52
+					"style": "event_blocks"
 				}
 				""";
 	}

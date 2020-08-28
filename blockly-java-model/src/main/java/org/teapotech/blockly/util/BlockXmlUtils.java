@@ -3,26 +3,16 @@
  */
 package org.teapotech.blockly.util;
 
-import java.beans.Statement;
+import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.lang.reflect.Field;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.transform.Source;
-import javax.xml.transform.stream.StreamSource;
 
 import org.teapotech.blockly.model.Block;
-import org.teapotech.blockly.model.BlockValue;
-import org.teapotech.blockly.model.Category;
-import org.teapotech.blockly.model.Shadow;
-import org.teapotech.blockly.model.Variable;
 import org.teapotech.blockly.model.Workspace;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 /**
  * @author jiangl
@@ -30,51 +20,27 @@ import org.teapotech.blockly.model.Workspace;
  */
 public class BlockXmlUtils {
 
-	private static Class<?>[] BLOCK_CLASSES = { Workspace.class, Category.class, Block.class, BlockValue.class,
-			Field.class, Shadow.class, Variable.class, Statement.class };
-	private static JAXBContext BLOCK_CONTEXT = null;
-	private static Unmarshaller BLOCK_UNMARSHALLER = null;
-	private static Marshaller BLOCK_MARSHALLER = null;
+	private static XmlMapper xmlMapper = new XmlMapper();
 
-	static {
-		try {
-			BLOCK_CONTEXT = JAXBContext.newInstance(BLOCK_CLASSES);
-			BLOCK_UNMARSHALLER = BLOCK_CONTEXT.createUnmarshaller();
-			BLOCK_MARSHALLER = BLOCK_CONTEXT.createMarshaller();
-			BLOCK_MARSHALLER.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
-		} catch (Exception e) {
-			throw new Error(e.getMessage(), e);
-		}
+	public static Workspace loadWorkspace(String workspaceXml) throws JsonMappingException, JsonProcessingException {
+		Workspace w = xmlMapper.readValue(workspaceXml, Workspace.class);
+		return w;
 	}
 
-	public static Workspace loadWorkspace(String configuration) throws JAXBException {
-		StringReader reader = new StringReader(configuration);
-		StreamSource source = new StreamSource(reader);
-		JAXBElement<Workspace> e = BLOCK_UNMARSHALLER.unmarshal(source, Workspace.class);
-		return e.getValue();
+	public static Workspace loadWorkspace(InputStream in) throws JsonParseException, JsonMappingException, IOException {
+		Workspace w = xmlMapper.readValue(in, Workspace.class);
+		return w;
 	}
 
-	public static Workspace loadWorkspace(Source source) throws JAXBException {
-		JAXBElement<Workspace> e = BLOCK_UNMARSHALLER.unmarshal(source, Workspace.class);
-		return e.getValue();
-	}
-
-	public static Workspace loadWorkspace(InputStream in) throws JAXBException {
-		Object o = BLOCK_UNMARSHALLER.unmarshal(in);
-		return (Workspace) o;
-	}
-
-	public static Block loadToolboxBlock(InputStream in) throws JAXBException {
-		Workspace tbw = (Workspace) BLOCK_UNMARSHALLER.unmarshal(in);
+	public static Block loadToolboxBlock(InputStream in) throws JsonParseException, JsonMappingException, IOException {
+		Workspace tbw = loadWorkspace(in);
 		if (tbw == null || tbw.getBlocks() == null || tbw.getBlocks().isEmpty()) {
 			return null;
 		}
 		return tbw.getBlocks().get(0);
 	}
 
-	public static String toXml(Object o) throws JAXBException {
-		StringWriter writer = new StringWriter();
-		BLOCK_MARSHALLER.marshal(o, writer);
-		return writer.toString();
+	public static String toXml(Object o) throws JsonProcessingException {
+		return xmlMapper.writeValueAsString(o);
 	}
 }

@@ -13,7 +13,7 @@ public class SetLocalVariableBlock extends CustomBlockDefinition {
 
 	@Override
 	public String getCategory() {
-		return Category.ID_VARIABLES;
+		return CategoryID.ID_VARIABLES;
 	}
 
 	@Override
@@ -21,7 +21,7 @@ public class SetLocalVariableBlock extends CustomBlockDefinition {
 		return """
 				{
 					"type": "set_local_variable",
-					"message0": "set %1 to %2",
+					"message0": "set local %1 to %2",
 					"args0": [
 						{
 							"type": "field_input",
@@ -35,7 +35,7 @@ public class SetLocalVariableBlock extends CustomBlockDefinition {
 					],
 					"previousStatement": null,
 					"nextStatement": null,
-					"colour": 32,
+					"style": "variable_blocks",
 					"tooltip": "",
 					"helpUrl": ""
 				}

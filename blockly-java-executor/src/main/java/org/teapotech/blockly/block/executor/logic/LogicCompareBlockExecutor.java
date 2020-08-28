@@ -22,7 +22,7 @@ import org.teapotech.blockly.util.BlockExecutorUtils;
  * @author jiangl
  *
  */
-@BlockDef(blockType = "logic_compare", category = "basic/control")
+@BlockDef(blockType = "logic_compare", category = "control", style = "control_blocks")
 public class LogicCompareBlockExecutor extends AbstractBlockExecutor {
 
 	/**
@@ -30,6 +30,13 @@ public class LogicCompareBlockExecutor extends AbstractBlockExecutor {
 	 */
 	public LogicCompareBlockExecutor(Block block) {
 		super(block);
+	}
+
+	/**
+	 * @param block
+	 */
+	public LogicCompareBlockExecutor(BlockValue blockValue) {
+		super(blockValue);
 	}
 
 	@Override
@@ -61,6 +68,10 @@ public class LogicCompareBlockExecutor extends AbstractBlockExecutor {
 				return Objects.equals(v1, v2.toString());
 			} else if (v2 instanceof String) {
 				return Objects.equals(v1.toString(), v2);
+			} else if ((v1 instanceof Number) && (v2 instanceof Number)) {
+				double dv1 = ((Number) v1).doubleValue();
+				double dv2 = ((Number) v2).doubleValue();
+				return dv1 == dv2;
 			} else {
 				return Objects.equals(v1, v2);
 			}

@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -12,10 +14,12 @@ import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Set;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.teapotech.blockly.block.def.BlockDefinition.CategoryID;
 import org.teapotech.blockly.block.def.annotation.BlockDef;
 import org.teapotech.blockly.block.executor.AbstractBlockExecutor;
 import org.teapotech.blockly.model.Block;
@@ -32,6 +36,9 @@ public class BlockExecutorRegistry {
 	private static Logger LOG = LoggerFactory.getLogger(BlockExecutorRegistry.class);
 	private final Map<String, JsonNode> defaultCategories = new HashMap<>();
 	private final Map<BlockDefinition, Class<? extends AbstractBlockExecutor>> blockExecutors = new HashMap<>();
+
+	private static final String[] CATEGORY_ORDERS = { CategoryID.ID_START_EXIT, CategoryID.ID_VARIABLES,
+			CategoryID.ID_CONTROL, CategoryID.ID_EVENTS, CategoryID.ID_FILE_OPERATIONS, CategoryID.ID_RESOURCES };
 
 	public BlockExecutorRegistry() throws Exception {
 		loadBlockExecutors();
@@ -69,7 +76,8 @@ public class BlockExecutorRegistry {
 			String blockType = a.blockType();
 			if (!StringUtils.isBlank(blockType)) {
 				String category = a.category();
-				DefaultBlockDefinition bdef = new DefaultBlockDefinition(blockType, category);
+				String style = a.style();
+				DefaultBlockDefinition bdef = new DefaultBlockDefinition(blockType, category, style);
 				blockExecutors.put(bdef, c);
 				LOG.info("Registered block, Type: {}, Executor class: {}", blockType, c.getName());
 			} else {
@@ -120,6 +128,21 @@ public class BlockExecutorRegistry {
 				}
 			}
 		});
+		Collections.sort(toolbox.getCategories(), new Comparator<Category>() {
+
+			@Override
+			public int compare(Category c1, Category c2) {
+				int i1 = ArrayUtils.indexOf(CATEGORY_ORDERS, c1.getId());
+				if (i1 < 0) {
+					return 1;
+				}
+				int i2 = ArrayUtils.indexOf(CATEGORY_ORDERS, c2.getId());
+				if (i2 < 0) {
+					return -1;
+				}
+				return i1 - i2;
+			}
+		});
 		return toolbox;
 	}
 
@@ -168,17 +191,17 @@ public class BlockExecutorRegistry {
 		return cat;
 	}
 
-	public List<CustomBlockTemplate> getCustomBlockDefinitions() {
-		List<CustomBlockTemplate> result = new ArrayList<>();
+	public List<CustomBlockConfiguration> getCustomBlockConfigurations() {
+		List<CustomBlockConfiguration> result = new ArrayList<>();
 		blockExecutors.keySet().stream().filter(bdef -> bdef instanceof CustomBlockDefinition).forEach(bdef -> {
 			CustomBlockDefinition cbDef = (CustomBlockDefinition) bdef;
 			try {
-				String blockTemplate = cbDef.getBlockDefinitionTemplate();
-				if (StringUtils.isBlank(blockTemplate)) {
+				String blockConf = cbDef.getConfiguration();
+				if (StringUtils.isBlank(blockConf)) {
 					return;
 				}
-				JsonNode json = JSONUtils.getObject(blockTemplate);
-				result.add(new CustomBlockTemplate(cbDef.getBlockType(), json));
+				JsonNode json = JSONUtils.getObject(blockConf);
+				result.add(new CustomBlockConfiguration(cbDef.getBlockType(), json));
 			} catch (Exception e) {
 				LOG.error("Invalid block definition. Ignore it. \n{}", e.getMessage());
 			}

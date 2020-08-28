@@ -28,6 +28,9 @@ import Blockly from 'blockly/core';
 import locale from 'blockly/msg/en';
 import 'blockly/blocks';
 import toolboxConfigXml from './toolbox';
+import customBlockTemplate from './CustomBlockTemplate.json'
+import './CustomBlockTheme'
+import BlocklyTheme from './CustomBlockTheme';
 
 Blockly.setLocale(locale);
 
@@ -41,16 +44,23 @@ class BlocklyComponent extends React.Component {
     componentDidMount() {
 
         var toolboxConfig = this.getToolbox();
-        console.log(toolboxConfig.documentElement);
+        console.log(customBlockTemplate);
+
+        customBlockTemplate.forEach(bt=>{
+            this.registerBlock(bt.type, bt.definition);
+        })
 
         const { initialXml, children, ...rest } = this.props;
         this.primaryWorkspace = Blockly.inject(
             this.blocklyDiv.current,
             {
                 toolbox: toolboxConfig.documentElement,
+                theme: BlocklyTheme,
                 ...rest
             },
         );
+
+        this.primaryWorkspace.addChangeListener(e => this.onWorkspaceChange(e));
 
         if (initialXml) {
             Blockly.Xml.domToWorkspace(Blockly.Xml.textToDom(initialXml), this.primaryWorkspace);
@@ -61,12 +71,35 @@ class BlocklyComponent extends React.Component {
         return this.primaryWorkspace;
     }
 
+    onWorkspaceChange (e, workspace) {
+
+        if (e instanceof Blockly.Events.Ui) {
+            return;
+        }
+
+        var xmlStr = Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(this.primaryWorkspace));
+
+        console.log(xmlStr)
+    }
+
     getToolbox() {
         return (new window.DOMParser()).parseFromString(toolboxConfigXml, "text/xml");
     }
 
     setXml(xml) {
         Blockly.Xml.domToWorkspace(Blockly.Xml.textToDom(xml), this.primaryWorkspace);
+    }
+
+    registerBlock (blockType, blockDef) {
+        //console.log(blockDef);
+        Blockly.Blocks[blockType] = {
+            init: function () {
+                this.jsonInit(blockDef);
+                if (blockDef.hat) {
+                    this.hat = blockDef.hat;
+                }
+            }
+        };
     }
 
     render() {

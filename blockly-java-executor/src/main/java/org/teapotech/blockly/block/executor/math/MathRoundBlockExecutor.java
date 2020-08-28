@@ -16,7 +16,7 @@ import org.teapotech.blockly.util.BlockExecutorUtils;
  * @author jiangl
  *
  */
-@BlockDef(blockType = "math_round", category = "basic/math")
+@BlockDef(blockType = "math_round", category = "math")
 public class MathRoundBlockExecutor extends AbstractBlockExecutor {
 
 	public MathRoundBlockExecutor(Block block) {

@@ -1,0 +1,224 @@
+[
+	{
+		"type": "get_event_param",
+		"definition": {
+			"type": "get_event_param",
+			"message0": "get parameter from %1",
+			"args0": [
+				{
+					"type": "field_input",
+					"name": "event_name",
+					"text": "event_name"
+				}
+			],
+			"output": null,
+			"tooltip": "",
+			"helpUrl": "",
+			"style": "event_blocks"
+		}
+	},
+	{
+		"type": "exit",
+		"definition": {
+			"type": "exit",
+			"message0": "Exit",
+			"previousStatement": null,
+			"tooltip": "",
+			"helpUrl": "",
+			"style": "start_exit_blocks"
+		}
+	},
+	{
+		"type": "handle_event",
+		"definition": {
+			"type": "handle_event",
+			"message0": " when I receive %1",
+			"args0": [
+				{
+					"type": "field_input",
+					"name": "event_name",
+					"text": "event_name"
+				}
+			],
+			"inputsInline": true,
+			"nextStatement": null,
+			"tooltip": "",
+			"helpUrl": "",
+			"style": "event_blocks",
+			"hat": "cap"
+		}
+	},
+	{
+		"type": "event_with_param",
+		"definition": {
+			"type": "event_with_param",
+			"message0": "%1 with parameter %2",
+			"args0": [
+				{
+					"type": "field_input",
+					"name": "event_name",
+					"text": "event_name"
+				},
+				{
+					"type": "input_value",
+					"name": "parameter"
+				}
+			],
+			"inputsInline": true,
+			"output": null,
+			"tooltip": "",
+			"helpUrl": "",
+			"style": "event_blocks"
+		}
+	},
+	{
+		"type": "wait_seconds",
+		"definition": {
+			"type": "wait_seconds",
+			"message0": "wait %1 seconds",
+			"args0": [
+				{
+					"type": "input_value",
+					"name": "value",
+					"check": "Number"
+				}
+			],
+			"inputsInline": true,
+			"previousStatement": null,
+			"nextStatement": null,
+			"style": "control_blocks",
+			"tooltip": "",
+			"helpUrl": ""
+		}
+	},
+	{
+		"type": "set_local_variable",
+		"definition": {
+			"type": "set_local_variable",
+			"message0": "set local %1 to %2",
+			"args0": [
+				{
+					"type": "field_input",
+					"name": "var",
+					"text": "local_variable_name"
+				},
+				{
+					"type": "input_value",
+					"name": "value"
+				}
+			],
+			"previousStatement": null,
+			"nextStatement": null,
+			"style": "variable_blocks",
+			"tooltip": "",
+			"helpUrl": ""
+		}
+	},
+	{
+		"type": "get_local_variable",
+		"definition": {
+			"type": "get_local_variable",
+			"message0": "local: %1",
+			"args0": [
+				{
+					"type": "field_input",
+					"name": "var",
+					"text": "local_variable"
+				}
+			],
+			"inputsInline": true,
+			"output": null,
+			"style": "variable_blocks",
+			"tooltip": "",
+			"helpUrl": ""
+		}
+	},
+	{
+		"type": "dispatch_event",
+		"definition": {
+			"type": "dispatch_event",
+			"message0": "broadcast %1",
+			"args0": [
+				{
+					"type": "input_value",
+					"name": "event",
+					"check": "event_with_param"
+				}
+			],
+			"inputsInline": true,
+			"previousStatement": null,
+			"nextStatement": null,
+			"style": "event_blocks",
+			"tooltip": "",
+			"helpUrl": ""
+		}
+	},
+	{
+		"type": "start",
+		"definition": {
+			"type": "start",
+			"message0": "when started",
+			"nextStatement": null,
+			"tooltip": "",
+			"helpUrl": "",
+			"style": "start_exit_blocks",
+			"hat": "cap"
+		}
+	},
+	{
+		"type": "math_arithmetic",
+		"definition": {
+			"type": "math_arithmetic",
+			"message0": "%1 %2 %3 %4",
+			"args0": [
+				{
+					"type": "input_value",
+					"name": "A",
+					"check": "Number",
+					"align": "CENTRE"
+				},
+				{
+					"type": "field_dropdown",
+					"name": "OP",
+					"options": [
+						[
+							"+",
+							"ADD"
+						],
+						[
+							"-",
+							"MINUS"
+						],
+						[
+							"×",
+							"MULTIPLY"
+						],
+						[
+							"÷",
+							"DIVIDE"
+						],
+						[
+							"%",
+							"MOD"
+						]
+					]
+				},
+				{
+					"type": "input_dummy",
+					"align": "CENTRE"
+				},
+				{
+					"type": "input_value",
+					"name": "B",
+					"check": "Number",
+					"align": "CENTRE"
+				}
+			],
+			"inputsInline": true,
+			"output": "Number",
+			"style": "math_blocks",
+			"tooltip": "",
+			"helpUrl": ""
+		}
+	}
+]

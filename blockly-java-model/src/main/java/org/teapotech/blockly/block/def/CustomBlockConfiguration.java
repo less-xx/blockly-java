@@ -11,15 +11,15 @@ import com.fasterxml.jackson.databind.JsonNode;
  *
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class CustomBlockTemplate {
+public class CustomBlockConfiguration {
 
 	private String type;
 	private JsonNode definition;
 
-	public CustomBlockTemplate() {
+	public CustomBlockConfiguration() {
 	}
 
-	public CustomBlockTemplate(String type, JsonNode definition) {
+	public CustomBlockConfiguration(String type, JsonNode definition) {
 		this.type = type;
 		this.definition = definition;
 	}

@@ -17,7 +17,7 @@ import org.teapotech.blockly.util.BlockExecutorUtils;
  * @author jiangl
  *
  */
-@BlockDef(blockType = "math_random_int", category = "basic/math")
+@BlockDef(blockType = "math_random_int", category = "math")
 public class MathRandomIntBlockExecutor extends AbstractBlockExecutor {
 
 	/**

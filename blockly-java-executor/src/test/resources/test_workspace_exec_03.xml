@@ -1,0 +1,145 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+	<block type="start" id="_DpSvd}Hl}BNFVdj[E,d" x="230" y="30">
+		<next>
+			<block type="set_local_variable" id="Gq{+gBH?dJst@$~siqf,">
+				<field name="var">x</field>
+				<value name="value">
+					<block type="math_number" id="qJ1~%c4r]7I#tYF5X0y]">
+						<field name="NUM">10</field>
+					</block>
+				</value>
+				<next>
+					<block type="controls_whileUntil" id="ils8)7QH)Dn=a9Pkrz}d">
+						<field name="MODE">WHILE</field>
+						<value name="BOOL">
+							<block type="logic_compare" id="0G/D8(0_a?D_W.:09k/y">
+								<field name="OP">GT</field>
+								<value name="A">
+									<block type="get_local_variable" id="Ewxk*?rc:hO;CSa(q?+x">
+										<field name="var">x</field>
+									</block>
+								</value>
+								<value name="B">
+									<block type="math_number" id="y?t{C#b~aWq3K9K]nOeP">
+										<field name="NUM">0</field>
+									</block>
+								</value>
+							</block>
+						</value>
+						<statement name="DO">
+							<block type="controls_if" id="Ww@96W}!O/hzK5GC$;N$">
+								<value name="IF0">
+									<block type="logic_compare" id="Gl2ze`.4VRYW3|{_7M`4">
+										<field name="OP">EQ</field>
+										<value name="A">
+											<block type="math_arithmetic" id="l+J3J_:/_.S/N~OU_N3F">
+												<field name="OP">MOD</field>
+												<value name="A">
+													<block type="get_local_variable" id="km}`_AW[Q#62Qu4p6Ekp">
+														<field name="var">x</field>
+													</block>
+												</value>
+												<value name="B">
+													<block type="math_number" id="ZR`Aq5$[9RA@X:dDO%h2">
+														<field name="NUM">2</field>
+													</block>
+												</value>
+											</block>
+										</value>
+										<value name="B">
+											<block type="math_number" id=";l(tel8|?fD;7^*|ZS*[">
+												<field name="NUM">0</field>
+											</block>
+										</value>
+									</block>
+								</value>
+								<statement name="DO0">
+									<block type="text_print" id="WSM~t$KS=ii{ug[i1wGl">
+										<value name="TEXT">
+											<block type="text_join" id="vrluxX/56sz}yf:?I@=t">
+												<mutation items="2"/>
+												<value name="ADD0">
+													<block type="text" id="!cAX#;fy)V|;.?i1YBn*">
+														<field name="TEXT">x=</field>
+													</block>
+												</value>
+												<value name="ADD1">
+													<block type="get_local_variable" id="3.R}TMCQ/JgA4@/j{{-L">
+														<field name="var">x</field>
+													</block>
+												</value>
+											</block>
+										</value>
+									</block>
+								</statement>
+								<next>
+									<block type="controls_if" id="mq6;QAFj(Mh)-wQR8B+s">
+										<value name="IF0">
+											<block type="logic_compare" id="0#`O1up1#w=!Stz--}-#">
+												<field name="OP">EQ</field>
+												<value name="A">
+													<block type="get_local_variable" id="a9?aJ$gqBXs]5HQKinDb">
+														<field name="var">x</field>
+													</block>
+												</value>
+												<value name="B">
+													<block type="math_number" id="]vI]j.jPL$#H_/-FG;(O">
+														<field name="NUM">1</field>
+													</block>
+												</value>
+											</block>
+										</value>
+										<statement name="DO0">
+											<block type="controls_flow_statements" id="ZV4|1P]VBX{UuYO0EBx(">
+												<field name="FLOW">BREAK</field>
+											</block>
+										</statement>
+										<next>
+											<block type="set_local_variable" id="gi6b%hloK4M`{V~RwDHs">
+												<field name="var">x</field>
+												<value name="value">
+													<block type="math_arithmetic" id="m;HO0B7rz)g!1{$!-]*X">
+														<field name="OP">MINUS</field>
+														<value name="A">
+															<block type="get_local_variable" id="S~sJq.[?N7P%2VfL|5Wc">
+																<field name="var">x</field>
+															</block>
+														</value>
+														<value name="B">
+															<block type="math_number" id="=befARvfjS0H4/sQ.h1n">
+																<field name="NUM">1</field>
+															</block>
+														</value>
+													</block>
+												</value>
+											</block>
+										</next>
+									</block>
+								</next>
+							</block>
+						</statement>
+						<next>
+							<block type="text_print" id="BI!2-5L.h3[BV[(58S4x">
+								<value name="TEXT">
+									<block type="text_join" id="(-Pz@$KNoy.#%AEnOp/V">
+										<mutation items="2"/>
+										<value name="ADD0">
+											<block type="text" id="yZdvs5LPr{IW|g2aM:R4">
+												<field name="TEXT">x=</field>
+											</block>
+										</value>
+										<value name="ADD1">
+											<block type="get_local_variable" id="(#p%Mme~9,!b+T;*rL3t">
+												<field name="var">x</field>
+											</block>
+										</value>
+									</block>
+								</value>
+							</block>
+						</next>
+					</block>
+				</next>
+			</block>
+		</next>
+	</block>
+</xml>

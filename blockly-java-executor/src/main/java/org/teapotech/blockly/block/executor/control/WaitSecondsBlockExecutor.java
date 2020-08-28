@@ -27,6 +27,13 @@ public class WaitSecondsBlockExecutor extends AbstractBlockExecutor {
 		super(block);
 	}
 
+	/**
+	 * @param blockValue
+	 */
+	public WaitSecondsBlockExecutor(BlockValue blockValue) {
+		super(blockValue);
+	}
+
 	@Override
 	protected Object doExecute(BlockExecutionContext context) throws Exception {
 

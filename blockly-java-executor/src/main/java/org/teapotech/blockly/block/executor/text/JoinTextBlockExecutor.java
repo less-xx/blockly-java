@@ -19,7 +19,7 @@ import org.teapotech.blockly.util.BlockExecutorUtils;
  * @author jiangl
  *
  */
-@BlockDef(blockType = "text_join", category = "basic/text")
+@BlockDef(blockType = "text_join", category = "text", style = "text_blocks")
 public class JoinTextBlockExecutor extends AbstractBlockExecutor {
 
 	/**

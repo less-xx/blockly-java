@@ -14,11 +14,15 @@ import org.teapotech.blockly.util.BlockExecutorUtils;
  * @author jiangl
  *
  */
-@BlockDef(blockType = "variables_set", category = "variables")
+@BlockDef(blockType = "variables_set", category = "variables", style = "variable_blocks")
 public class VariableSetBlockExecutor extends AbstractBlockExecutor {
 
 	public VariableSetBlockExecutor(Block block) {
 		super(block);
+	}
+
+	public VariableSetBlockExecutor(BlockValue blockValue) {
+		super(blockValue);
 	}
 
 	@Override

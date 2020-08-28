@@ -13,7 +13,7 @@ import org.teapotech.blockly.model.BlockValue;
  * @author jiangl
  *
  */
-@BlockDef(blockType = "variables_get", category = "variables")
+@BlockDef(blockType = "variables_get", category = "variables", style = "variable_blocks")
 public class VariableGetBlockExecutor extends AbstractBlockExecutor {
 
 	public VariableGetBlockExecutor(Block block) {

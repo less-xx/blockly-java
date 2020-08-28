@@ -17,7 +17,7 @@ import org.teapotech.blockly.util.BlockExecutorUtils;
  * @author jiangl
  *
  */
-@BlockDef(blockType = "controls_whileUntil", category = "basic/control")
+@BlockDef(blockType = "controls_whileUntil", category = "control", style = "control_blocks")
 public class ControlsWhileUntilBlockExecutor extends AbstractBlockExecutor {
 
 	/**
@@ -25,6 +25,10 @@ public class ControlsWhileUntilBlockExecutor extends AbstractBlockExecutor {
 	 */
 	public ControlsWhileUntilBlockExecutor(Block block) {
 		super(block);
+	}
+
+	public ControlsWhileUntilBlockExecutor(BlockValue blockValue) {
+		super(blockValue);
 	}
 
 	@Override

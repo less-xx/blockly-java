@@ -13,7 +13,7 @@ public class GetLocalVariableBlock extends CustomBlockDefinition {
 
 	@Override
 	public String getCategory() {
-		return Category.ID_VARIABLES;
+		return CategoryID.ID_VARIABLES;
 	}
 
 	@Override
@@ -21,17 +21,17 @@ public class GetLocalVariableBlock extends CustomBlockDefinition {
 		return """
 				{
 					"type": "get_local_variable",
-					"message0": "%1",
+					"message0": "local: %1",
 					"args0": [
 						{
 							"type": "field_input",
 							"name": "var",
-							"text": "dynamic_variable"
+							"text": "local_variable"
 						}
 					],
 					"inputsInline": true,
 					"output": null,
-					"colour": 32,
+					"style": "variable_blocks",
 					"tooltip": "",
 					"helpUrl": ""
 				}

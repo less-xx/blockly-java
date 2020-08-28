@@ -16,7 +16,7 @@ import org.teapotech.blockly.util.BlockExecutorUtils;
  * @author jiangl
  *
  */
-@BlockDef(blockType = "text_print", category = "basic/text")
+@BlockDef(blockType = "text_print", category = "text", style = "text_blocks")
 public class PrintTextBlockExecutor extends AbstractBlockExecutor {
 
 	/**
@@ -24,6 +24,10 @@ public class PrintTextBlockExecutor extends AbstractBlockExecutor {
 	 */
 	public PrintTextBlockExecutor(Block block) {
 		super(block);
+	}
+
+	public PrintTextBlockExecutor(BlockValue blockValue) {
+		super(blockValue);
 	}
 
 	@Override

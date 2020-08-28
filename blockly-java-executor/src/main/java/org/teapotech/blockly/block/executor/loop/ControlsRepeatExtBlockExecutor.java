@@ -18,7 +18,7 @@ import org.teapotech.blockly.util.BlockExecutorUtils;
  * @author jiangl
  *
  */
-@BlockDef(blockType = "controls_repeat_ext", category = "basic/control")
+@BlockDef(blockType = "controls_repeat_ext", category = "control", style = "control_blocks")
 public class ControlsRepeatExtBlockExecutor extends AbstractBlockExecutor {
 
 	/**
@@ -26,6 +26,10 @@ public class ControlsRepeatExtBlockExecutor extends AbstractBlockExecutor {
 	 */
 	public ControlsRepeatExtBlockExecutor(Block block) {
 		super(block);
+	}
+
+	public ControlsRepeatExtBlockExecutor(BlockValue blockValue) {
+		super(blockValue);
 	}
 
 	@Override

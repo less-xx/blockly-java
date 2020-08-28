@@ -18,7 +18,7 @@ import org.teapotech.blockly.util.BlockExecutorUtils;
  * @author jiangl
  *
  */
-@BlockDef(blockType = "controls_if", category = "basic/control")
+@BlockDef(blockType = "controls_if", category = "control", style = "control_blocks")
 public class ControlsIfBlockExecutor extends AbstractBlockExecutor {
 
 	/**
@@ -26,6 +26,13 @@ public class ControlsIfBlockExecutor extends AbstractBlockExecutor {
 	 */
 	public ControlsIfBlockExecutor(Block block) {
 		super(block);
+	}
+
+	/**
+	 * @param block
+	 */
+	public ControlsIfBlockExecutor(BlockValue blockValue) {
+		super(blockValue);
 	}
 
 	@Override
@@ -41,24 +48,23 @@ public class ControlsIfBlockExecutor extends AbstractBlockExecutor {
 		if (ifCondition) {
 			Block statBlock = this.block.getStatements().get(idx).getBlock();
 			return BlockExecutorUtils.execute(statBlock, context);
-		}
+		} else if (mut != null) {
 
-		if (mut.getElseif() != null) {
-			idx += 1;
-			while (idx <= mut.getElseif()) {
-				ifCondBlock = values.get(idx).getBlock();
-				ifCondition = (Boolean) BlockExecutorUtils.execute(ifCondBlock, context);
-				if (ifCondition) {
-					Block statBlock = this.block.getStatements().get(idx).getBlock();
-					return BlockExecutorUtils.execute(statBlock, context);
-				}
+			if (mut.getElseif() != null) {
 				idx += 1;
+				while (idx <= mut.getElseif()) {
+					ifCondBlock = values.get(idx).getBlock();
+					ifCondition = (Boolean) BlockExecutorUtils.execute(ifCondBlock, context);
+					if (ifCondition) {
+						Block statBlock = this.block.getStatements().get(idx).getBlock();
+						return BlockExecutorUtils.execute(statBlock, context);
+					}
+					idx += 1;
+				}
+			} else if (mut.getElse() != null) {
+				Block statBlock = this.block.getStatements().get(idx).getBlock();
+				return BlockExecutorUtils.execute(statBlock, context);
 			}
-		}
-
-		if (mut.getElse() != null) {
-			Block statBlock = this.block.getStatements().get(idx).getBlock();
-			return BlockExecutorUtils.execute(statBlock, context);
 		}
 		return null;
 	}

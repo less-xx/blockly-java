@@ -11,7 +11,7 @@ public class DispatchEventBlock extends CustomBlockDefinition {
 
 	@Override
 	public String getCategory() {
-		return Category.ID_EVENTS;
+		return CategoryID.ID_EVENTS;
 	}
 
 	@Override
@@ -30,7 +30,7 @@ public class DispatchEventBlock extends CustomBlockDefinition {
 					"inputsInline": true,
 					"previousStatement": null,
 					"nextStatement": null,
-					"colour": 52,
+					"style": "event_blocks",
 					"tooltip": "",
 					"helpUrl": ""
 				}

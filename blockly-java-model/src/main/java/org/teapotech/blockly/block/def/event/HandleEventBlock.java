@@ -13,7 +13,7 @@ public class HandleEventBlock extends CustomBlockDefinition {
 
 	@Override
 	public String getCategory() {
-		return Category.ID_EVENTS;
+		return CategoryID.ID_EVENTS;
 	}
 
 	@Override
@@ -33,7 +33,7 @@ public class HandleEventBlock extends CustomBlockDefinition {
 					"nextStatement": null,
 					"tooltip": "",
 					"helpUrl": "",
-					"colour": 52,
+					"style": "event_blocks",
 					"hat": "cap"
 				}
 				""";

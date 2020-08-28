@@ -18,4 +18,6 @@ public @interface BlockDef {
 
 	public String category() default "others";
 
+	public String style() default "";
+
 }

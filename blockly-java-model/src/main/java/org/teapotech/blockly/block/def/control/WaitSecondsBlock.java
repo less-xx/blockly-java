@@ -13,7 +13,7 @@ public class WaitSecondsBlock extends CustomBlockDefinition {
 
 	@Override
 	public String getCategory() {
-		return Category.ID_BASIC + "/" + Category.ID_CONTROL;
+		return CategoryID.ID_CONTROL;
 	}
 
 	@Override
@@ -32,7 +32,7 @@ public class WaitSecondsBlock extends CustomBlockDefinition {
 					"inputsInline": true,
 					"previousStatement": null,
 					"nextStatement": null,
-					"colour": 42,
+					"style": "control_blocks",
 					"tooltip": "",
 					"helpUrl": ""
 				}

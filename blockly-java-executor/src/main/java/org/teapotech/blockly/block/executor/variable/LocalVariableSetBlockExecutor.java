@@ -23,6 +23,10 @@ public class LocalVariableSetBlockExecutor extends AbstractBlockExecutor {
 		super(block);
 	}
 
+	public LocalVariableSetBlockExecutor(BlockValue blockValue) {
+		super(blockValue);
+	}
+
 	@Override
 	protected Object doExecute(BlockExecutionContext context) throws Exception {
 

@@ -7,6 +7,7 @@ import org.teapotech.blockly.block.executor.BlockExecutionContext;
 import org.teapotech.blockly.block.executor.BlockExecutionProgress.BlockStatus;
 import org.teapotech.blockly.exception.InvalidBlockException;
 import org.teapotech.blockly.model.Block;
+import org.teapotech.blockly.model.BlockValue;
 
 /**
  * 
@@ -18,6 +19,10 @@ public class LocalVariableGetBlockExecutor extends AbstractBlockExecutor {
 
 	public LocalVariableGetBlockExecutor(Block block) {
 		super(block);
+	}
+
+	public LocalVariableGetBlockExecutor(BlockValue blockValue) {
+		super(blockValue);
 	}
 
 	@Override

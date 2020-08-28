@@ -9,13 +9,14 @@ import org.teapotech.blockly.block.executor.BlockExecutionContext;
 import org.teapotech.blockly.block.executor.BlockExecutionProgress.BlockStatus;
 import org.teapotech.blockly.exception.InvalidBlockException;
 import org.teapotech.blockly.model.Block;
+import org.teapotech.blockly.model.BlockValue;
 import org.teapotech.blockly.model.Field;
 
 /**
  * @author jiangl
  *
  */
-@BlockDef(blockType = "controls_flow_statements", category = "basic/control")
+@BlockDef(blockType = "controls_flow_statements", category = "control", style = "control_blocks")
 public class ControlsFlowStatementsBlockExecutor extends AbstractBlockExecutor {
 
 	/**
@@ -23,6 +24,10 @@ public class ControlsFlowStatementsBlockExecutor extends AbstractBlockExecutor {
 	 */
 	public ControlsFlowStatementsBlockExecutor(Block block) {
 		super(block);
+	}
+
+	public ControlsFlowStatementsBlockExecutor(BlockValue blockValue) {
+		super(blockValue);
 	}
 
 	@Override

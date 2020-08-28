@@ -4,6 +4,7 @@
 package org.teapotech.blockly.block.executor.math;
 
 import org.teapotech.blockly.block.def.annotation.BlockDef;
+import org.teapotech.blockly.block.def.math.MathArithmeticBlock;
 import org.teapotech.blockly.block.executor.AbstractBlockExecutor;
 import org.teapotech.blockly.block.executor.BlockExecutionContext;
 import org.teapotech.blockly.block.executor.BlockExecutionProgress.BlockStatus;
@@ -17,7 +18,7 @@ import org.teapotech.blockly.util.BlockExecutorUtils;
  * @author jiangl
  *
  */
-@BlockDef(blockType = "math_arithmetic", category = "basic/math")
+@BlockDef(value = MathArithmeticBlock.class)
 public class MathArithmeticBlockExecutor extends AbstractBlockExecutor {
 
 	public MathArithmeticBlockExecutor(Block block) {
@@ -50,6 +51,8 @@ public class MathArithmeticBlockExecutor extends AbstractBlockExecutor {
 			return aValue.doubleValue() * bValue.doubleValue();
 		} else if (opValue.equalsIgnoreCase("DIVIDE")) {
 			return aValue.doubleValue() / bValue.doubleValue();
+		} else if (opValue.equalsIgnoreCase("MOD")) {
+			return aValue.doubleValue() % bValue.doubleValue();
 		}
 		throw new InvalidBlockException(this.block.getId(), this.block.getType(), "Unknown operator: " + opValue);
 	}

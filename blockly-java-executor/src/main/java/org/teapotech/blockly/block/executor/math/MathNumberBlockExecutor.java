@@ -17,7 +17,7 @@ import org.teapotech.blockly.model.Field;
  * @author jiangl
  *
  */
-@BlockDef(blockType = "math_number", category = "basic/math")
+@BlockDef(blockType = "math_number", category = "math")
 public class MathNumberBlockExecutor extends AbstractBlockExecutor {
 
 	public MathNumberBlockExecutor(Block block) {

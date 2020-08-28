@@ -1,23 +1,13 @@
 [
 	{
-		"id": "start_stop",
-		"name": "Start | Stop",
-		"style": "start_stop"
+		"id": "start_exit",
+		"name": "Start | Exit",
+		"style": "start_exit"
 	},
 	{
-		"id": "basic",
-		"name": "Basic",
-		"style": "basic"
-	},
-	{
-		"id": "logic",
-		"name": "Logic",
-		"style": "logic"
-	},
-	{
-		"id": "loop",
-		"name": "Loop",
-		"style": "loop"
+		"id": "variables",
+		"name": "Variables",
+		"style": "variables"
 	},
 	{
 		"id": "control",
@@ -27,17 +17,12 @@
 	{
 		"id": "text",
 		"name": "Text",
-		"style": "test"
+		"style": "text"
 	},
 	{
 		"id": "math",
 		"name": "Math",
 		"style": "math"
-	},
-	{
-		"id": "variables",
-		"name": "Variables",
-		"style": "variables"
 	},
 	{
 		"id": "events",
