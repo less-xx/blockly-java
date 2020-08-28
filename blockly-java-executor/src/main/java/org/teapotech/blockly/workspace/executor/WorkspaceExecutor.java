@@ -4,6 +4,7 @@
 package org.teapotech.blockly.workspace.executor;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -14,6 +15,7 @@ import org.teapotech.blockly.block.executor.BlockExecutionContext;
 import org.teapotech.blockly.block.executor.BlockExecutionProgress;
 import org.teapotech.blockly.block.executor.BlockExecutionProgress.BlockStatus;
 import org.teapotech.blockly.block.executor.BlockExecutorFactory;
+import org.teapotech.blockly.entity.WorkspaceExecution;
 import org.teapotech.blockly.entity.WorkspaceExecution.Status;
 import org.teapotech.blockly.model.Block;
 import org.teapotech.blockly.model.Variable;
@@ -28,11 +30,14 @@ import org.teapotech.blockly.workspace.event.WorkspaceEvent;
 public class WorkspaceExecutor {
 
 	private static final Logger LOG = LoggerFactory.getLogger(WorkspaceExecutor.class);
+	private static final int WORKSPACE_EXECUTION_TIMEOUT_SECONDS = 10 * 60; // 10 minutes
 
 	private final BlockExecutionContext context;
 	private final Workspace workspace;
 	private final ThreadGroup threadGroup;
 	private BlockExecutionMonitoringThread monitoringThread;
+	private final WorkspaceExecution workspaceExecution = new WorkspaceExecution();
+	private int executionTimeout = WORKSPACE_EXECUTION_TIMEOUT_SECONDS;
 
 	public WorkspaceExecutor(Workspace workspace, BlockExecutionContext context) {
 		this.context = context;
@@ -40,6 +45,11 @@ public class WorkspaceExecutor {
 		this.threadGroup = new ThreadGroup("wexec-" + context.getWorkspaceId() + "-" + context.getInstanceId());
 		this.threadGroup.setDaemon(true);
 		LOG.info("Created workspace executor. ID: {}-{}", context.getWorkspaceId(), context.getInstanceId());
+		workspaceExecution.setId(context.getInstanceId());
+		workspaceExecution.setStatus(Status.Waiting);
+		workspaceExecution.setWorkspaceId(workspace.getId());
+		workspaceExecution.setStartBy(context.getExecutedBy());
+		workspaceExecution.setTriggerTime(new Date());
 	}
 
 	public BlockExecutionContext getBlockExecutionContext() {
@@ -50,14 +60,25 @@ public class WorkspaceExecutor {
 		return context.getBlockExecutorFactory();
 	}
 
-	public long getWorkspaceInstanceId() {
-		return context.getInstanceId();
+	public WorkspaceExecution getWorkspaceExecution() {
+		return workspaceExecution;
+	}
+
+	public void setExecutionTimeout(int executionTimeout) {
+		this.executionTimeout = executionTimeout;
+	}
+
+	public int getExecutionTimeout() {
+		return executionTimeout;
 	}
 
 	public void execute() {
 
+		workspaceExecution.setStartTime(new Date());
+		workspaceExecution.setStatus(Status.Running);
+
 		context.getEventDispatcher().dispatchWorkspaceEvent(
-				new WorkspaceEvent(context.getWorkspaceId(), getWorkspaceInstanceId(), Status.Running));
+				new WorkspaceEvent(context.getWorkspaceId(), context.getInstanceId(), Status.Running));
 
 		List<Variable> variables = workspace.getVariables();
 		if (variables != null) {
@@ -94,7 +115,7 @@ public class WorkspaceExecutor {
 				for (String tn : eventBlockThreadNames) {
 					BlockExecutionProgress beg = context.getBlockExecutionProgress().get(tn);
 					if (beg != null) {
-						b = b && (beg.getBlockStatus() == BlockStatus.Running);
+						b = b && (beg.getBlockStatus() == BlockStatus.Enter);
 					}
 				}
 				initialized = b;
@@ -118,9 +139,31 @@ public class WorkspaceExecutor {
 		monitoringThread.start();
 	}
 
-	public void stop() {
+	public void waitFor() {
+		try {
+			monitoringThread.join();
+		} catch (InterruptedException e) {
+
+		}
+	}
+
+	public void waitFor(long milliSec) {
+		try {
+			monitoringThread.join(milliSec);
+		} catch (InterruptedException e) {
+
+		}
+	}
+
+	public void stopExecution() {
+		workspaceExecution.setStatus(Status.Stopping);
 		this.context.setStopped(true);
 		this.threadGroup.interrupt();
+	}
+
+	public void stopExecution(String stoppedBy) {
+		workspaceExecution.setEndBy(stoppedBy);
+		this.stopExecution();
 	}
 
 	private class BlockExecutionThread extends Thread {
@@ -149,7 +192,6 @@ public class WorkspaceExecutor {
 			if (beg == null) {
 				context.getLogger().error("Cannot find block execution thread by name: {}", name);
 			}
-			beg.setBlockStatus(BlockStatus.Stopped);
 			context.getLogger().info("Thread {} stopped.", getName());
 			LOG.info("Block execution thread exited. Group: {}, Active: {}", threadGroup.getName(),
 					threadGroup.activeCount());
@@ -178,6 +220,15 @@ public class WorkspaceExecutor {
 						continue;
 					}
 					running = running || t.isAlive();
+
+					Date startTime = workspaceExecution.getStartTime();
+					long duration = (System.currentTimeMillis() - startTime.getTime()) / 1000;
+					if (duration > executionTimeout) {
+						LOG.warn("Workspace execution time out, instance ID: {}, workspace ID: {}. Duration: {}",
+								context.getInstanceId(), workspace.getId(), duration);
+						workspaceExecution.setMessage("Workspace execution time out");
+						stopExecution();
+					}
 				}
 				if (!running) {
 					break;
@@ -191,8 +242,10 @@ public class WorkspaceExecutor {
 			}
 			LOG.info("All block execution threads are stopped. Ouput dir: {}",
 					context.getWorkingDir().getAbsolutePath());
+			workspaceExecution.setEndTime(new Date());
+			workspaceExecution.setStatus(Status.Stopped);
 			context.getEventDispatcher().dispatchWorkspaceEvent(
-					new WorkspaceEvent(context.getWorkspaceId(), getWorkspaceInstanceId(), Status.Stopped));
+					new WorkspaceEvent(context.getWorkspaceId(), context.getInstanceId(), Status.Stopped));
 			if (!context.isStopped()) {
 				context.setStopped(true);
 			}

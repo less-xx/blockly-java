@@ -7,7 +7,6 @@ import org.apache.commons.lang3.math.NumberUtils;
 import org.teapotech.blockly.block.def.annotation.BlockDef;
 import org.teapotech.blockly.block.executor.AbstractBlockExecutor;
 import org.teapotech.blockly.block.executor.BlockExecutionContext;
-import org.teapotech.blockly.block.executor.BlockExecutionProgress.BlockStatus;
 import org.teapotech.blockly.exception.BlockExecutionException;
 import org.teapotech.blockly.model.Block;
 import org.teapotech.blockly.model.BlockValue;
@@ -30,8 +29,6 @@ public class MathNumberBlockExecutor extends AbstractBlockExecutor {
 
 	@Override
 	protected Object doExecute(BlockExecutionContext context) throws Exception {
-
-		updateBlockStatus(context, BlockStatus.Running);
 
 		if (this.block != null) {
 			Field field = this.block.getFieldByName("NUM", this.block.getFields().get(0));

@@ -1,4 +1,4 @@
-<xml xmlns="https://developers.google.com/blockly/xml" id="workspaceBlocks" style="display: none">
+<xml xmlns="https://developers.google.com/blockly/xml" id="test_workspace_02" style="display: none">
 	<variables>
 		<variable id="5d({#/uLhfM;00Y`c-0a">x</variable>
 	</variables>
@@ -48,7 +48,4 @@
 			</block>
 		</next>
 	</block>
-	<shadow type="text" id="~h%Zw#%z-bN[CZ8lr1,@" x="149" y="-296">
-		<field name="TEXT">abc</field>
-	</shadow>
 </xml>

@@ -37,8 +37,11 @@ public class WorkspaceExecution {
 	@Enumerated(EnumType.STRING)
 	private Status status = Status.Waiting;
 
-	@Column(name = "start_time", nullable = true)
+	@Column(name = "trigger_time", nullable = false)
 	@CreationTimestamp
+	private Date triggerTime;
+
+	@Column(name = "start_time", nullable = true)
 	private Date startTime;
 
 	@Column(name = "end_time", nullable = true)
@@ -141,19 +144,29 @@ public class WorkspaceExecution {
 		this.message = message;
 	}
 
+	public void setTriggerTime(Date triggerTime) {
+		this.triggerTime = triggerTime;
+	}
+
+	public Date getTriggerTime() {
+		return triggerTime;
+	}
+
 	@Override
 	public String toString() {
 		String s = """
 				{
 					id: %d,
 					workspaceId: %s,
-					status: %s
-					startTime: %s
+					status: %s,
+					triggerTime: %s,
+					startTime: %s,
 					endTime: %s,
 					message: %s
 				}
 				""";
-		return s.formatted(this.id, this.workspaceId, this.status, this.startTime, this.endTime, this.message);
+		return s.formatted(this.id, this.workspaceId, this.status, this.triggerTime, this.startTime, this.endTime,
+				this.message);
 	}
 
 }

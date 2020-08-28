@@ -9,7 +9,6 @@ import org.teapotech.blockly.block.def.event.DispatchEventBlock;
 import org.teapotech.blockly.block.event.NamedBlockEvent;
 import org.teapotech.blockly.block.executor.AbstractBlockExecutor;
 import org.teapotech.blockly.block.executor.BlockExecutionContext;
-import org.teapotech.blockly.block.executor.BlockExecutionProgress.BlockStatus;
 import org.teapotech.blockly.exception.BlockExecutionException;
 import org.teapotech.blockly.model.Block;
 import org.teapotech.blockly.model.BlockValue;
@@ -32,8 +31,6 @@ public class DispatchEventBlockExecutor extends AbstractBlockExecutor {
 
 	@Override
 	protected Object doExecute(BlockExecutionContext context) throws Exception {
-
-		updateBlockStatus(context, BlockStatus.Running);
 
 		Logger LOG = context.getLogger();
 		BlockValue bv = block.getBlockValueByName("event", null);

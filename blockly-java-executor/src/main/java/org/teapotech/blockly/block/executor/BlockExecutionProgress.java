@@ -5,7 +5,7 @@ import org.teapotech.blockly.model.Block;
 public class BlockExecutionProgress {
 
 	public enum BlockStatus {
-		Waiting, Created, Initializing, Running, Stopped
+		Waiting, Enter, Exit
 	}
 
 	private final String threadName;
@@ -18,12 +18,14 @@ public class BlockExecutionProgress {
 	private String blockId;
 	private String blockType;
 	private String message;
+	private long enterTimestamp;
+	private long exitTimestamp;
 
 	public BlockStatus getBlockStatus() {
 		return blockStatus;
 	}
 
-	public void setBlockStatus(BlockStatus blockStatus) {
+	void setBlockStatus(BlockStatus blockStatus) {
 		this.blockStatus = blockStatus;
 	}
 
@@ -31,7 +33,7 @@ public class BlockExecutionProgress {
 		return blockId;
 	}
 
-	public void setBlockId(String blockId) {
+	void setBlockId(String blockId) {
 		this.blockId = blockId;
 	}
 
@@ -44,7 +46,7 @@ public class BlockExecutionProgress {
 		return blockType;
 	}
 
-	public void setBlockType(String blockType) {
+	void setBlockType(String blockType) {
 		this.blockType = blockType;
 	}
 
@@ -58,5 +60,21 @@ public class BlockExecutionProgress {
 
 	public String getThreadName() {
 		return threadName;
+	}
+
+	void setEnterTimestamp(long enterTimestamp) {
+		this.enterTimestamp = enterTimestamp;
+	}
+
+	public long getEnterTimestamp() {
+		return enterTimestamp;
+	}
+
+	void setExitTimestamp(long exitTimestamp) {
+		this.exitTimestamp = exitTimestamp;
+	}
+
+	public long getExitTimestamp() {
+		return exitTimestamp;
 	}
 }

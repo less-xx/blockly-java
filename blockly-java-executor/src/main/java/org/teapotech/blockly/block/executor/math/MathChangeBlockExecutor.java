@@ -5,7 +5,6 @@ package org.teapotech.blockly.block.executor.math;
 
 import org.teapotech.blockly.block.executor.AbstractBlockExecutor;
 import org.teapotech.blockly.block.executor.BlockExecutionContext;
-import org.teapotech.blockly.block.executor.BlockExecutionProgress.BlockStatus;
 import org.teapotech.blockly.model.Block;
 import org.teapotech.blockly.model.BlockValue;
 import org.teapotech.blockly.util.BlockExecutorUtils;
@@ -26,8 +25,6 @@ public class MathChangeBlockExecutor extends AbstractBlockExecutor {
 
 	@Override
 	protected Object doExecute(BlockExecutionContext context) throws Exception {
-
-		updateBlockStatus(context, BlockStatus.Running);
 
 		String var = this.block.getFieldByName("VAR", this.block.getFields().get(0)).getValue();
 		Number n = (Number) context.getVariable(var);

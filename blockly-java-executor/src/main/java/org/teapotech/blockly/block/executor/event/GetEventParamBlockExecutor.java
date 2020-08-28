@@ -8,7 +8,6 @@ import org.teapotech.blockly.block.def.event.GetEventParameterBlock;
 import org.teapotech.blockly.block.event.NamedBlockEvent;
 import org.teapotech.blockly.block.executor.AbstractBlockExecutor;
 import org.teapotech.blockly.block.executor.BlockExecutionContext;
-import org.teapotech.blockly.block.executor.BlockExecutionProgress.BlockStatus;
 import org.teapotech.blockly.exception.BlockExecutionException;
 import org.teapotech.blockly.model.Block;
 import org.teapotech.blockly.model.BlockValue;
@@ -31,8 +30,6 @@ public class GetEventParamBlockExecutor extends AbstractBlockExecutor {
 
 	@Override
 	protected Object doExecute(BlockExecutionContext context) throws Exception {
-
-		updateBlockStatus(context, BlockStatus.Running);
 
 		Field evtNameFld = block.getFieldByName("event_name", null);
 		if (evtNameFld == null) {

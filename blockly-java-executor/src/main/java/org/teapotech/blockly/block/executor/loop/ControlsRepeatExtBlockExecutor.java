@@ -6,7 +6,6 @@ package org.teapotech.blockly.block.executor.loop;
 import org.teapotech.blockly.block.def.annotation.BlockDef;
 import org.teapotech.blockly.block.executor.AbstractBlockExecutor;
 import org.teapotech.blockly.block.executor.BlockExecutionContext;
-import org.teapotech.blockly.block.executor.BlockExecutionProgress.BlockStatus;
 import org.teapotech.blockly.exception.BlockExecutionException;
 import org.teapotech.blockly.exception.InvalidBlockException;
 import org.teapotech.blockly.model.Block;
@@ -34,8 +33,6 @@ public class ControlsRepeatExtBlockExecutor extends AbstractBlockExecutor {
 
 	@Override
 	protected Object doExecute(BlockExecutionContext context) throws Exception {
-
-		updateBlockStatus(context, BlockStatus.Running);
 
 		BlockValue timesBv = this.block.getValues().get(0);
 

@@ -29,6 +29,7 @@ public class DefaultBlockExecutionContext implements BlockExecutionContext {
 	private final String workspaceId;
 	private final long instanceId;
 	private final File workingDir;
+	private final String executedBy;
 
 	private boolean stopped;
 	private ThreadLocal<Map<String, Object>> localVariables = new ThreadLocal<Map<String, Object>>() {
@@ -40,9 +41,10 @@ public class DefaultBlockExecutionContext implements BlockExecutionContext {
 	private Map<String, Object> globalVariables = new HashMap<String, Object>();
 	private final Map<String, BlockExecutionProgress> executionThreadInfo = new HashMap<>();
 
-	public DefaultBlockExecutionContext(String workspaceId, long instanceId, File workingDir,
+	public DefaultBlockExecutionContext(String workspaceId, long instanceId, String executedBy, File workingDir,
 			BlockExecutorFactory blockExecutorFactory, KeyValueStorageProvider kvStorageProvider,
 			FileStorageProvider fileStorageProvider, EventDispatcher eventDispatcher) {
+		this.executedBy = executedBy;
 		this.blockExecutorFactory = blockExecutorFactory;
 		this.eventDispatcher = eventDispatcher;
 		this.kvStorageProvider = kvStorageProvider;
@@ -133,5 +135,10 @@ public class DefaultBlockExecutionContext implements BlockExecutionContext {
 	@Override
 	public File getWorkingDir() {
 		return workingDir;
+	}
+
+	@Override
+	public String getExecutedBy() {
+		return this.executedBy;
 	}
 }

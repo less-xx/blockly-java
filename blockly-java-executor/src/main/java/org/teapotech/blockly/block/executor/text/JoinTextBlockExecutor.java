@@ -8,7 +8,6 @@ import java.util.List;
 import org.teapotech.blockly.block.def.annotation.BlockDef;
 import org.teapotech.blockly.block.executor.AbstractBlockExecutor;
 import org.teapotech.blockly.block.executor.BlockExecutionContext;
-import org.teapotech.blockly.block.executor.BlockExecutionProgress.BlockStatus;
 import org.teapotech.blockly.exception.BlockExecutionException;
 import org.teapotech.blockly.model.Block;
 import org.teapotech.blockly.model.BlockValue;
@@ -35,8 +34,6 @@ public class JoinTextBlockExecutor extends AbstractBlockExecutor {
 
 	@Override
 	protected Object doExecute(BlockExecutionContext context) throws Exception {
-
-		updateBlockStatus(context, BlockStatus.Running);
 
 		if (this.block != null) {
 			StringBuilder result = new StringBuilder();

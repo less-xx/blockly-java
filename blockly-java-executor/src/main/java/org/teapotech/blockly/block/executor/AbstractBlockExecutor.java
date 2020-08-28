@@ -47,7 +47,10 @@ public abstract class AbstractBlockExecutor implements BlockExecutor {
 			} else {
 				LOG.debug("Executing shadow, type: {}, id: {}", shadow.getType(), shadow.getId());
 			}
+			updateBlockStatus(context, BlockStatus.Enter);
 			Object result = doExecute(context);
+			updateBlockStatus(context, BlockStatus.Exit);
+
 			if (this.block != null) {
 				LOG.debug("Block executed, type: {}, id: {}", block.getType(), block.getId());
 			} else {
@@ -55,6 +58,9 @@ public abstract class AbstractBlockExecutor implements BlockExecutor {
 			}
 			return result;
 		} catch (Exception e) {
+			if (context.isStopped()) {
+				return null;
+			}
 			if (e instanceof BlockExecutionException) {
 				throw (BlockExecutionException) e;
 			} else if (e instanceof InvalidBlockException) {
@@ -77,8 +83,13 @@ public abstract class AbstractBlockExecutor implements BlockExecutor {
 			LOG.error("Cannot find block execution thread by name: {}", name);
 			return;
 		}
+		if (status == BlockStatus.Enter) {
+			beg.setEnterTimestamp(System.currentTimeMillis());
+		} else if (status == BlockStatus.Exit) {
+			beg.setExitTimestamp(System.currentTimeMillis());
+		}
 		beg.setBlockStatus(status);
-		context.getLogger().info("Block id: [{}], type: [{}] is [{}]", block.getId(), block.getType(), status);
+		context.getLogger().debug("{} Block [{}], type: [{}]", status, block.getId(), block.getType());
 	}
 
 	abstract protected Object doExecute(BlockExecutionContext context) throws Exception;

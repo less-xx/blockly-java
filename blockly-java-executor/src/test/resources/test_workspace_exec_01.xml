@@ -1,4 +1,4 @@
-<xml xmlns="https://developers.google.com/blockly/xml" id="workspaceBlocks" style="display: none">
+<xml xmlns="https://developers.google.com/blockly/xml" id="test_workspace_exec_01" style="display: none">
 	<block type="start" id="start_01">
 		<next>
 			<block type="controls_repeat_ext" id="BQJLwZ3WDj0gBLx$R[F`" x="38" y="12">

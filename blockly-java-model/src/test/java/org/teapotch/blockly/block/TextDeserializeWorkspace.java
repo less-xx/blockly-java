@@ -14,8 +14,7 @@ import org.teapotech.blockly.model.Field;
 import org.teapotech.blockly.model.Shadow;
 import org.teapotech.blockly.model.Variable;
 import org.teapotech.blockly.model.Workspace;
-
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import org.teapotech.blockly.util.BlockXmlUtils;
 
 public class TextDeserializeWorkspace {
 
@@ -23,9 +22,7 @@ public class TextDeserializeWorkspace {
 	public void test01() throws Exception {
 		String workspaceXml = IOUtils.resourceToString("test_workspace_01.xml", StandardCharsets.UTF_8,
 				getClass().getClassLoader());
-		// Workspace w = BlockXmlUtils.loadWorkspace(workspaceXml);
-		XmlMapper xmlMapper = new XmlMapper();
-		Workspace w = xmlMapper.readValue(workspaceXml, Workspace.class);
+		Workspace w = BlockXmlUtils.loadWorkspace(workspaceXml);
 		assertNotNull(w);
 		assertEquals("workspaceBlocks", w.getId());
 		assertNotNull(w.getBlocks());
@@ -42,15 +39,16 @@ public class TextDeserializeWorkspace {
 		assertNotNull(field);
 		assertEquals("10", field.getValue());
 		assertEquals("NUM", field.getName());
+
+		w = BlockXmlUtils.updateToUUID(w);
+		System.out.println(BlockXmlUtils.toXml(w));
 	}
 
 	@Test
 	public void test02() throws Exception {
 		String workspaceXml = IOUtils.resourceToString("test_workspace_02.xml", StandardCharsets.UTF_8,
 				getClass().getClassLoader());
-		// Workspace w = BlockXmlUtils.loadWorkspace(workspaceXml);
-		XmlMapper xmlMapper = new XmlMapper();
-		Workspace w = xmlMapper.readValue(workspaceXml, Workspace.class);
+		Workspace w = BlockXmlUtils.loadWorkspace(workspaceXml);
 		assertNotNull(w);
 		assertEquals("workspaceBlocks", w.getId());
 		assertNotNull(w.getVariables());
@@ -81,7 +79,17 @@ public class TextDeserializeWorkspace {
 		assertEquals("logic_compare", b3.getType());
 		assertEquals(2, b3.getValues().size());
 
-		System.out.println(xmlMapper.writeValueAsString(w));
+		w = BlockXmlUtils.updateToUUID(w);
+		System.out.println(BlockXmlUtils.toXml(w));
 
+	}
+
+	@Test
+	public void testUpdateID() throws Exception {
+		String workspaceXml = IOUtils.resourceToString("test_workspace_03.xml", StandardCharsets.UTF_8,
+				getClass().getClassLoader());
+		Workspace w = BlockXmlUtils.loadWorkspace(workspaceXml);
+		w = BlockXmlUtils.updateToUUID(w);
+		System.out.println(BlockXmlUtils.toXml(w));
 	}
 }

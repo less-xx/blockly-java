@@ -8,7 +8,6 @@ import java.util.List;
 import org.teapotech.blockly.block.def.annotation.BlockDef;
 import org.teapotech.blockly.block.executor.AbstractBlockExecutor;
 import org.teapotech.blockly.block.executor.BlockExecutionContext;
-import org.teapotech.blockly.block.executor.BlockExecutionProgress.BlockStatus;
 import org.teapotech.blockly.model.Block;
 import org.teapotech.blockly.model.BlockMutation;
 import org.teapotech.blockly.model.BlockValue;
@@ -37,8 +36,6 @@ public class ControlsIfBlockExecutor extends AbstractBlockExecutor {
 
 	@Override
 	protected Object doExecute(BlockExecutionContext context) throws Exception {
-
-		updateBlockStatus(context, BlockStatus.Running);
 
 		BlockMutation mut = this.block.getMutation();
 		List<BlockValue> values = this.block.getValues();

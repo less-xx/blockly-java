@@ -1,4 +1,4 @@
-<xml xmlns="https://developers.google.com/blockly/xml" id="workspaceBlocks" style="display: none">
+<xml xmlns="https://developers.google.com/blockly/xml" id="test_workspace_01" style="display: none">
 	<block type="controls_repeat_ext" id="BQJLwZ3WDj0gBLx$R[F`" x="38" y="12">
 		<value name="TIMES">
 			<shadow type="math_number" id="seYJb3R^k%3Yvb]4RuF9">
@@ -25,7 +25,4 @@
 			</block>
 		</statement>
 	</block>
-	<shadow type="text" id="(O2S,Zfev~3P}1+~5YMt" x="125" y="51">
-		<field name="TEXT">abc</field>
-	</shadow>
 </xml>

@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.teapotech.blockly.block.def.BlockExecutorRegistry;
 import org.teapotech.blockly.block.executor.BlockExecutorFactory;
 import org.teapotech.blockly.block.executor.DefaultBlockExecutionContext;
+import org.teapotech.blockly.entity.WorkspaceExecution;
 import org.teapotech.blockly.event.BlockEventListenerFactory;
 import org.teapotech.blockly.event.EventDispatcher;
 import org.teapotech.blockly.event.SimpleBlockEventListenerFactory;
@@ -38,8 +39,7 @@ public class TestWorkspaceExecutor {
 	private static SimpleEventExchange eventExchange = new SimpleEventExchange();
 	private static EventDispatcher eventDispatcher = new SimpleEventDispatcher(eventExchange);
 	private static BlockEventListenerFactory blockEventListenerFac = new SimpleBlockEventListenerFactory(eventExchange);
-
-	private static String testWorkspaceId = "test-workspace-id";
+	private static String executedBy = "UnitTest";
 
 	@BeforeAll
 	static void init() throws Exception {
@@ -53,12 +53,11 @@ public class TestWorkspaceExecutor {
 			long testInstanceId = 1;
 			Workspace w = BlockXmlUtils.loadWorkspace(in);
 			File workingDir = new File(workingDirPath);
-			DefaultBlockExecutionContext context = new DefaultBlockExecutionContext(testWorkspaceId, testInstanceId,
-					workingDir, factory, kvStorageProvider, fileStorageProvider, eventDispatcher);
+			DefaultBlockExecutionContext context = new DefaultBlockExecutionContext(w.getId(), testInstanceId,
+					executedBy, workingDir, factory, kvStorageProvider, fileStorageProvider, eventDispatcher);
 			WorkspaceExecutor wExecutor = new WorkspaceExecutor(w, context);
 			wExecutor.execute();
-
-			Thread.sleep(5000);
+			wExecutor.waitFor(5000);
 		}
 	}
 
@@ -68,12 +67,11 @@ public class TestWorkspaceExecutor {
 			long testInstanceId = 1;
 			Workspace w = BlockXmlUtils.loadWorkspace(in);
 			File workingDir = new File(workingDirPath);
-			DefaultBlockExecutionContext context = new DefaultBlockExecutionContext(testWorkspaceId, testInstanceId,
-					workingDir, factory, kvStorageProvider, fileStorageProvider, eventDispatcher);
+			DefaultBlockExecutionContext context = new DefaultBlockExecutionContext(w.getId(), testInstanceId,
+					executedBy, workingDir, factory, kvStorageProvider, fileStorageProvider, eventDispatcher);
 			WorkspaceExecutor wExecutor = new WorkspaceExecutor(w, context);
 			wExecutor.execute();
-
-			Thread.sleep(5000);
+			wExecutor.waitFor(5000);
 		}
 	}
 
@@ -83,12 +81,16 @@ public class TestWorkspaceExecutor {
 			long testInstanceId = 1;
 			Workspace w = BlockXmlUtils.loadWorkspace(in);
 			File workingDir = new File(workingDirPath);
-			DefaultBlockExecutionContext context = new DefaultBlockExecutionContext(testWorkspaceId, testInstanceId,
-					workingDir, factory, kvStorageProvider, fileStorageProvider, eventDispatcher);
+			DefaultBlockExecutionContext context = new DefaultBlockExecutionContext(w.getId(), testInstanceId,
+					executedBy, workingDir, factory, kvStorageProvider, fileStorageProvider, eventDispatcher);
 			WorkspaceExecutor wExecutor = new WorkspaceExecutor(w, context);
+			wExecutor.setExecutionTimeout(1);
 			wExecutor.execute();
-
-			Thread.sleep(500000);
+			WorkspaceExecution wexec = wExecutor.getWorkspaceExecution();
+			System.out.println(wexec);
+			wExecutor.waitFor(5000);
+			wexec = wExecutor.getWorkspaceExecution();
+			System.out.println(wexec);
 		}
 	}
 

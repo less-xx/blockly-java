@@ -45,4 +45,6 @@ public interface BlockExecutionContext {
 	Map<String, BlockExecutionProgress> getBlockExecutionProgress();
 
 	EventDispatcher getEventDispatcher();
+
+	String getExecutedBy();
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import BlocklyComponent, { Block, Value, Field, Shadow } from './Blockly';
 import './App.css';
+import workspaceXml from './Blockly/workspace';
 
 function App() {
 
@@ -24,11 +25,7 @@ function App() {
             drag: true,
             wheel: true
           }}
-          initialXml={`
-<xml xmlns="http://www.w3.org/1999/xhtml">
-<block type="controls_ifelse" x="0" y="0"></block>
-</xml>
-      `}>
+          initialXml={workspaceXml}>
                     
       </BlocklyComponent>
     </div>

@@ -10,7 +10,6 @@ import org.apache.commons.lang3.ClassUtils;
 import org.teapotech.blockly.block.def.annotation.BlockDef;
 import org.teapotech.blockly.block.executor.AbstractBlockExecutor;
 import org.teapotech.blockly.block.executor.BlockExecutionContext;
-import org.teapotech.blockly.block.executor.BlockExecutionProgress.BlockStatus;
 import org.teapotech.blockly.exception.BlockExecutionException;
 import org.teapotech.blockly.exception.InvalidBlockExecutorException;
 import org.teapotech.blockly.model.Block;
@@ -41,8 +40,6 @@ public class LogicCompareBlockExecutor extends AbstractBlockExecutor {
 
 	@Override
 	protected Object doExecute(BlockExecutionContext context) throws Exception {
-
-		updateBlockStatus(context, BlockStatus.Running);
 
 		Field opField = this.block.getFieldByName("OP", this.block.getFields().get(0));
 		if (opField == null) {

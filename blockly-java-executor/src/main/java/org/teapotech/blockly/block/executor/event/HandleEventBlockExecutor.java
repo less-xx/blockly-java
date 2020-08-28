@@ -11,7 +11,6 @@ import org.teapotech.blockly.block.def.event.HandleEventBlock;
 import org.teapotech.blockly.block.event.NamedBlockEvent;
 import org.teapotech.blockly.block.executor.AbstractBlockExecutor;
 import org.teapotech.blockly.block.executor.BlockExecutionContext;
-import org.teapotech.blockly.block.executor.BlockExecutionProgress.BlockStatus;
 import org.teapotech.blockly.event.BlockEventListener;
 import org.teapotech.blockly.event.BlockEventListenerSupport;
 import org.teapotech.blockly.exception.BlockExecutionException;
@@ -47,8 +46,6 @@ public class HandleEventBlockExecutor extends AbstractBlockExecutor implements B
 	@Override
 	protected Object doExecute(BlockExecutionContext context) throws Exception {
 
-		updateBlockStatus(context, BlockStatus.Initializing);
-
 		String eventName = null;
 		Field evtNameField = this.block.getFieldByName("event_name", null);
 		if (evtNameField != null) {
@@ -61,7 +58,6 @@ public class HandleEventBlockExecutor extends AbstractBlockExecutor implements B
 		String routingKey = "workspace." + context.getWorkspaceId() + "." + evtName;
 		blockEventListener.initialize(routingKey);
 		Logger LOG = context.getLogger();
-		updateBlockStatus(context, BlockStatus.Running);
 		try {
 			while (!context.isStopped()) {
 
