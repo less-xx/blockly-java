@@ -1,0 +1,42 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+	<block type="start" id="start_ZBiRmVhj" x="50" y="-710">
+		<next>
+			<block type="controls_if" id="7QwAEl^ssEYW7PgK_]X)">
+				<mutation elseif="1"></mutation>
+				<value name="IF0">
+					<block type="logic_compare" id="SGcmVsS}YXo5:_L}$Ox6">
+						<field name="OP">LTE</field>
+						<value name="A">
+							<block type="math_number" id="gazk$~JU-FQSODBheBvY">
+								<field name="NUM">0</field>
+							</block>
+						</value>
+						<value name="B">
+							<block type="math_number" id="b/g`bplrQUUSmk=d-/Ln">
+								<field name="NUM">1</field>
+							</block>
+						</value>
+					</block>
+				</value>
+				<statement name="DO0">
+					<block type="text_print" id="hm{~;TZm_EY}j?_bJ_e5">
+						<value name="TEXT">
+							<block type="text" id="7goQs]J}jiGgK+/h|mBN">
+								<field name="TEXT">0&lt;1</field>
+							</block>
+						</value>
+					</block>
+				</statement>
+				<statement name="DO1">
+					<block type="text_print" id="tmR1{#~@`AYDyWLuVd/V">
+						<value name="TEXT">
+							<block type="text" id="*p/_jW?Iq1Ha]wK@Y~VR">
+								<field name="TEXT">0&gt;1</field>
+							</block>
+						</value>
+					</block>
+				</statement>
+			</block>
+		</next>
+	</block>
+</xml>

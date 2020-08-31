@@ -109,5 +109,22 @@ public class TestWorkspaceExecutor {
 			System.out.println(wexec);
 		}
 	}
+	
+	@Test
+	public void testRunWorkspace_05() throws Exception {
+		try (InputStream in = getClass().getClassLoader().getResourceAsStream("test_workspace_exec_05.xml");) {
+			long testInstanceId = 1;
+			Workspace w = BlockXmlUtils.loadWorkspace(in);
+			File workingDir = new File(workingDirPath);
+			DefaultBlockExecutionContext context = new DefaultBlockExecutionContext(w.getId(), testInstanceId,
+					executedBy, workingDir, factory, kvStorageProvider, fileStorageProvider, eventDispatcher);
+			WorkspaceExecutor wExecutor = new WorkspaceExecutor(w, context);
+			wExecutor.setExecutionTimeout(1);
+			wExecutor.execute();
+			wExecutor.waitFor(5000);
+			WorkspaceExecution wexec = wExecutor.getWorkspaceExecution();
+			System.out.println(wexec);
+		}
+	}
 
 }

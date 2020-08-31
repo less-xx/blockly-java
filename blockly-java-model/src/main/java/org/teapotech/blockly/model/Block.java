@@ -3,6 +3,7 @@
  */
 package org.teapotech.blockly.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -17,6 +18,9 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties
 public class Block {
+
+	@JacksonXmlProperty(isAttribute = false, namespace = BlocklyConstants.NAMESPACE)
+	private BlockMutation mutation;
 
 	@JacksonXmlProperty(isAttribute = true)
 	private String type;
@@ -40,9 +44,6 @@ public class Block {
 
 	@JacksonXmlProperty(isAttribute = false, namespace = BlocklyConstants.NAMESPACE)
 	private Next next;
-
-	@JacksonXmlProperty(isAttribute = false, namespace = BlocklyConstants.NAMESPACE)
-	private BlockMutation mutation;
 
 	@JacksonXmlProperty(isAttribute = false, localName = "field", namespace = BlocklyConstants.NAMESPACE)
 	@JacksonXmlElementWrapper(useWrapping = false, namespace = BlocklyConstants.NAMESPACE)
@@ -85,7 +86,10 @@ public class Block {
 	}
 
 	public void setValues(List<BlockValue> values) {
-		this.values = values;
+		if (this.values == null) {
+			this.values = new ArrayList<BlockValue>(values.size());
+		}
+		this.values.addAll(values);
 	}
 
 	public Next getNext() {
@@ -109,15 +113,21 @@ public class Block {
 	}
 
 	public void setFields(List<Field> fields) {
-		this.fields = fields;
+		if (this.fields == null) {
+			this.fields = new ArrayList<Field>(fields.size());
+		}
+		this.fields.addAll(fields);
 	}
 
 	public List<Statement> getStatements() {
 		return statements;
 	}
 
-	public void setStatement(List<Statement> statements) {
-		this.statements = statements;
+	public void setStatements(List<Statement> statements) {
+		if (this.statements == null) {
+			this.statements = new ArrayList<Statement>(statements.size());
+		}
+		this.statements.addAll(statements);
 	}
 
 	public Field getFieldByName(String name, Field orElse) {

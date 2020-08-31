@@ -89,24 +89,24 @@ public class BlockXmlUtils {
 			if (id == null) {
 				id = prefix + randomID();
 				idMap.put(block.getId(), id);
+				block.setId(id);
 			}
-			block.setId(id);
 		}
 		List<Field> fields = block.getFields();
 		if (fields != null) {
 			fields.forEach(f -> updateID(f, idMap));
 		}
-		Next next = block.getNext();
-		if (next != null && next.getBlock() != null) {
-			updateID(next.getBlock(), idMap);
+		List<BlockValue> values = block.getValues();
+		if (values != null) {
+			values.forEach(v -> updateID(v, idMap));
 		}
 		List<Statement> statements = block.getStatements();
 		if (statements != null) {
 			statements.forEach(stmt -> updateID(stmt, idMap));
 		}
-		List<BlockValue> values = block.getValues();
-		if (values != null) {
-			values.forEach(v -> updateID(v, idMap));
+		Next next = block.getNext();
+		if (next != null && next.getBlock() != null) {
+			updateID(next.getBlock(), idMap);
 		}
 	}
 
@@ -117,8 +117,8 @@ public class BlockXmlUtils {
 			if (id == null) {
 				id = prefix + randomID();
 				idMap.put(field.getId(), id);
+				field.setId(id);
 			}
-			field.setId(id);
 		}
 	}
 
@@ -144,8 +144,8 @@ public class BlockXmlUtils {
 			if (id == null) {
 				id = prefix + randomID();
 				idMap.put(var.getId(), id);
+				var.setId(id);
 			}
-			var.setId(id);
 		}
 	}
 
@@ -156,8 +156,8 @@ public class BlockXmlUtils {
 			if (id == null) {
 				id = prefix + randomID();
 				idMap.put(shadow.getId(), id);
+				shadow.setId(id);
 			}
-			shadow.setId(id);
 		}
 	}
 

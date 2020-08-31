@@ -89,6 +89,7 @@ public class TextDeserializeWorkspace {
 		String workspaceXml = IOUtils.resourceToString("test_workspace_04.xml", StandardCharsets.UTF_8,
 				getClass().getClassLoader());
 		Workspace w = BlockXmlUtils.loadWorkspace(workspaceXml);
+		System.out.println(BlockXmlUtils.toXml(w));
 		w = BlockXmlUtils.updateToUUID(w);
 		System.out.println(BlockXmlUtils.toXml(w));
 	}
