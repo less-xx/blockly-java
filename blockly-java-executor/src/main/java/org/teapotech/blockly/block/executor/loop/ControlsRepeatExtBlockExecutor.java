@@ -7,6 +7,8 @@ import org.teapotech.blockly.block.def.annotation.BlockDef;
 import org.teapotech.blockly.block.executor.AbstractBlockExecutor;
 import org.teapotech.blockly.block.executor.BlockExecutionContext;
 import org.teapotech.blockly.exception.BlockExecutionException;
+import org.teapotech.blockly.exception.BreakLoopException;
+import org.teapotech.blockly.exception.ContinueLoopException;
 import org.teapotech.blockly.exception.InvalidBlockException;
 import org.teapotech.blockly.model.Block;
 import org.teapotech.blockly.model.BlockValue;
@@ -48,7 +50,16 @@ public class ControlsRepeatExtBlockExecutor extends AbstractBlockExecutor {
 		}
 		Statement stmt = this.block.getStatements().get(0);
 		for (int i = 0; i < timesInt; i++) {
-			BlockExecutorUtils.execute(stmt.getBlock(), context);
+			try {
+				BlockExecutorUtils.execute(stmt.getBlock(), context);
+			} catch (BreakLoopException e) {
+				context.getLogger().debug("Break iteration of {}", block.getType());
+				break;
+
+			} catch (ContinueLoopException e) {
+				context.getLogger().debug("Continue iteration of {}", block.getType());
+				continue;
+			}
 		}
 		return null;
 	}
