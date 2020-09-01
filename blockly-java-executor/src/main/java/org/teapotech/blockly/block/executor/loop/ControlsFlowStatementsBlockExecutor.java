@@ -6,6 +6,8 @@ package org.teapotech.blockly.block.executor.loop;
 import org.teapotech.blockly.block.def.annotation.BlockDef;
 import org.teapotech.blockly.block.executor.AbstractBlockExecutor;
 import org.teapotech.blockly.block.executor.BlockExecutionContext;
+import org.teapotech.blockly.exception.BreakLoopException;
+import org.teapotech.blockly.exception.ContinueLoopException;
 import org.teapotech.blockly.exception.InvalidBlockException;
 import org.teapotech.blockly.model.Block;
 import org.teapotech.blockly.model.BlockValue;
@@ -36,7 +38,20 @@ public class ControlsFlowStatementsBlockExecutor extends AbstractBlockExecutor {
 		if (flowField == null) {
 			throw new InvalidBlockException(this.block.getId(), this.block.getType(), "Missing field FLOW");
 		}
-		return flowField.getValue();
+		String value = flowField.getValue();
+//		if (context.getLoops().isEmpty()) {
+//			throw new InvalidBlockException(this.block.getId(), this.block.getType(), "not in an iteration");
+//		}
+		// LoopSupport ls = context.getLoops().pop();
+		if (value.equalsIgnoreCase("break")) {
+			// ls.breakIteration();
+			throw new BreakLoopException();
+		}
+		if (value.equalsIgnoreCase("continue")) {
+			// ls.continueNextIteration();
+			throw new ContinueLoopException();
+		}
+		return null;
 	}
 
 }

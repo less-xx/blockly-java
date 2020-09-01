@@ -33,7 +33,7 @@ public class LocalVariableGetBlockExecutor extends AbstractBlockExecutor {
 			throw new InvalidBlockException(this.block.getId(), this.block.getType(),
 					"Cannot find local variable: " + var);
 		}
-		context.getLogger().info("Get local variable: {}", var);
+		context.getLogger().info("Get local variable: {}={}", var, value);
 		return value;
 	}
 

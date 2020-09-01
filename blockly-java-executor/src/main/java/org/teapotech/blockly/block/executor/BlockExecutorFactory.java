@@ -33,7 +33,7 @@ public class BlockExecutorFactory {
 		this.blockDefinitionObjectRegistry = blockDefinitionObjectRegistry;
 	}
 
-	public BlockExecutor createBlockExecutor(String workspaceId, Block block)
+	public AbstractBlockExecutor createBlockExecutor(String workspaceId, Block block)
 			throws BlockExecutorNotFoundException, InvalidBlockExecutorException {
 
 		if (block == null) {
@@ -47,7 +47,7 @@ public class BlockExecutorFactory {
 		}
 		try {
 
-			BlockExecutor be = null;
+			AbstractBlockExecutor be = null;
 
 			Constructor<? extends AbstractBlockExecutor> constructor = c.getConstructor(Block.class);
 			if (constructor == null) {
@@ -64,7 +64,7 @@ public class BlockExecutorFactory {
 		}
 	}
 
-	public BlockExecutor createBlockExecutor(String workspaceId, BlockValue blockValue)
+	public AbstractBlockExecutor createBlockExecutor(String workspaceId, BlockValue blockValue)
 			throws InvalidBlockException, BlockExecutorNotFoundException, InvalidBlockExecutorException {
 		String blockType = null;
 		String id = null;
@@ -86,7 +86,7 @@ public class BlockExecutorFactory {
 
 		try {
 
-			BlockExecutor be = null;
+			AbstractBlockExecutor be = null;
 
 			Constructor<? extends AbstractBlockExecutor> constructor = c.getConstructor(BlockValue.class);
 			if (constructor == null) {

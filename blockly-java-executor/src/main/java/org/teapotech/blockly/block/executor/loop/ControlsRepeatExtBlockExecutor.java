@@ -47,11 +47,10 @@ public class ControlsRepeatExtBlockExecutor extends AbstractBlockExecutor {
 					"Missing statements. Block type: " + this.block.getType() + ", id: " + this.block.getId());
 		}
 		Statement stmt = this.block.getStatements().get(0);
-		Object result = null;
 		for (int i = 0; i < timesInt; i++) {
-			result = BlockExecutorUtils.execute(stmt.getBlock(), context);
+			BlockExecutorUtils.execute(stmt.getBlock(), context);
 		}
-		return result;
+		return null;
 	}
 
 }

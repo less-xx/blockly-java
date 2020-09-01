@@ -6,6 +6,8 @@ package org.teapotech.blockly.block.executor.loop;
 import org.teapotech.blockly.block.def.annotation.BlockDef;
 import org.teapotech.blockly.block.executor.AbstractBlockExecutor;
 import org.teapotech.blockly.block.executor.BlockExecutionContext;
+import org.teapotech.blockly.exception.BreakLoopException;
+import org.teapotech.blockly.exception.ContinueLoopException;
 import org.teapotech.blockly.exception.InvalidBlockException;
 import org.teapotech.blockly.model.Block;
 import org.teapotech.blockly.model.BlockValue;
@@ -47,19 +49,22 @@ public class ControlsWhileUntilBlockExecutor extends AbstractBlockExecutor {
 		if (stmt == null) {
 			throw new InvalidBlockException(this.block.getId(), this.block.getType(), "Missing statement block");
 		}
-		while (whileTrue && expressionValue) {
-			Object result = BlockExecutorUtils.execute(stmt.getBlock(), context);
-			if (result != null) {
-				if (result.equals("BREAK")) {
-					break;
-				} else if (result.equals("CONTINUE")) {
-					continue;
-				}
+		while (!(whileTrue ^ expressionValue)) {
+			try {
+				BlockExecutorUtils.execute(stmt.getBlock(), context);
+			} catch (BreakLoopException e) {
+				context.getLogger().debug("Break iteration of {}", block.getType());
+				break;
+
+			} catch (ContinueLoopException e) {
+				context.getLogger().debug("Continue iteration of {}", block.getType());
+				expressionValue = (Boolean) BlockExecutorUtils.execute(expressionBv, context);
+				continue;
 			}
 			expressionValue = (Boolean) BlockExecutorUtils.execute(expressionBv, context);
 		}
 
 		return null;
-	}
 
+	}
 }

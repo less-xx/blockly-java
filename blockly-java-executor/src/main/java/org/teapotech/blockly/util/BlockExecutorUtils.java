@@ -3,6 +3,7 @@
  */
 package org.teapotech.blockly.util;
 
+import org.teapotech.blockly.block.executor.AbstractBlockExecutor;
 import org.teapotech.blockly.block.executor.BlockExecutionContext;
 import org.teapotech.blockly.block.executor.BlockExecutionProgress;
 import org.teapotech.blockly.block.executor.BlockExecutor;
@@ -28,7 +29,8 @@ public class BlockExecutorUtils {
 		if (beg == null) {
 			context.getLogger().error("Cannot find block execution thread by name: {}", name);
 		}
-		BlockExecutor executor = context.getBlockExecutorFactory().createBlockExecutor(context.getWorkspaceId(), block);
+		AbstractBlockExecutor executor = context.getBlockExecutorFactory().createBlockExecutor(context.getWorkspaceId(),
+				block);
 		beg.setBlock(block);
 		// context.getLogger().info("Block id: [{}], type: [{}] is [{}]", block.getId(),
 		// block.getType(),beg.getBlockStatus());
@@ -39,13 +41,9 @@ public class BlockExecutorUtils {
 		while (next != null) {
 			result = context.getBlockExecutorFactory().createBlockExecutor(context.getWorkspaceId(), next.getBlock())
 					.execute(context);
-			if ("BREAK".equals(result)) {
-				break;
-			} else if ("CONTINUE".equals(result)) {
-				continue;
-			}
 			next = next.getBlock().getNext();
 		}
+
 		return result;
 	}
 

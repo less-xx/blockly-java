@@ -104,7 +104,7 @@ public class TestWorkspaceExecutor {
 					executedBy, workingDir, factory, kvStorageProvider, fileStorageProvider, eventDispatcher);
 			WorkspaceExecutor wExecutor = new WorkspaceExecutor(w, context);
 			wExecutor.execute();
-			wExecutor.waitFor(35000);
+			wExecutor.waitFor(350000);
 			WorkspaceExecution wexec = wExecutor.getWorkspaceExecution();
 			System.out.println(wexec);
 		}

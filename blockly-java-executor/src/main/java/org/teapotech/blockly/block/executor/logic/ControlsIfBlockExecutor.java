@@ -44,7 +44,7 @@ public class ControlsIfBlockExecutor extends AbstractBlockExecutor {
 		Boolean ifCondition = (Boolean) BlockExecutorUtils.execute(ifCondBlock, context);
 		if (ifCondition) {
 			Block statBlock = this.block.getStatements().get(idx).getBlock();
-			return BlockExecutorUtils.execute(statBlock, context);
+			BlockExecutorUtils.execute(statBlock, context);
 		} else if (mut != null) {
 
 			if (mut.getElseif() != null) {
@@ -54,13 +54,13 @@ public class ControlsIfBlockExecutor extends AbstractBlockExecutor {
 					ifCondition = (Boolean) BlockExecutorUtils.execute(ifCondBlock, context);
 					if (ifCondition) {
 						Block statBlock = this.block.getStatements().get(idx).getBlock();
-						return BlockExecutorUtils.execute(statBlock, context);
+						BlockExecutorUtils.execute(statBlock, context);
 					}
 					idx += 1;
 				}
 			} else if (mut.getElse() != null) {
 				Block statBlock = this.block.getStatements().get(idx).getBlock();
-				return BlockExecutorUtils.execute(statBlock, context);
+				BlockExecutorUtils.execute(statBlock, context);
 			}
 		}
 		return null;

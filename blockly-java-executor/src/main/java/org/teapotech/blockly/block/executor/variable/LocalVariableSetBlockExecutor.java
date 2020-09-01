@@ -42,7 +42,7 @@ public class LocalVariableSetBlockExecutor extends AbstractBlockExecutor {
 			throw new InvalidBlockException(this.block.getId(), this.block.getType(), "Empty 'value' block.");
 		}
 		context.setLocalVariable(var, value);
-		context.getLogger().info("Set local variable: {}", var);
+		context.getLogger().info("Set local variable: {}={}", var, value);
 		return null;
 	}
 
