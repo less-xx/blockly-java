@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.teapotech.blockly.block.def.event.HandleEventBlock;
 import org.teapotech.blockly.block.def.start_stop.StartBlock;
+import org.teapotech.blockly.block.executor.AbstractBlockExecutor;
 import org.teapotech.blockly.block.executor.BlockExecutionContext;
 import org.teapotech.blockly.block.executor.BlockExecutionProgress;
 import org.teapotech.blockly.block.executor.BlockExecutionProgress.BlockStatus;
@@ -71,6 +72,13 @@ public class WorkspaceExecutor {
 
 	public int getExecutionTimeout() {
 		return executionTimeout;
+	}
+
+	public void resumeExecution() {
+		AbstractBlockExecutor blockExecutor = context.getCurrentBlockExecutor();
+		if (blockExecutor != null) {
+			blockExecutor.resumeExecution();
+		}
 	}
 
 	public void execute() {
@@ -233,6 +241,13 @@ public class WorkspaceExecutor {
 						stopExecution();
 					}
 				}
+				if (context.getCurrentBlockExecutor() != null) {
+					workspaceExecution.setCurrentBlock(context.getCurrentBlockExecutor().getBlockId());
+					if (context.getCurrentBlockExecutor().isPaused()) {
+						workspaceExecution.setStatus(Status.Paused);
+					}
+				}
+
 				if (!running) {
 					break;
 				}

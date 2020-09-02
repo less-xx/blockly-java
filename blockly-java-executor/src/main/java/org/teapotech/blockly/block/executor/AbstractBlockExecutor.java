@@ -4,21 +4,26 @@
 package org.teapotech.blockly.block.executor;
 
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.teapotech.blockly.block.executor.BlockExecutionProgress.BlockStatus;
+import org.teapotech.blockly.entity.WorkspaceExecution.Status;
 import org.teapotech.blockly.exception.BlockExecutionException;
 import org.teapotech.blockly.exception.InvalidBlockException;
 import org.teapotech.blockly.model.Block;
 import org.teapotech.blockly.model.BlockValue;
 import org.teapotech.blockly.model.Shadow;
+import org.teapotech.blockly.workspace.event.WorkspaceEvent;
 
 /**
  * @author jiangl
  *
  */
 public abstract class AbstractBlockExecutor implements BlockExecutor {
+	protected Logger LOG = LoggerFactory.getLogger(getClass());
 
 	protected final Block block;
 	protected final Shadow shadow;
+	private boolean paused = false;
 
 	public AbstractBlockExecutor(Block block) {
 		this.block = block;
@@ -30,8 +35,36 @@ public abstract class AbstractBlockExecutor implements BlockExecutor {
 		this.shadow = blockValue.getShadow();
 	}
 
+	private void pauseExecution() throws Exception {
+		while (paused) {
+			Thread.sleep(1000);
+		}
+		LOG.debug("Execution resumed");
+	}
+
+	public String getBlockId() {
+		if (this.block != null) {
+			return this.block.getId();
+		}
+		if (this.shadow != null) {
+			return this.shadow.getId();
+		}
+		return null;
+	}
+
+	public void resumeExecution() {
+		this.paused = false;
+	}
+
+	public boolean isPaused() {
+		return paused;
+	}
+
 	@Override
 	public final Object execute(BlockExecutionContext context) throws BlockExecutionException {
+
+		context.setCurrentBlockExecutor(this);
+
 		Logger LOG = context.getLogger();
 		if (context.isStopped()) {
 			if (this.block != null) {
@@ -42,22 +75,20 @@ public abstract class AbstractBlockExecutor implements BlockExecutor {
 			return null;
 		}
 		try {
-			/*
-			 * if (this.block != null) { LOG.debug("Executing block, type: {}, id: {}",
-			 * block.getType(), block.getId()); } else {
-			 * LOG.debug("Executing shadow, type: {}, id: {}", shadow.getType(),
-			 * shadow.getId()); }
-			 */
+
 			updateBlockStatus(context, BlockStatus.Enter);
+			if (context.shouldPause(getBlockId())) {
+				this.paused = true;
+				context.getEventDispatcher().dispatchWorkspaceEvent(
+						new WorkspaceEvent(context.getWorkspaceId(), context.getInstanceId(), Status.Paused));
+				LOG.debug("Execution paused");
+				pauseExecution();
+			}
+
 			Object result = doExecute(context);
+
 			updateBlockStatus(context, BlockStatus.Exit);
 
-			/*
-			 * if (this.block != null) { LOG.debug("Block executed, type: {}, id: {}",
-			 * block.getType(), block.getId()); } else {
-			 * LOG.debug("Shadow executed, type: {}, id: {}", shadow.getType(),
-			 * shadow.getId()); }
-			 */
 			return result;
 		} catch (Exception e) {
 			if (context.isStopped()) {

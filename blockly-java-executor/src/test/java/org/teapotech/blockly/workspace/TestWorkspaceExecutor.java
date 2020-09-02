@@ -12,6 +12,7 @@ import org.teapotech.blockly.block.def.BlockExecutorRegistry;
 import org.teapotech.blockly.block.executor.BlockExecutorFactory;
 import org.teapotech.blockly.block.executor.DefaultBlockExecutionContext;
 import org.teapotech.blockly.entity.WorkspaceExecution;
+import org.teapotech.blockly.entity.WorkspaceExecution.Status;
 import org.teapotech.blockly.event.BlockEventListenerFactory;
 import org.teapotech.blockly.event.EventDispatcher;
 import org.teapotech.blockly.event.SimpleBlockEventListenerFactory;
@@ -139,6 +140,32 @@ public class TestWorkspaceExecutor {
 			wExecutor.execute();
 			wExecutor.waitFor(30000);
 			WorkspaceExecution wexec = wExecutor.getWorkspaceExecution();
+			System.out.println(wexec);
+		}
+	}
+
+	@Test
+	public void testPauseResumeExecution() throws Exception {
+		try (InputStream in = getClass().getClassLoader().getResourceAsStream("test_workspace_exec_05.xml");) {
+			long testInstanceId = 1;
+			Workspace w = BlockXmlUtils.loadWorkspace(in);
+			File workingDir = new File(workingDirPath);
+			DefaultBlockExecutionContext context = new DefaultBlockExecutionContext(w.getId(), testInstanceId,
+					executedBy, workingDir, factory, kvStorageProvider, fileStorageProvider, eventDispatcher);
+			WorkspaceExecutor wExecutor = new WorkspaceExecutor(w, context);
+			context.setDebugMode(true);
+			context.addBreakPoint("controls_if_2kHyeIyW");
+			wExecutor.execute();
+			WorkspaceExecution wexec = wExecutor.getWorkspaceExecution();
+			while (wexec.getStatus() != Status.Stopped) {
+				if (wexec.getStatus() == Status.Paused) {
+					wExecutor.resumeExecution();
+					System.out.println(wexec);
+				}
+				wexec = wExecutor.getWorkspaceExecution();
+				Thread.sleep(500);
+			}
+			wexec = wExecutor.getWorkspaceExecution();
 			System.out.println(wexec);
 		}
 	}

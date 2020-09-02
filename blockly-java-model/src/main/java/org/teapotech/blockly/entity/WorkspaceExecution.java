@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.Version;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -59,6 +60,9 @@ public class WorkspaceExecution {
 	@Column(name = "last_updated")
 	@UpdateTimestamp
 	private Date lastUpdatedTime;
+
+	@Transient
+	private String currentBlock;
 
 	@Version
 	@Column(name = "version", columnDefinition = "int DEFAULT 0", nullable = false)
@@ -152,6 +156,14 @@ public class WorkspaceExecution {
 		return triggerTime;
 	}
 
+	public String getCurrentBlock() {
+		return currentBlock;
+	}
+
+	public void setCurrentBlock(String currentBlock) {
+		this.currentBlock = currentBlock;
+	}
+
 	@Override
 	public String toString() {
 		String s = """
@@ -162,11 +174,12 @@ public class WorkspaceExecution {
 					triggerTime: %s,
 					startTime: %s,
 					endTime: %s,
-					message: %s
+					message: %s,
+					currentBlock: %s
 				}
 				""";
 		return s.formatted(this.id, this.workspaceId, this.status, this.triggerTime, this.startTime, this.endTime,
-				this.message);
+				this.message, this.currentBlock);
 	}
 
 }

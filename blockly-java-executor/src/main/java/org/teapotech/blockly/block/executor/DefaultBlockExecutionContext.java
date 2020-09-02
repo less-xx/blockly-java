@@ -6,7 +6,9 @@ package org.teapotech.blockly.block.executor;
 import java.io.File;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +32,9 @@ public class DefaultBlockExecutionContext implements BlockExecutionContext {
 	private final long instanceId;
 	private final File workingDir;
 	private final String executedBy;
+	private final Set<String> breakpoints = new HashSet<>();
+	private boolean debug = false;
+	private AbstractBlockExecutor currentBlockExecutor;
 
 	private boolean stopped;
 	private ThreadLocal<Map<String, Object>> localVariables = new ThreadLocal<Map<String, Object>>() {
@@ -142,4 +147,40 @@ public class DefaultBlockExecutionContext implements BlockExecutionContext {
 		return this.executedBy;
 	}
 
+	@Override
+	public Set<String> getBreakPoints() {
+		return breakpoints;
+	}
+
+	@Override
+	public boolean isDebugMode() {
+		return debug;
+	}
+
+	public void setDebugMode(boolean debug) {
+		this.debug = debug;
+	}
+
+	public void addBreakPoint(String blockId) {
+		this.breakpoints.add(blockId);
+	}
+
+	public void removeBreakPoint(String blockId) {
+		this.breakpoints.remove(blockId);
+	}
+
+	@Override
+	public boolean shouldPause(String blockId) {
+		return isDebugMode() && breakpoints.contains(blockId);
+	}
+
+	@Override
+	public AbstractBlockExecutor getCurrentBlockExecutor() {
+		return currentBlockExecutor;
+	}
+
+	@Override
+	public void setCurrentBlockExecutor(AbstractBlockExecutor blockExecutor) {
+		this.currentBlockExecutor = blockExecutor;
+	}
 }

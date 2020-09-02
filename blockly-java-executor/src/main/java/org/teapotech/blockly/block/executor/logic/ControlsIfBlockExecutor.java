@@ -8,6 +8,7 @@ import java.util.List;
 import org.teapotech.blockly.block.def.annotation.BlockDef;
 import org.teapotech.blockly.block.executor.AbstractBlockExecutor;
 import org.teapotech.blockly.block.executor.BlockExecutionContext;
+import org.teapotech.blockly.exception.InvalidBlockException;
 import org.teapotech.blockly.model.Block;
 import org.teapotech.blockly.model.BlockMutation;
 import org.teapotech.blockly.model.BlockValue;
@@ -50,6 +51,9 @@ public class ControlsIfBlockExecutor extends AbstractBlockExecutor {
 			if (mut.getElseif() != null) {
 				idx += 1;
 				while (idx <= mut.getElseif()) {
+					if (idx >= values.size()) {
+						throw new InvalidBlockException(block);
+					}
 					ifCondBlock = values.get(idx).getBlock();
 					ifCondition = (Boolean) BlockExecutorUtils.execute(ifCondBlock, context);
 					if (ifCondition) {

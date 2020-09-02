@@ -1,11 +1,11 @@
 const workspaceXml = `
-<xml xmlns="https://developers.google.com/blockly/xml" style="display: none" id="find_all_primes_in_range_event">
+<xml xmlns="https://developers.google.com/blockly/xml" style="display: none" id="test_workspace_exec_05">
 	<variables>
 		<variable id="var_HYOfkg93">primeCount</variable>
 		<variable id="var_SMMKzenW">start</variable>
 		<variable id="var_hLDCskx3">end</variable>
 	</variables>
-	<block type="start" id="start_ZBiRmVhj" x="30" y="-1570">
+	<block type="start" id="start_ZBiRmVhj" x="50" y="-1310">
 		<next>
 			<block type="variables_set" id="variables_set_R2ztXMDm">
 				<next>
@@ -42,12 +42,12 @@ const workspaceXml = `
 																	</block>
 																</value>
 																<value name="ADD4">
-																	<block type="text" id="text_GxB5jBicc">
+																	<block type="text" id="text_Qgb5fAU8">
 																		<field name="TEXT"> and </field>
 																	</block>
 																</value>
 																<value name="ADD5">
-																	<block type="variables_get" id="variables_get_SHai0mYT">
+																	<block type="variables_get" id="variables_get_qyScRWRu">
 																		<field id="var_hLDCskx3" name="VAR">end</field>
 																	</block>
 																</value>
@@ -119,18 +119,40 @@ const workspaceXml = `
 																									</block>
 																								</value>
 																								<statement name="DO0">
-																									<block type="dispatch_event" id="dispatch_event_5i90LWpB">
-																										<value name="event">
-																											<shadow type="event_with_param" id="shadow_uCATUN2m">
-																												<field name="event_name">event1</field>
-																											</shadow>
-																											<block type="event_with_param" id="event_with_param_TEnQ2ovS">
-																												<value name="parameter">
-																													<block type="get_local_variable" id="get_local_variable_GV13bshb">
+																									<block type="text_print" id="text_print_tE9N6oJu">
+																										<next>
+																											<block type="variables_set" id="variables_set_rCGUBscD">
+																												<value name="VALUE">
+																													<block type="math_arithmetic" id="math_arithmetic_EKTCJcTh">
+																														<value name="A">
+																															<block type="variables_get" id="variables_get_zro6FBhI">
+																																<field id="var_HYOfkg93" name="VAR">primeCount</field>
+																															</block>
+																														</value>
+																														<value name="B">
+																															<block type="math_number" id="math_number_SKhQLHec">
+																																<field name="NUM">1</field>
+																															</block>
+																														</value>
+																														<field name="OP">ADD</field>
+																													</block>
+																												</value>
+																												<field id="var_HYOfkg93" name="VAR">primeCount</field>
+																											</block>
+																										</next>
+																										<value name="TEXT">
+																											<block type="text_join" id="text_join_P7owjRXq">
+																												<mutation items="2" />
+																												<value name="ADD0">
+																													<block type="get_local_variable" id="get_local_variable_pwzz0cfd">
 																														<field name="var">num</field>
 																													</block>
 																												</value>
-																												<field name="event_name">foundPrimeEvent</field>
+																												<value name="ADD1">
+																													<block type="text" id="text_D2ysS1Jq">
+																														<field name="TEXT"> is a prime number.</field>
+																													</block>
+																												</value>
 																											</block>
 																										</value>
 																									</block>
@@ -259,14 +281,14 @@ const workspaceXml = `
 															</block>
 														</next>
 														<value name="IF0">
-															<block type="logic_compare" id="logic_compare_ddNhwGbv">
+															<block type="logic_compare" id="logic_compare_Gx4WNusB">
 																<value name="A">
-																	<block type="get_local_variable" id="get_local_variable_VdzFgxMJ">
+																	<block type="get_local_variable" id="get_local_variable_rUWOwlvZ">
 																		<field name="var">num</field>
 																	</block>
 																</value>
 																<value name="B">
-																	<block type="math_number" id="math_number_MtYhvIRI">
+																	<block type="math_number" id="math_number_A81xZVqd">
 																		<field name="NUM">0</field>
 																	</block>
 																</value>
@@ -274,14 +296,14 @@ const workspaceXml = `
 															</block>
 														</value>
 														<value name="IF1">
-															<block type="logic_compare" id="logic_compare_jQsSlAhQ">
+															<block type="logic_compare" id="logic_compare_t1hxriMG">
 																<value name="A">
-																	<block type="get_local_variable" id="get_local_variable_0jCywV8e">
+																	<block type="get_local_variable" id="get_local_variable_MdMIO3kZ">
 																		<field name="var">num</field>
 																	</block>
 																</value>
 																<value name="B">
-																	<block type="math_number" id="math_number_gRZlDraV">
+																	<block type="math_number" id="math_number_7hlJSnoi">
 																		<field name="NUM">1</field>
 																	</block>
 																</value>
@@ -289,21 +311,21 @@ const workspaceXml = `
 															</block>
 														</value>
 														<statement name="DO0">
-															<block type="set_local_variable" id="set_local_variable_w4ifkufh">
+															<block type="set_local_variable" id="set_local_variable_w70Qd5h4">
 																<next>
-																	<block type="controls_flow_statements" id="controls_flow_statements_dRXcO0i6">
+																	<block type="controls_flow_statements" id="controls_flow_statements_UhAcf5vP">
 																		<field name="FLOW">CONTINUE</field>
 																	</block>
 																</next>
 																<value name="value">
-																	<block type="math_arithmetic" id="math_arithmetic_s7QfW8cc">
+																	<block type="math_arithmetic" id="math_arithmetic_hjZNkh1T">
 																		<value name="A">
-																			<block type="get_local_variable" id="get_local_variable_dCeGleeE">
+																			<block type="get_local_variable" id="get_local_variable_sxfMlfdM">
 																				<field name="var">num</field>
 																			</block>
 																		</value>
 																		<value name="B">
-																			<block type="math_number" id="math_number_jwyKCcoQ">
+																			<block type="math_number" id="math_number_rolQBEI4">
 																				<field name="NUM">1</field>
 																			</block>
 																		</value>
@@ -314,21 +336,21 @@ const workspaceXml = `
 															</block>
 														</statement>
 														<statement name="DO1">
-															<block type="set_local_variable" id="set_local_variable_XcYhvdvs">
+															<block type="set_local_variable" id="set_local_variable_NiBnKIze">
 																<next>
-																	<block type="controls_flow_statements" id="controls_flow_statements_g54bbyCQ">
+																	<block type="controls_flow_statements" id="controls_flow_statements_RqPUhnMr">
 																		<field name="FLOW">CONTINUE</field>
 																	</block>
 																</next>
 																<value name="value">
-																	<block type="math_arithmetic" id="math_arithmetic_Mh1rWaz3">
+																	<block type="math_arithmetic" id="math_arithmetic_kney6txE">
 																		<value name="A">
-																			<block type="get_local_variable" id="get_local_variable_zkWiB51B">
+																			<block type="get_local_variable" id="get_local_variable_N4XrX2xK">
 																				<field name="var">num</field>
 																			</block>
 																		</value>
 																		<value name="B">
-																			<block type="math_number" id="math_number_Lg0yo7k0">
+																			<block type="math_number" id="math_number_suHoOHQv">
 																				<field name="NUM">1</field>
 																			</block>
 																		</value>
@@ -353,10 +375,10 @@ const workspaceXml = `
 								</next>
 								<value name="VALUE">
 									<block type="math_number" id="math_number_wKfjB6Lg">
-										<field name="NUM">100</field>
+										<field name="NUM">10</field>
 									</block>
 								</value>
-								<field id="field_EHQk6fmJ" name="VAR">end</field>
+								<field id="field_pAfHecMv" name="VAR">end</field>
 							</block>
 						</next>
 						<value name="VALUE">
@@ -364,7 +386,7 @@ const workspaceXml = `
 								<field name="NUM">0</field>
 							</block>
 						</value>
-						<field id="field_n9O8OP2t" name="VAR">start</field>
+						<field id="field_v3OxYTGs" name="VAR">start</field>
 					</block>
 				</next>
 				<value name="VALUE">
@@ -372,32 +394,11 @@ const workspaceXml = `
 						<field name="NUM">0</field>
 					</block>
 				</value>
-				<field id="field_0hX6GmVq" name="VAR">primeCount</field>
+				<field id="field_RIdMpOVM" name="VAR">primeCount</field>
 			</block>
 		</next>
-	</block>
-	<block type="handle_event" id="handle_event_FtOiQsDC" x="510" y="-1590">
-		<next>
-			<block type="text_print" id="text_print_gfYe7g97">
-				<value name="TEXT">
-					<block type="text_join" id="text_join_N9i2JGa8">
-						<mutation items="2" />
-						<value name="ADD0">
-							<block type="get_event_param" id="get_event_param_nvZ9Epe2">
-								<field name="event_name">foundPrimeEvent</field>
-							</block>
-						</value>
-						<value name="ADD1">
-							<block type="text" id="text_BmVr7KKu">
-								<field name="TEXT"> is a prime number.</field>
-							</block>
-						</value>
-					</block>
-				</value>
-			</block>
-		</next>
-		<field name="event_name">foundPrimeEvent</field>
 	</block>
 </xml>
+
 `
 export default workspaceXml;

@@ -6,6 +6,7 @@ package org.teapotech.blockly.block.executor;
 import java.io.File;
 import java.util.Collection;
 import java.util.Map;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.teapotech.blockly.event.EventDispatcher;
@@ -47,4 +48,14 @@ public interface BlockExecutionContext {
 	EventDispatcher getEventDispatcher();
 
 	String getExecutedBy();
+
+	Set<String> getBreakPoints();
+
+	boolean isDebugMode();
+
+	boolean shouldPause(String blockId);
+
+	AbstractBlockExecutor getCurrentBlockExecutor();
+
+	void setCurrentBlockExecutor(AbstractBlockExecutor blockExecutor);
 }
