@@ -18,7 +18,13 @@
 												<next>
 													<block type="text_print" id="text_print_LAzIsZM7">
 														<next>
-															<block type="exit" id="exit_SGiLUp1F" />
+															<block type="dispatch_event" id="dispatch_event_bFX1cgtE">
+																<value name="event">
+																	<shadow type="event_with_param" id="shadow_Py6MuFEo">
+																		<field name="event_name">exitWorkspace</field>
+																	</shadow>
+																</value>
+															</block>
 														</next>
 														<value name="TEXT">
 															<block type="text_join" id="text_join_iVkygg8E">
@@ -123,16 +129,16 @@
 																								<statement name="DO0">
 																									<block type="dispatch_event" id="dispatch_event_5i90LWpB">
 																										<next>
-																											<block type="variables_set" id="variables_set_4Hrp6qGs">
+																											<block type="variables_set" id="variables_set_fre0vx3N">
 																												<value name="VALUE">
-																													<block type="math_arithmetic" id="math_arithmetic_Zy1Vrybf">
+																													<block type="math_arithmetic" id="math_arithmetic_kOrew2Gf">
 																														<value name="A">
-																															<block type="variables_get" id="variables_get_fBetMl5F">
+																															<block type="variables_get" id="variables_get_6YaRdtLE">
 																																<field id="var_HYOfkg93" name="VAR">primeCount</field>
 																															</block>
 																														</value>
 																														<value name="B">
-																															<block type="math_number" id="math_number_sV5lnkEB">
+																															<block type="math_number" id="math_number_2zuNSAif">
 																																<field name="NUM">1</field>
 																															</block>
 																														</value>
@@ -378,7 +384,7 @@
 										<field name="NUM">100</field>
 									</block>
 								</value>
-								<field id="field_eWFkcr8F" name="VAR">end</field>
+								<field id="field_lv6C5bsC" name="VAR">end</field>
 							</block>
 						</next>
 						<value name="VALUE">
@@ -386,7 +392,7 @@
 								<field name="NUM">0</field>
 							</block>
 						</value>
-						<field id="field_fIiYsMSq" name="VAR">start</field>
+						<field id="field_JAqUcXlI" name="VAR">start</field>
 					</block>
 				</next>
 				<value name="VALUE">
@@ -394,7 +400,7 @@
 						<field name="NUM">0</field>
 					</block>
 				</value>
-				<field id="field_f0mOCiP2" name="VAR">primeCount</field>
+				<field id="field_B2lxyiM5" name="VAR">primeCount</field>
 			</block>
 		</next>
 	</block>
@@ -419,5 +425,11 @@
 			</block>
 		</next>
 		<field name="event_name">foundPrimeEvent</field>
+	</block>
+	<block type="handle_event" id="handle_event_IWUpqgxp" x="350" y="-1590">
+		<next>
+			<block type="exit" id="exit_2R2sSsMy" />
+		</next>
+		<field name="event_name">exitWorkspace</field>
 	</block>
 </xml>

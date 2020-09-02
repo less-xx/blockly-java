@@ -383,7 +383,13 @@
 															</block>
 														</value>
 														<next>
-															<block type="exit" id="4N/Bt~*ELZnh)k//0./-"></block>
+															<block type="dispatch_event" id="4@Zb2lt?Vj9.c)20-].u">
+																<value name="event">
+																	<shadow type="event_with_param" id="W~pK5sNDreNW;0Ve.sl]">
+																		<field name="event_name">exitWorkspace</field>
+																	</shadow>
+																</value>
+															</block>
 														</next>
 													</block>
 												</next>
@@ -418,6 +424,12 @@
 					</block>
 				</value>
 			</block>
+		</next>
+	</block>
+	<block type="handle_event" id="$7Q[90|[~V*hIVy]RR]g" x="350" y="-1590">
+		<field name="event_name">exitWorkspace</field>
+		<next>
+			<block type="exit" id="4N/Bt~*ELZnh)k//0./-"></block>
 		</next>
 	</block>
 </xml>

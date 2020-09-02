@@ -67,5 +67,4 @@ public class Shadow {
 	public void setY(Integer y) {
 		this.y = y;
 	}
-
 }
