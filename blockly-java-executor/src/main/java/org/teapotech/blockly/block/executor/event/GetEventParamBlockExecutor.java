@@ -35,7 +35,7 @@ public class GetEventParamBlockExecutor extends AbstractBlockExecutor {
 		if (evtNameFld == null) {
 			throw new BlockExecutionException("Missing event_name field value.");
 		}
-		NamedBlockEvent evt = (NamedBlockEvent) context.getLocalVariable(evtNameFld.getValue());
+		NamedBlockEvent evt = (NamedBlockEvent) context.getLocalVariable("_event." + evtNameFld.getValue());
 		if (evt == null) {
 			throw new BlockExecutionException("Cannot find event named " + evtNameFld.getValue());
 		}
