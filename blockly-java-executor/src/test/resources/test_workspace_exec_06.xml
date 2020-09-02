@@ -1,11 +1,10 @@
-const workspaceXml = `
 <xml xmlns="https://developers.google.com/blockly/xml" style="display: none" id="find_all_primes_in_range_event">
 	<variables>
 		<variable id="var_HYOfkg93">primeCount</variable>
 		<variable id="var_SMMKzenW">start</variable>
 		<variable id="var_hLDCskx3">end</variable>
 	</variables>
-	<block type="start" id="start_ZBiRmVhj" x="30" y="-1570">
+	<block type="start" id="start_ZBiRmVhj" x="-130" y="-1710">
 		<next>
 			<block type="variables_set" id="variables_set_R2ztXMDm">
 				<next>
@@ -18,6 +17,9 @@ const workspaceXml = `
 											<block type="controls_whileUntil" id="controls_whileUntil_wmzGsdTg">
 												<next>
 													<block type="text_print" id="text_print_LAzIsZM7">
+														<next>
+															<block type="exit" id="exit_SGiLUp1F" />
+														</next>
 														<value name="TEXT">
 															<block type="text_join" id="text_join_iVkygg8E">
 																<mutation items="6" />
@@ -120,6 +122,26 @@ const workspaceXml = `
 																								</value>
 																								<statement name="DO0">
 																									<block type="dispatch_event" id="dispatch_event_5i90LWpB">
+																										<next>
+																											<block type="variables_set" id="variables_set_4Hrp6qGs">
+																												<value name="VALUE">
+																													<block type="math_arithmetic" id="math_arithmetic_Zy1Vrybf">
+																														<value name="A">
+																															<block type="variables_get" id="variables_get_fBetMl5F">
+																																<field id="var_HYOfkg93" name="VAR">primeCount</field>
+																															</block>
+																														</value>
+																														<value name="B">
+																															<block type="math_number" id="math_number_sV5lnkEB">
+																																<field name="NUM">1</field>
+																															</block>
+																														</value>
+																														<field name="OP">ADD</field>
+																													</block>
+																												</value>
+																												<field id="var_HYOfkg93" name="VAR">primeCount</field>
+																											</block>
+																										</next>
 																										<value name="event">
 																											<shadow type="event_with_param" id="shadow_uCATUN2m">
 																												<field name="event_name">event1</field>
@@ -356,7 +378,7 @@ const workspaceXml = `
 										<field name="NUM">100</field>
 									</block>
 								</value>
-								<field id="field_EHQk6fmJ" name="VAR">end</field>
+								<field id="field_eWFkcr8F" name="VAR">end</field>
 							</block>
 						</next>
 						<value name="VALUE">
@@ -364,7 +386,7 @@ const workspaceXml = `
 								<field name="NUM">0</field>
 							</block>
 						</value>
-						<field id="field_n9O8OP2t" name="VAR">start</field>
+						<field id="field_fIiYsMSq" name="VAR">start</field>
 					</block>
 				</next>
 				<value name="VALUE">
@@ -372,11 +394,11 @@ const workspaceXml = `
 						<field name="NUM">0</field>
 					</block>
 				</value>
-				<field id="field_0hX6GmVq" name="VAR">primeCount</field>
+				<field id="field_f0mOCiP2" name="VAR">primeCount</field>
 			</block>
 		</next>
 	</block>
-	<block type="handle_event" id="handle_event_FtOiQsDC" x="510" y="-1590">
+	<block type="handle_event" id="handle_event_FtOiQsDC" x="350" y="-1730">
 		<next>
 			<block type="text_print" id="text_print_gfYe7g97">
 				<value name="TEXT">
@@ -399,5 +421,3 @@ const workspaceXml = `
 		<field name="event_name">foundPrimeEvent</field>
 	</block>
 </xml>
-`
-export default workspaceXml;

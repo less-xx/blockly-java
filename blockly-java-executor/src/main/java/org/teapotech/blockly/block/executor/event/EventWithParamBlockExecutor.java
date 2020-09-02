@@ -42,7 +42,7 @@ public class EventWithParamBlockExecutor extends AbstractBlockExecutor {
 		evt.setEventName(evtNameFld.getValue());
 		BlockValue bv = block.getBlockValueByName("parameter", null);
 		if (bv != null) {
-			String value = (String) BlockExecutorUtils.execute(bv, context);
+			Object value = BlockExecutorUtils.execute(bv, context);
 			evt.setParameter(value);
 		}
 		LOG.info("Created block event. Name: {}", evt.getEventName());

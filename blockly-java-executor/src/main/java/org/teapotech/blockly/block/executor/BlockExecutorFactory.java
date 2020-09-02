@@ -5,9 +5,12 @@ package org.teapotech.blockly.block.executor;
 
 import java.lang.reflect.Constructor;
 
+import org.apache.commons.lang3.ClassUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.teapotech.blockly.block.def.BlockExecutorRegistry;
+import org.teapotech.blockly.event.BlockEventListenerFactory;
+import org.teapotech.blockly.event.BlockEventListenerSupport;
 import org.teapotech.blockly.exception.BlockExecutorNotFoundException;
 import org.teapotech.blockly.exception.InvalidBlockException;
 import org.teapotech.blockly.exception.InvalidBlockExecutorException;
@@ -23,14 +26,18 @@ public class BlockExecutorFactory {
 	private static Logger LOG = LoggerFactory.getLogger(BlockExecutorFactory.class);
 
 	private final BlockExecutorRegistry blockDefinitionObjectRegistry;
+	private final BlockEventListenerFactory blockEventListenerFactory;
 
-	public static BlockExecutorFactory build(BlockExecutorRegistry blockDefinitionObjectRegistry) {
-		BlockExecutorFactory fac = new BlockExecutorFactory(blockDefinitionObjectRegistry);
+	public static BlockExecutorFactory build(BlockExecutorRegistry blockDefinitionObjectRegistry,
+			BlockEventListenerFactory blockEventListnerFactory) {
+		BlockExecutorFactory fac = new BlockExecutorFactory(blockDefinitionObjectRegistry, blockEventListnerFactory);
 		return fac;
 	}
 
-	private BlockExecutorFactory(BlockExecutorRegistry blockDefinitionObjectRegistry) {
+	private BlockExecutorFactory(BlockExecutorRegistry blockDefinitionObjectRegistry,
+			BlockEventListenerFactory blockEventListnerFactory) {
 		this.blockDefinitionObjectRegistry = blockDefinitionObjectRegistry;
+		this.blockEventListenerFactory = blockEventListnerFactory;
 	}
 
 	public AbstractBlockExecutor createBlockExecutor(String workspaceId, Block block)
@@ -56,6 +63,11 @@ public class BlockExecutorFactory {
 			}
 
 			be = constructor.newInstance(block);
+
+			if (ClassUtils.isAssignable(c, BlockEventListenerSupport.class)) {
+				((BlockEventListenerSupport) be)
+						.setBlockEventListener(blockEventListenerFactory.createBlockEventListener(workspaceId, block));
+			}
 
 			return be;
 

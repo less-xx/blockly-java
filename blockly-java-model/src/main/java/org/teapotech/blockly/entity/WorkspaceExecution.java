@@ -21,7 +21,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 public class WorkspaceExecution {
 
 	public static enum Status {
-		Waiting, Running, Stopping, Stopped, Success, Failure
+		Waiting, Running, Stopping, Stopped, Success, Failure, Paused
 	}
 
 	@Id

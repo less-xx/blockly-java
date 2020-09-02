@@ -10,7 +10,7 @@ package org.teapotech.blockly.block.event;
 public class NamedBlockEvent extends BlockEvent {
 
 	private String eventName;
-	private String parameter;
+	private Object parameter;
 
 	public NamedBlockEvent(String workspaceId, String type, String id) {
 		super(workspaceId, type, id);
@@ -24,11 +24,11 @@ public class NamedBlockEvent extends BlockEvent {
 		this.eventName = eventName;
 	}
 
-	public String getParameter() {
+	public Object getParameter() {
 		return parameter;
 	}
 
-	public void setParameter(String parameter) {
+	public void setParameter(Object parameter) {
 		this.parameter = parameter;
 	}
 

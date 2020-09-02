@@ -17,6 +17,7 @@ import org.teapotech.blockly.block.executor.BlockExecutionProgress.BlockStatus;
 import org.teapotech.blockly.block.executor.BlockExecutorFactory;
 import org.teapotech.blockly.entity.WorkspaceExecution;
 import org.teapotech.blockly.entity.WorkspaceExecution.Status;
+import org.teapotech.blockly.exception.ExitBlockExecutionException;
 import org.teapotech.blockly.model.Block;
 import org.teapotech.blockly.model.Variable;
 import org.teapotech.blockly.model.Workspace;
@@ -182,6 +183,8 @@ public class WorkspaceExecutor {
 			context.getLogger().info("Thread {} start running.", getName());
 			try {
 				BlockExecutorUtils.execute(startBlock, context);
+			} catch (ExitBlockExecutionException e) {
+				stopExecution();
 			} catch (Exception e) {
 				context.getLogger().error(e.getMessage());
 				LOG.error(e.getMessage(), e);
