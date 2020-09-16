@@ -18,6 +18,7 @@ import org.teapotech.blockly.block.executor.BlockExecutionProgress.BlockStatus;
 import org.teapotech.blockly.block.executor.BlockExecutorFactory;
 import org.teapotech.blockly.entity.WorkspaceExecution;
 import org.teapotech.blockly.entity.WorkspaceExecution.Status;
+import org.teapotech.blockly.event.EventDispatcher;
 import org.teapotech.blockly.exception.ExitBlockExecutionException;
 import org.teapotech.blockly.model.Block;
 import org.teapotech.blockly.model.Variable;
@@ -86,7 +87,7 @@ public class WorkspaceExecutor {
 		workspaceExecution.setStartTime(new Date());
 		workspaceExecution.setStatus(Status.Running);
 
-		context.getEventDispatcher().dispatchWorkspaceEvent(
+		context.getContextObject(EventDispatcher.class).dispatchWorkspaceEvent(
 				new WorkspaceEvent(context.getWorkspaceId(), context.getInstanceId(), Status.Running));
 
 		List<Variable> variables = workspace.getVariables();
@@ -262,7 +263,7 @@ public class WorkspaceExecutor {
 					context.getWorkingDir().getAbsolutePath());
 			workspaceExecution.setEndTime(new Date());
 			workspaceExecution.setStatus(Status.Stopped);
-			context.getEventDispatcher().dispatchWorkspaceEvent(
+			context.getContextObject(EventDispatcher.class).dispatchWorkspaceEvent(
 					new WorkspaceEvent(context.getWorkspaceId(), context.getInstanceId(), Status.Stopped));
 			if (!context.isStopped()) {
 				context.setStopped(true);

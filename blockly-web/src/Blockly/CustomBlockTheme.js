@@ -5,17 +5,17 @@ const BlocklyTheme = {
             "colourTertiary": "#e07200"
         },
         "variable_blocks": {
-            "colourPrimary": "#fc8000",
+            "colourPrimary": "#FF9671",
             "colourSecondary": "#ffdaad",
             "colourTertiary": "#cf7200"
         },
         "event_blocks": {
-            "colourPrimary": "#edd411",
+            "colourPrimary": "#F8E80A",
             "colourSecondary": "#ccc37a",
             "colourTertiary": "#f2e200"
         },
         "control_blocks": {
-            "colourPrimary": "#fcb000",
+            "colourPrimary": "#FFC75F",
             "colourSecondary": "#ffe29e",
             "colourTertiary": "#f0a700"
         },
@@ -30,7 +30,7 @@ const BlocklyTheme = {
             "colourTertiary": "#f0a700"
         },
         "text_blocks": {
-            "colourPrimary": "#4ae324",
+            "colourPrimary": "#00C9A7",
             "colourSecondary": "#c0fcb1",
             "colourTertiary": "#18d900"
         },
@@ -38,6 +38,11 @@ const BlocklyTheme = {
             "colourPrimary": "#00c70d",
             "colourSecondary": "#84db89",
             "colourTertiary": "#00b80b"
+        },
+        "file_blocks": {
+            "colourPrimary": "#2C73D2",
+            "colourSecondary": "#2C73D2",
+            "colourTertiary": "#2C73D2"
         }
     },
     'categoryStyles': {
@@ -63,7 +68,10 @@ const BlocklyTheme = {
             "colour": "#4ae324"
         },
         "math": {
-            "colour": "#00c70d"
+            "colour": "#008F7A"
+        },
+        "file_operations": {
+            "colour": "#2C73D2"
         }
     },
     'componentStyles': {

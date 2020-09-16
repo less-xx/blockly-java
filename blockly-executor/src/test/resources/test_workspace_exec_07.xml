@@ -1,0 +1,22 @@
+<xml xmlns="https://developers.google.com/blockly/xml" style="display: none">
+	<block type="handle_event" id="handle_event_wRBabWBv" x="850" y="-1370">
+		<next>
+			<block type="text_print" id="text_print_ylT5bFWO">
+				<value name="TEXT">
+					<block type="get_event_param" id="get_event_param_cXOJRuRu">
+						<field name="event_name">fileCreateUpdateDeleteEvents</field>
+					</block>
+				</value>
+			</block>
+		</next>
+		<field name="event_name">fileCreateUpdateDeleteEvents</field>
+	</block>
+	<block type="start" id="start_ZBiRmVhj" x="50" y="-1310">
+		<next>
+			<block type="watch_file_system" id="watch_file_system_Hg9PnYdA">
+				<field name="FILE_RESOURCE">test-user-file-resource1</field>
+				<field name="EVENT">fileCreateUpdateDeleteEvents</field>
+			</block>
+		</next>
+	</block>
+</xml>

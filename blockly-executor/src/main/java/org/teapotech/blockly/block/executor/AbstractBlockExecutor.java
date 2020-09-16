@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.teapotech.blockly.block.executor.BlockExecutionProgress.BlockStatus;
 import org.teapotech.blockly.entity.WorkspaceExecution.Status;
+import org.teapotech.blockly.event.EventDispatcher;
 import org.teapotech.blockly.exception.BlockExecutionException;
 import org.teapotech.blockly.exception.InvalidBlockException;
 import org.teapotech.blockly.model.Block;
@@ -79,7 +80,7 @@ public abstract class AbstractBlockExecutor implements BlockExecutor {
 			updateBlockStatus(context, BlockStatus.Enter);
 			if (context.shouldPause(getBlockId())) {
 				this.paused = true;
-				context.getEventDispatcher().dispatchWorkspaceEvent(
+				context.getContextObject(EventDispatcher.class).dispatchWorkspaceEvent(
 						new WorkspaceEvent(context.getWorkspaceId(), context.getInstanceId(), Status.Paused));
 				LOG.debug("Execution paused");
 				pauseExecution();

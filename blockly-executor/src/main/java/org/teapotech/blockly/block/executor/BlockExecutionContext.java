@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.slf4j.Logger;
-import org.teapotech.blockly.event.EventDispatcher;
 
 /**
  * @author jiangl
@@ -45,7 +44,7 @@ public interface BlockExecutionContext {
 
 	Map<String, BlockExecutionProgress> getBlockExecutionProgress();
 
-	EventDispatcher getEventDispatcher();
+	// EventDispatcher getEventDispatcher();
 
 	String getExecutedBy();
 
@@ -58,4 +57,6 @@ public interface BlockExecutionContext {
 	AbstractBlockExecutor getCurrentBlockExecutor();
 
 	void setCurrentBlockExecutor(AbstractBlockExecutor blockExecutor);
+
+	<T> T getContextObject(Class<T> objectType);
 }

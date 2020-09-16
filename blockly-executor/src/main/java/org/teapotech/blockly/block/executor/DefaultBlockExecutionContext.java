@@ -12,9 +12,6 @@ import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.teapotech.blockly.event.EventDispatcher;
-import org.teapotech.blockly.execution.provider.FileStorageProvider;
-import org.teapotech.blockly.execution.provider.KeyValueStorageProvider;
 
 /**
  * @author jiangl
@@ -25,14 +22,15 @@ public class DefaultBlockExecutionContext implements BlockExecutionContext {
 	private static Logger LOG = LoggerFactory.getLogger(DefaultBlockExecutionContext.class);
 
 	private final BlockExecutorFactory blockExecutorFactory;
-	private final EventDispatcher eventDispatcher;
-	private final KeyValueStorageProvider kvStorageProvider;
-	private final FileStorageProvider fileStorageProvider;
+	// private final EventDispatcher eventDispatcher;
+	// private final KeyValueStorageProvider kvStorageProvider;
+	// private final FileStorageProvider fileStorageProvider;
 	private final String workspaceId;
 	private final long instanceId;
 	private final File workingDir;
 	private final String executedBy;
 	private final Set<String> breakpoints = new HashSet<>();
+	private final Map<Class<?>, Object> contextObjects = new HashMap<>();
 	private boolean debug = false;
 	private AbstractBlockExecutor currentBlockExecutor;
 
@@ -47,13 +45,12 @@ public class DefaultBlockExecutionContext implements BlockExecutionContext {
 	private final Map<String, BlockExecutionProgress> executionThreadInfo = new HashMap<>();
 
 	public DefaultBlockExecutionContext(String workspaceId, long instanceId, String executedBy, File workingDir,
-			BlockExecutorFactory blockExecutorFactory, KeyValueStorageProvider kvStorageProvider,
-			FileStorageProvider fileStorageProvider, EventDispatcher eventDispatcher) {
+			BlockExecutorFactory blockExecutorFactory) {
 		this.executedBy = executedBy;
 		this.blockExecutorFactory = blockExecutorFactory;
-		this.eventDispatcher = eventDispatcher;
-		this.kvStorageProvider = kvStorageProvider;
-		this.fileStorageProvider = fileStorageProvider;
+		// this.eventDispatcher = eventDispatcher;
+		// this.kvStorageProvider = kvStorageProvider;
+		// this.fileStorageProvider = fileStorageProvider;
 		this.workspaceId = workspaceId;
 		this.instanceId = instanceId;
 		this.workingDir = workingDir;
@@ -119,18 +116,18 @@ public class DefaultBlockExecutionContext implements BlockExecutionContext {
 		return globalVariables.keySet();
 	}
 
-	@Override
-	public EventDispatcher getEventDispatcher() {
-		return this.eventDispatcher;
-	}
-
-	public FileStorageProvider getFileStorageProvider() {
-		return fileStorageProvider;
-	}
-
-	public KeyValueStorageProvider getKvStorageProvider() {
-		return kvStorageProvider;
-	}
+//	@Override
+//	public EventDispatcher getEventDispatcher() {
+//		return this.eventDispatcher;
+//	}
+//
+//	public FileStorageProvider getFileStorageProvider() {
+//		return fileStorageProvider;
+//	}
+//
+//	public KeyValueStorageProvider getKvStorageProvider() {
+//		return kvStorageProvider;
+//	}
 
 	@Override
 	public long getInstanceId() {
@@ -183,4 +180,24 @@ public class DefaultBlockExecutionContext implements BlockExecutionContext {
 	public void setCurrentBlockExecutor(AbstractBlockExecutor blockExecutor) {
 		this.currentBlockExecutor = blockExecutor;
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T> T getContextObject(Class<T> objectType) {
+		T object = (T) contextObjects.get(objectType);
+		if (object == null) {
+			throw new IllegalArgumentException("Cannot find context object of type " + objectType);
+		}
+		return object;
+	}
+
+	public <T> void setContextObject(Class<T> objectType, T object) {
+		if (contextObjects.containsKey(objectType)) {
+			LOG.warn("Object of type {} already exists in the context. Reset will be ignored.", objectType);
+			return;
+		}
+		contextObjects.put(objectType, object);
+		LOG.debug("Set context object {}={}", objectType, object);
+	}
+
 }

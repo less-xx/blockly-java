@@ -15,6 +15,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.ClassUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.reflections.Reflections;
 import org.slf4j.Logger;
@@ -22,9 +23,13 @@ import org.slf4j.LoggerFactory;
 import org.teapotech.blockly.block.def.BlockDefinition.CategoryID;
 import org.teapotech.blockly.block.def.annotation.BlockDef;
 import org.teapotech.blockly.block.executor.AbstractBlockExecutor;
+import org.teapotech.blockly.block.executor.file.UserFileResource;
+import org.teapotech.blockly.execution.provider.UserFileResourceProvider;
 import org.teapotech.blockly.model.Block;
 import org.teapotech.blockly.model.Category;
 import org.teapotech.blockly.model.Workspace;
+import org.teapotech.blockly.resource.FileResource;
+import org.teapotech.blockly.resource.FileResourceSupport;
 import org.teapotech.blockly.util.BlockXmlUtils;
 import org.teapotech.blockly.util.JSONUtils;
 
@@ -36,13 +41,10 @@ public class BlockExecutorRegistry {
 	private static Logger LOG = LoggerFactory.getLogger(BlockExecutorRegistry.class);
 	private final Map<String, JsonNode> defaultCategories = new HashMap<>();
 	private final Map<BlockDefinition, Class<? extends AbstractBlockExecutor>> blockExecutors = new HashMap<>();
+	private UserFileResourceProvider userFileResourceProvider;
 
 	private static final String[] CATEGORY_ORDERS = { CategoryID.ID_START_EXIT, CategoryID.ID_VARIABLES,
 			CategoryID.ID_CONTROL, CategoryID.ID_EVENTS, CategoryID.ID_FILE_OPERATIONS, CategoryID.ID_RESOURCES };
-
-	public BlockExecutorRegistry() throws Exception {
-		loadBlockExecutors();
-	}
 
 	public BlockDefinition getBlockDefinition(String blockType) {
 		return blockExecutors.keySet().stream().filter(bdef -> bdef.getBlockType().equals(blockType)).findAny()
@@ -57,6 +59,10 @@ public class BlockExecutorRegistry {
 			return op.get().getValue();
 		}
 		return null;
+	}
+
+	public void setUserFileResourceProvider(UserFileResourceProvider userFileResourceProvider) {
+		this.userFileResourceProvider = userFileResourceProvider;
 	}
 
 	public void loadBlockExecutors() throws Exception {
@@ -87,6 +93,12 @@ public class BlockExecutorRegistry {
 				}
 				try {
 					BlockDefinition blockDef = blockDefClass.getConstructor(null).newInstance(null);
+
+					if (ClassUtils.isAssignable(blockDef.getClass(), FileResourceSupport.class)) {
+						FileResourceSupport frs = (FileResourceSupport) blockDef;
+						List<UserFileResource> allUserFileRes = userFileResourceProvider.findAll();
+						frs.setFileResources(allUserFileRes.toArray(new FileResource[] {}));
+					}
 					blockExecutors.put(blockDef, c);
 					LOG.info("Registered block, Type: {}, Executor class: {}", blockDef.getBlockType(), c.getName());
 				} catch (Exception e) {
@@ -195,6 +207,12 @@ public class BlockExecutorRegistry {
 		List<CustomBlockConfiguration> result = new ArrayList<>();
 		blockExecutors.keySet().stream().filter(bdef -> bdef instanceof CustomBlockDefinition).forEach(bdef -> {
 			CustomBlockDefinition cbDef = (CustomBlockDefinition) bdef;
+
+			if (ClassUtils.isAssignable(bdef.getClass(), FileResourceSupport.class)) {
+				FileResourceSupport frs = (FileResourceSupport) bdef;
+				List<UserFileResource> allUserFileRes = userFileResourceProvider.findAll();
+				frs.setFileResources(allUserFileRes.toArray(new FileResource[] {}));
+			}
 			try {
 				String blockConf = cbDef.getConfiguration();
 				if (StringUtils.isBlank(blockConf)) {

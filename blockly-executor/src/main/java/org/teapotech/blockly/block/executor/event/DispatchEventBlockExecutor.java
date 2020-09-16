@@ -9,6 +9,7 @@ import org.teapotech.blockly.block.def.event.DispatchEventBlock;
 import org.teapotech.blockly.block.event.NamedBlockEvent;
 import org.teapotech.blockly.block.executor.AbstractBlockExecutor;
 import org.teapotech.blockly.block.executor.BlockExecutionContext;
+import org.teapotech.blockly.event.EventDispatcher;
 import org.teapotech.blockly.exception.BlockExecutionException;
 import org.teapotech.blockly.model.Block;
 import org.teapotech.blockly.model.BlockValue;
@@ -41,7 +42,7 @@ public class DispatchEventBlockExecutor extends AbstractBlockExecutor {
 		if (evt == null) {
 			throw new BlockExecutionException("Invalid event block.");
 		}
-		context.getEventDispatcher().dispatchBlockEvent(evt);
+		context.getContextObject(EventDispatcher.class).dispatchBlockEvent(evt);
 		LOG.info("Dispatched block event. Name: {}", evt.getEventName());
 
 		return null;
