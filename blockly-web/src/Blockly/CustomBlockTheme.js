@@ -29,6 +29,11 @@ const BlocklyTheme = {
             "colourSecondary": "#ffe29e",
             "colourTertiary": "#f0a700"
         },
+        "basic_blocks": {
+            "colourPrimary": "#00C9A7",
+            "colourSecondary": "#c0fcb1",
+            "colourTertiary": "#18d900"
+        },
         "text_blocks": {
             "colourPrimary": "#00C9A7",
             "colourSecondary": "#c0fcb1",
@@ -64,8 +69,8 @@ const BlocklyTheme = {
         "logic": {
             "colour": "#fcb000"
         },
-        "text": {
-            "colour": "#4ae324"
+        "basic": {
+            "colour": "#00C9A7"
         },
         "math": {
             "colour": "#008F7A"

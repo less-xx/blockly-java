@@ -5,6 +5,11 @@
 		"style": "start_exit"
 	},
 	{
+		"id": "basic",
+		"name": "Basic",
+		"style": "basic"
+	},
+	{
 		"id": "variables",
 		"name": "Variables",
 		"style": "variables"
@@ -13,11 +18,6 @@
 		"id": "control",
 		"name": "Control",
 		"style": "control"
-	},
-	{
-		"id": "text",
-		"name": "Text",
-		"style": "text"
 	},
 	{
 		"id": "math",

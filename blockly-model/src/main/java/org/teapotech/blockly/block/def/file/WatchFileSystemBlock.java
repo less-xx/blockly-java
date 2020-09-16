@@ -65,7 +65,7 @@ public class WatchFileSystemBlock extends CustomBlockDefinition implements FileR
 				  ],
 				  "previousStatement": null,
 				  "style": "event_blocks",
-				  "tooltip": "",
+				  "tooltip": "The event is an object {'event': 'CREATED|CHANGED|DELETED', 'file':'File object'}",
 				  "helpUrl": ""
 				}
 

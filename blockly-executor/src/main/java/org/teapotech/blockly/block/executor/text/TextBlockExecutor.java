@@ -14,7 +14,7 @@ import org.teapotech.blockly.model.Field;
  * @author jiangl
  *
  */
-@BlockDef(blockType = "text", category = "text", style = "text_blocks")
+@BlockDef(blockType = "text", category = "basic", style = "basic_blocks")
 public class TextBlockExecutor extends AbstractBlockExecutor {
 
 	public TextBlockExecutor(Block block) {

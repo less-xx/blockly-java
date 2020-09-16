@@ -43,8 +43,9 @@ public class BlockExecutorRegistry {
 	private final Map<BlockDefinition, Class<? extends AbstractBlockExecutor>> blockExecutors = new HashMap<>();
 	private UserFileResourceProvider userFileResourceProvider;
 
-	private static final String[] CATEGORY_ORDERS = { CategoryID.ID_START_EXIT, CategoryID.ID_VARIABLES,
-			CategoryID.ID_CONTROL, CategoryID.ID_EVENTS, CategoryID.ID_FILE_OPERATIONS, CategoryID.ID_RESOURCES };
+	private static final String[] CATEGORY_ORDERS = { CategoryID.ID_START_EXIT, CategoryID.ID_BASIC,
+			CategoryID.ID_VARIABLES, CategoryID.ID_CONTROL, CategoryID.ID_EVENTS, CategoryID.ID_FILE_OPERATIONS,
+			CategoryID.ID_RESOURCES };
 
 	public BlockDefinition getBlockDefinition(String blockType) {
 		return blockExecutors.keySet().stream().filter(bdef -> bdef.getBlockType().equals(blockType)).findAny()

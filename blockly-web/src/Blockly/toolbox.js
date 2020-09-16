@@ -4,11 +4,17 @@ const toolboxConfigXml = `
 		<block type="exit"/>
 		<block type="start"/>
 	</category>
+	<category name="Basic" categorystyle="basic">
+		<block type="get_object_property"/>
+		<block type="text_print"/>
+		<block type="text_join"/>
+		<block type="text"/>
+	</category>
 	<category name="Variables" categorystyle="variables">
+		<block type="variables_get"/>
 		<block type="set_local_variable"/>
 		<block type="variables_set"/>
 		<block type="get_local_variable"/>
-		<block type="variables_get"/>
 	</category>
 	<category name="Control" categorystyle="control">
 		<block type="wait_seconds">
@@ -19,10 +25,10 @@ const toolboxConfigXml = `
 			</value>
 		</block>
 		<block type="controls_flow_statements"/>
-		<block type="logic_compare"/>
-		<block type="controls_repeat_ext"/>
 		<block type="controls_whileUntil"/>
 		<block type="controls_if"/>
+		<block type="logic_compare"/>
+		<block type="controls_repeat_ext"/>
 	</category>
 	<category name="Events" categorystyle="events">
 		<block type="get_event_param"/>
@@ -40,15 +46,10 @@ const toolboxConfigXml = `
 		<block type="watch_file_system"/>
 	</category>
 	<category name="Math" categorystyle="math">
-		<block type="math_random_int"/>
 		<block type="math_number"/>
-		<block type="math_arithmetic"/>
 		<block type="math_round"/>
-	</category>
-	<category name="Text" categorystyle="text">
-		<block type="text_print"/>
-		<block type="text_join"/>
-		<block type="text"/>
+		<block type="math_random_int"/>
+		<block type="math_arithmetic"/>
 	</category>
 </xml>
 

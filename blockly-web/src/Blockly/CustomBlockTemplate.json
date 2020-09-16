@@ -197,4 +197,25 @@
 		"tooltip": "",
 		"helpUrl": ""
 	}
+}, {
+	"type": "get_object_property",
+	"definition": {
+		"type": "get_object_property",
+		"message0": "Get %1 of %2",
+		"args0": [{
+				"type": "field_input",
+				"name": "PROPERTY_NAME",
+				"text": "propertyName"
+			},
+			{
+				"type": "input_value",
+				"name": "OBJECT"
+			}
+		],
+		"inputsInline": false,
+		"output": null,
+		"style": "basic_blocks",
+		"tooltip": "The event is an object {'event': 'CREATED|CHANGED|DELETED', 'file':'File object'}",
+		"helpUrl": ""
+	}
 }]
