@@ -1,7 +1,5 @@
 package org.teapotech.blockly.event;
 
-import org.teapotech.blockly.model.Block;
-
 public class SimpleBlockEventListenerFactory implements BlockEventListenerFactory {
 
 	private final SimpleEventExchange eventExchange;
@@ -11,10 +9,10 @@ public class SimpleBlockEventListenerFactory implements BlockEventListenerFactor
 	}
 
 	@Override
-	public BlockEventListener createBlockEventListener(String workspaceId, Block block) {
+	public BlockEventListener createBlockEventListener(String workspaceId, String blockId) {
 		SimpleBlockEventListener listener = new SimpleBlockEventListener();
 		listener.setEventExchange(eventExchange);
-		listener.setId(block.getType() + "." + block.getId());
+		listener.setId("workspace." + workspaceId + "." + blockId);
 		return listener;
 	}
 

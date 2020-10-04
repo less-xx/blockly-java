@@ -5,7 +5,6 @@ package org.teapotech.blockly.event;
 
 import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
-import org.teapotech.blockly.model.Block;
 
 /**
  * @author jiangl
@@ -22,9 +21,9 @@ public class RabbitMQBlockEventListenerFactory implements BlockEventListenerFact
 	}
 
 	@Override
-	public BlockEventListener createBlockEventListener(String workspaceId, Block block) {
+	public BlockEventListener createBlockEventListener(String workspaceId, String blockId) {
 		RabbitMQBlockEventListener listener = new RabbitMQBlockEventListener(rabbitAdmin, eventExchange);
-		String id = "workspace." + workspaceId + ".queue." + block.getId();
+		String id = "workspace." + workspaceId + ".queue." + blockId;
 		listener.setId(id);
 		return listener;
 	}

@@ -29,6 +29,7 @@ import org.teapotech.blockly.model.Workspace;
 import org.teapotech.blockly.util.BlockXmlUtils;
 import org.teapotech.blockly.workspace.TestBlockExecutorRegistry.TestUserFileResource;
 import org.teapotech.blockly.workspace.executor.WorkspaceExecutor;
+import org.teapotech.util.JsonHelper;
 
 /**
  * @author jiangl
@@ -38,6 +39,7 @@ public class TestWorkspaceExecutor {
 
 	private static BlockExecutorFactory factory;
 	private static BlockExecutorRegistry blockDefRegistry;
+	private static JsonHelper jsonHelper = JsonHelper.builder().build();
 	private static KeyValueStorageProvider kvStorageProvider = new InMemoryKeyValueStorageProvider();
 	private static String workingDirPath = System.getProperty("java.io.tmpdir") + "/tmp/workspace/test";
 	private static FileStorageProvider fileStorageProvider = new DiskFileStorageProvider(workingDirPath);
@@ -66,7 +68,7 @@ public class TestWorkspaceExecutor {
 		blockDefRegistry = new BlockExecutorRegistry();
 		blockDefRegistry.setUserFileResourceProvider(userFileResourceProvider);
 		blockDefRegistry.loadBlockExecutors();
-		factory = BlockExecutorFactory.build(blockDefRegistry, blockEventListenerFac);
+		factory = BlockExecutorFactory.build(blockDefRegistry, blockEventListenerFac, jsonHelper);
 	}
 
 	private DefaultBlockExecutionContext createBlockExecutionContext(Workspace w, long instanceId) {

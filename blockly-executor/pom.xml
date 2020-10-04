@@ -7,7 +7,7 @@
 
 	<properties>
 		<junit-version>5.6.2</junit-version>
-		<spring-version>2.2.9.RELEASE</spring-version>
+		<spring-version>2.3.4.RELEASE</spring-version>
 	</properties>
 
 	<dependencies>
@@ -16,6 +16,13 @@
 			<artifactId>blockly-model</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.teapotech</groupId>
+			<artifactId>common-java-lib</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.reflections</groupId>
 			<artifactId>reflections</artifactId>
@@ -23,14 +30,14 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework.amqp</groupId>
-			<artifactId>spring-rabbit</artifactId>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-amqp</artifactId>
 			<version>${spring-version}</version>
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-redis</artifactId>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
 			<version>${spring-version}</version>
 		</dependency>
 
@@ -39,7 +46,7 @@
 			<artifactId>commons-lang3</artifactId>
 			<version>3.11</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter</artifactId>

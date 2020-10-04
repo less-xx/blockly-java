@@ -9,13 +9,15 @@ import org.apache.commons.lang3.ClassUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.teapotech.blockly.block.def.BlockExecutorRegistry;
+import org.teapotech.blockly.block.executor.support.BlockEventListenerSupport;
+import org.teapotech.blockly.block.executor.support.JsonHelperSupport;
 import org.teapotech.blockly.event.BlockEventListenerFactory;
-import org.teapotech.blockly.event.BlockEventListenerSupport;
 import org.teapotech.blockly.exception.BlockExecutorNotFoundException;
 import org.teapotech.blockly.exception.InvalidBlockException;
 import org.teapotech.blockly.exception.InvalidBlockExecutorException;
 import org.teapotech.blockly.model.Block;
 import org.teapotech.blockly.model.BlockValue;
+import org.teapotech.util.JsonHelper;
 
 /**
  * @author jiangl
@@ -27,17 +29,20 @@ public class BlockExecutorFactory {
 
 	private final BlockExecutorRegistry blockDefinitionObjectRegistry;
 	private final BlockEventListenerFactory blockEventListenerFactory;
+	private final JsonHelper jsonHelper;
 
 	public static BlockExecutorFactory build(BlockExecutorRegistry blockDefinitionObjectRegistry,
-			BlockEventListenerFactory blockEventListnerFactory) {
-		BlockExecutorFactory fac = new BlockExecutorFactory(blockDefinitionObjectRegistry, blockEventListnerFactory);
+			BlockEventListenerFactory blockEventListnerFactory, JsonHelper jsonHelper) {
+		BlockExecutorFactory fac = new BlockExecutorFactory(blockDefinitionObjectRegistry, blockEventListnerFactory,
+				jsonHelper);
 		return fac;
 	}
 
 	private BlockExecutorFactory(BlockExecutorRegistry blockDefinitionObjectRegistry,
-			BlockEventListenerFactory blockEventListnerFactory) {
+			BlockEventListenerFactory blockEventListnerFactory, JsonHelper jsonHelper) {
 		this.blockDefinitionObjectRegistry = blockDefinitionObjectRegistry;
 		this.blockEventListenerFactory = blockEventListnerFactory;
+		this.jsonHelper = jsonHelper;
 	}
 
 	public AbstractBlockExecutor createBlockExecutor(String workspaceId, Block block)
@@ -65,8 +70,11 @@ public class BlockExecutorFactory {
 			be = constructor.newInstance(block);
 
 			if (ClassUtils.isAssignable(c, BlockEventListenerSupport.class)) {
-				((BlockEventListenerSupport) be)
-						.setBlockEventListener(blockEventListenerFactory.createBlockEventListener(workspaceId, block));
+				((BlockEventListenerSupport) be).setBlockEventListener(
+						blockEventListenerFactory.createBlockEventListener(workspaceId, block.getId()));
+			}
+			if (ClassUtils.isAssignable(c, JsonHelperSupport.class)) {
+				((JsonHelperSupport) be).setJsonHelper(jsonHelper);
 			}
 
 			return be;
@@ -107,6 +115,14 @@ public class BlockExecutorFactory {
 			}
 
 			be = constructor.newInstance(blockValue);
+
+			if (ClassUtils.isAssignable(c, BlockEventListenerSupport.class)) {
+				((BlockEventListenerSupport) be)
+						.setBlockEventListener(blockEventListenerFactory.createBlockEventListener(workspaceId, id));
+			}
+			if (ClassUtils.isAssignable(c, JsonHelperSupport.class)) {
+				((JsonHelperSupport) be).setJsonHelper(jsonHelper);
+			}
 
 			return be;
 
