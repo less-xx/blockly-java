@@ -1,0 +1,77 @@
+spring:
+   application:
+      version: ^project.version^
+      name: ^project.name^
+   datasource:
+      url: jdbc:postgresql://${APP_DB_HOST:localhost}:${APP_DB_PORT:5432}/${APP_DB_NAME:postgres}
+      username: ${APP_DB_USERNAME:dummy}
+      password: ${APP_DB_PASSWORD:dummy}
+      driver-class-name: org.postgresql.Driver
+      testOnBorrow: true
+      validationQuery: SELECT 1
+      validationInterval: 30000
+      hikari:
+         minimum-idle: ${APP_DB_MINIMUM_IDEL_CONNECTIONS:10}
+         maximum-pool-size: ${APP_DB_MAX_CONNECTION_SIZE:50}
+         idle-timeout: 10000
+         connection-timeout: 60000
+   jpa:
+      open-in-view: false
+      show-sql: false
+      database-platform: org.hibernate.dialect.PostgreSQLDialect
+      hibernate.ddl-auto: ${HIBERNATE_DDL_AUTO:update}
+      properties:
+         hibernate.default_schema: ${APP_DB_SCHEMA:blockly}
+         hibernate.temp.use_jdbc_metadata_defaults: false
+         hibernate.current_session_context_class: org.springframework.orm.hibernate5.SpringSessionContext
+         hibernate.naming-strategy: org.hibernate.cfg.DefaultNamingStrategy
+   rabbitmq:
+      host: ${CONFIG_RABBIT_HOST:localhost}
+      port: ${CONFIG_RABBIT_PORT:5672}
+      virtual-host: ${CONFIG_RABBIT_VHOST:/}
+      username: ${CONFIG_RABBIT_USERNAME:dummy}
+      password: ${CONFIG_RABBIT_PASSWORD:dummy}
+   redis:
+      host: ${CONFIG_REDIS_HOST:localhost}
+      port: ${CONFIG_REDIS_PORT:6379}
+      password: ${CONFIG_REDIS_PASSWORD:}
+      timeout: ${CONFIG_REDIS_TIMEOUT:3000}
+      database: ${CONFIG_REDIS_DATABASE:1}
+
+spring.servlet.multipart:
+   maxFileSize: ${MAX_UPLOAD_FILE_SIZE:200MB}
+   maxRequestSize: ${MAX_REQUEST_SIZE:201MB}
+
+spring.data.web.pageable:
+   max-page-size: 1000
+   default-page-size: 50
+
+server:
+   port: ${CONFIG_SERVER_PORT:8080}
+   servlet:
+      context-path: ${SERVLET_CONTEXT_PATH:/blockly-backend}
+
+logging:
+   level:
+      root: INFO
+      org.teapotech: DEBUG
+      
+credential.cipher:
+   profilePath: ${CRED_CIPHER_KEYSTORE_PATH:/tmp/.cred/profile}
+   keystorePath: ${CRED_CIPHER_KEYSTORE_PATH:/tmp/.cred/kestore}
+   keystoreType: ${CRED_CIPHER_KEYSTORE_TYPE:JCEKS}
+   keyAlias: ${CRED_CIPHER_KEY_ALIAS:CipherKey} 
+
+resource.support:
+   http:
+      trustStorePath: ${RESOURCE_TRUSTSTORE_PATH:/tmp/.resource/truststore}
+      trustStorePass: ${RESOURCE_TRUSTSTORE_PASSWORD:changeit!}
+      
+application.customer:
+   code: ${APP_CUSTOMER_CODE:TEA}
+   name: ${APP_CUSTOMER_NAME:Teapotech}
+      
+application.testUser:
+   userId: ${APP_TEST_USER_ID:test_user}
+   userName: ${APP_TEST_USER_NAME:Test User}
+   enabled:  ${APP_TEST_USER_ENABLED:false}
