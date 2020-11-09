@@ -14,6 +14,7 @@ import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.teapotech.base.config.CustomerConfigProperties;
@@ -23,6 +24,7 @@ import org.teapotech.base.service.LogService;
 import org.teapotech.event.LogEvent;
 
 @Configuration
+@ConditionalOnBean(ConnectionFactory.class)
 public class ApplicationRabbitMQConfig {
 
 	private static Logger LOG = LoggerFactory.getLogger(ApplicationRabbitMQConfig.class);

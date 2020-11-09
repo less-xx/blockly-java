@@ -1,0 +1,29 @@
+{
+	"userParameters": [{
+		"name": "employeeId",
+		"type": "Number"
+	}],
+	"cacheExpiration": 0,
+	"httpRequestConfig": {
+		"method": "GET",
+		"header": [
+			{
+				"name": "Content-Type",
+				"value": "application/json"
+			}
+		],
+		"url": {
+			"value": "http://dummy.restapiexample.com/api/v1/employee/${employeeId}?q1=v1&q2=",
+			"query": [
+				{
+					"name": "q1",
+					"value": "v1"
+				},
+				{
+					"name": "q2",
+					"value": ""
+				}
+			]
+		}
+	}
+}
