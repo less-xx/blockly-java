@@ -10,15 +10,19 @@ import java.nio.charset.StandardCharsets;
 import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.teapotech.base.config.RedisAutoConfig;
+import org.teapotech.blockly.config.ApplicationRabbitMQConfig;
 import org.teapotech.resource.entity.ResourceConfig;
 import org.teapotech.resource.entity.ResourceConfig.Type;
 import org.teapotech.resource.service.ResourceService;
 
 @SpringBootTest(classes = TestInitializer.class)
+@EnableAutoConfiguration(exclude = { ApplicationRabbitMQConfig.class, RedisAutoConfig.class })
 @AutoConfigureMockMvc
 public class TestResourceController {
 

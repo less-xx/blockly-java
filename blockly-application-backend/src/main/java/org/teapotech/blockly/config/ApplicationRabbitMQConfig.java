@@ -9,22 +9,22 @@ import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.teapotech.base.config.CustomerConfigProperties;
+import org.teapotech.base.config.RabbitMQAutoConfig;
 import org.teapotech.base.event.LogEventDispatcher;
 import org.teapotech.base.event.RabbitMQLogEventDispatcher;
 import org.teapotech.base.service.LogService;
 import org.teapotech.event.LogEvent;
 
 @Configuration
-@ConditionalOnBean(ConnectionFactory.class)
+@Import(RabbitMQAutoConfig.class)
 public class ApplicationRabbitMQConfig {
 
 	private static Logger LOG = LoggerFactory.getLogger(ApplicationRabbitMQConfig.class);
@@ -53,8 +53,8 @@ public class ApplicationRabbitMQConfig {
 	}
 
 	@Bean
-	LogEventDispatcher logEventDispatcher(final ConnectionFactory connectionFactory,
-			Jackson2JsonMessageConverter converter) {
+	@ConditionalOnMissingBean
+	LogEventDispatcher logEventDispatcher() {
 		return new RabbitMQLogEventDispatcher(rabbitTemplate);
 	}
 

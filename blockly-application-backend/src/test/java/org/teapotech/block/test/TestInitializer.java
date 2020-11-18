@@ -3,8 +3,9 @@
  */
 package org.teapotech.block.test;
 
+import java.util.Set;
+
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.teapotech.base.event.LogEventDispatcher;
 import org.teapotech.base.service.KeyValueStoreDelegate;
@@ -14,7 +15,6 @@ import org.teapotech.event.LogEvent;
  * @author jiangl
  *
  */
-@ComponentScan(basePackages = { "org.teapotech" })
 @Configuration
 public class TestInitializer {
 
@@ -36,6 +36,24 @@ public class TestInitializer {
 
 			@Override
 			public Object get(String key, String hash) {
+				return null;
+			}
+
+			@Override
+			public void put(String key, String hash, Object object) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void delete(String key, String... hash) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public Set<String> keys(String key) {
+				// TODO Auto-generated method stub
 				return null;
 			}
 		};

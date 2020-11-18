@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+org.teapotech.blockly.config.ApplicationRabbitMQConfig,\
+org.teapotech.base.config.RedisAutoConfig
