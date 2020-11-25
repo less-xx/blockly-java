@@ -4,11 +4,11 @@ import org.teapotech.blockly.block.def.CustomBlockDefinition;
 
 public class StartBlock extends CustomBlockDefinition {
 
-	public final static String TYPE = "start";
+	public final static String BLOCK_TYPE = "start";
 
 	@Override
 	public String getBlockType() {
-		return TYPE;
+		return BLOCK_TYPE;
 	}
 
 	@Override

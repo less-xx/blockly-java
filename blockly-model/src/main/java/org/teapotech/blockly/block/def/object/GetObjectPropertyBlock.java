@@ -4,11 +4,11 @@ import org.teapotech.blockly.block.def.CustomBlockDefinition;
 
 public class GetObjectPropertyBlock extends CustomBlockDefinition {
 
-	public final static String TYPE = "get_object_property";
+	public final static String BLOCK_TYPE = "get_object_property";
 
 	@Override
 	public String getBlockType() {
-		return TYPE;
+		return BLOCK_TYPE;
 	}
 
 	@Override

@@ -4,11 +4,11 @@ import org.teapotech.blockly.block.def.CustomBlockDefinition;
 
 public class HandleEventBlock extends CustomBlockDefinition {
 
-	public final static String TYPE = "handle_event";
+	public final static String BLOCK_TYPE = "handle_event";
 
 	@Override
 	public String getBlockType() {
-		return TYPE;
+		return BLOCK_TYPE;
 	}
 
 	@Override

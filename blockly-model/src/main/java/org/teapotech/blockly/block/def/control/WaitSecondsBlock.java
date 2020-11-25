@@ -4,11 +4,11 @@ import org.teapotech.blockly.block.def.CustomBlockDefinition;
 
 public class WaitSecondsBlock extends CustomBlockDefinition {
 
-	public final static String TYPE = "wait_seconds";
+	public final static String BLOCK_TYPE = "wait_seconds";
 
 	@Override
 	public String getBlockType() {
-		return TYPE;
+		return BLOCK_TYPE;
 	}
 
 	@Override

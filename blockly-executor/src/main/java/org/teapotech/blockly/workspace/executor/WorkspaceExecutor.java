@@ -15,7 +15,6 @@ import org.teapotech.blockly.block.executor.AbstractBlockExecutor;
 import org.teapotech.blockly.block.executor.BlockExecutionContext;
 import org.teapotech.blockly.block.executor.BlockExecutionProgress;
 import org.teapotech.blockly.block.executor.BlockExecutionProgress.BlockStatus;
-import org.teapotech.blockly.block.executor.BlockExecutorFactory;
 import org.teapotech.blockly.entity.WorkspaceExecution;
 import org.teapotech.blockly.entity.WorkspaceExecution.Status;
 import org.teapotech.blockly.event.EventDispatcher;
@@ -25,6 +24,7 @@ import org.teapotech.blockly.model.Variable;
 import org.teapotech.blockly.model.Workspace;
 import org.teapotech.blockly.util.BlockExecutorUtils;
 import org.teapotech.blockly.workspace.event.WorkspaceEvent;
+import org.teapotech.user.UserDelegate;
 
 /**
  * @author jiangl
@@ -48,10 +48,12 @@ public class WorkspaceExecutor {
 		this.threadGroup = new ThreadGroup("wexec-" + context.getWorkspaceId() + "-" + context.getInstanceId());
 		this.threadGroup.setDaemon(true);
 		LOG.info("Created workspace executor. ID: {}-{}", context.getWorkspaceId(), context.getInstanceId());
+		UserDelegate executedByUser = context.getExecutedBy();
 		workspaceExecution.setId(context.getInstanceId());
 		workspaceExecution.setStatus(Status.Waiting);
 		workspaceExecution.setWorkspaceId(workspace.getId());
-		workspaceExecution.setStartBy(context.getExecutedBy());
+		workspaceExecution.setStartByUserId(executedByUser.getUserId());
+		workspaceExecution.setStartByUserName(executedByUser.getUserName());
 		workspaceExecution.setTriggerTime(new Date());
 	}
 
@@ -59,9 +61,9 @@ public class WorkspaceExecutor {
 		return context;
 	}
 
-	public BlockExecutorFactory getBlockExecutorFactory() {
-		return context.getBlockExecutorFactory();
-	}
+//	public BlockExecutorFactory getBlockExecutorFactory() {
+//		return context.getBlockExecutorFactory();
+//	}
 
 	public WorkspaceExecution getWorkspaceExecution() {
 		return workspaceExecution;
@@ -105,12 +107,12 @@ public class WorkspaceExecutor {
 		List<String> eventBlockThreadNames = new ArrayList<String>();
 		for (Block block : startBlocks) {
 
-			if (block.getType().equals(StartBlock.TYPE)) {
+			if (block.getType().equals(StartBlock.BLOCK_TYPE)) {
 				entryPointThread = new BlockExecutionThread(block, this.threadGroup);
 				context.getBlockExecutionProgress().put(entryPointThread.getName(),
 						new BlockExecutionProgress(entryPointThread.getName()));
 
-			} else if (block.getType().equals(HandleEventBlock.TYPE)) {
+			} else if (block.getType().equals(HandleEventBlock.BLOCK_TYPE)) {
 				BlockExecutionThread bt = new BlockExecutionThread(block, this.threadGroup);
 				context.getBlockExecutionProgress().put(bt.getName(), new BlockExecutionProgress(bt.getName()));
 				bt.start();
@@ -171,8 +173,9 @@ public class WorkspaceExecutor {
 		this.threadGroup.interrupt();
 	}
 
-	public void stopExecution(String stoppedBy) {
-		workspaceExecution.setEndBy(stoppedBy);
+	public void stopExecution(UserDelegate stoppedBy) {
+		workspaceExecution.setEndByUserId(stoppedBy.getUserId());
+		workspaceExecution.setEndByUserName(stoppedBy.getUserName());
 		this.stopExecution();
 	}
 

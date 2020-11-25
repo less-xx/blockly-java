@@ -4,11 +4,11 @@ import org.teapotech.blockly.block.def.CustomBlockDefinition;
 
 public class ForEachInCollectionBlock extends CustomBlockDefinition {
 
-	public final static String TYPE = "foreach_in_collection";
+	public final static String BLOCK_TYPE = "foreach_in_collection";
 
 	@Override
 	public String getBlockType() {
-		return TYPE;
+		return BLOCK_TYPE;
 	}
 
 	@Override

@@ -48,11 +48,17 @@ public class WorkspaceExecution {
 	@Column(name = "end_time", nullable = true)
 	private Date endTime;
 
-	@Column(name = "start_by", nullable = true)
-	private String startBy;
+	@Column(name = "start_by_user_id", nullable = true)
+	private String startByUserId;
 
-	@Column(name = "end_by", nullable = true)
-	private String endBy;
+	@Column(name = "start_by_user_name")
+	private String startByUserName;
+
+	@Column(name = "end_by_user_id", nullable = true)
+	private String endByUserId;
+
+	@Column(name = "end_by_user_name", nullable = true)
+	private String endByUserName;
 
 	@Column(name = "message", nullable = true)
 	private String message;
@@ -124,20 +130,36 @@ public class WorkspaceExecution {
 		this.endTime = endTime;
 	}
 
-	public String getStartBy() {
-		return startBy;
+	public String getStartByUserId() {
+		return startByUserId;
 	}
 
-	public void setStartBy(String startBy) {
-		this.startBy = startBy;
+	public void setStartByUserId(String startByUserId) {
+		this.startByUserId = startByUserId;
 	}
 
-	public String getEndBy() {
-		return endBy;
+	public String getStartByUserName() {
+		return startByUserName;
 	}
 
-	public void setEndBy(String endBy) {
-		this.endBy = endBy;
+	public void setStartByUserName(String startByUserName) {
+		this.startByUserName = startByUserName;
+	}
+
+	public String getEndByUserId() {
+		return endByUserId;
+	}
+
+	public void setEndByUserId(String endByUserId) {
+		this.endByUserId = endByUserId;
+	}
+
+	public String getEndByUserName() {
+		return endByUserName;
+	}
+
+	public void setEndByUserName(String endByUserName) {
+		this.endByUserName = endByUserName;
 	}
 
 	public String getMessage() {

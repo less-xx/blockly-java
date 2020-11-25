@@ -12,6 +12,8 @@ import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.teapotech.blockly.exception.BlockExecutorNotFoundException;
+import org.teapotech.user.UserDelegate;
 
 /**
  * @author jiangl
@@ -21,14 +23,14 @@ public class DefaultBlockExecutionContext implements BlockExecutionContext {
 
 	private static Logger LOG = LoggerFactory.getLogger(DefaultBlockExecutionContext.class);
 
-	private final BlockExecutorFactory blockExecutorFactory;
+	private final BlockExecutorFactory[] blockExecutorFactories;
 	// private final EventDispatcher eventDispatcher;
 	// private final KeyValueStorageProvider kvStorageProvider;
 	// private final FileStorageProvider fileStorageProvider;
 	private final String workspaceId;
 	private final long instanceId;
 	private final File workingDir;
-	private final String executedBy;
+	private final UserDelegate executedBy;
 	private final Set<String> breakpoints = new HashSet<>();
 	private final Map<Class<?>, Object> contextObjects = new HashMap<>();
 	private boolean debug = false;
@@ -44,10 +46,10 @@ public class DefaultBlockExecutionContext implements BlockExecutionContext {
 	private Map<String, Object> globalVariables = new HashMap<String, Object>();
 	private final Map<String, BlockExecutionProgress> executionThreadInfo = new HashMap<>();
 
-	public DefaultBlockExecutionContext(String workspaceId, long instanceId, String executedBy, File workingDir,
-			BlockExecutorFactory blockExecutorFactory) {
+	public DefaultBlockExecutionContext(String workspaceId, long instanceId, UserDelegate executedBy, File workingDir,
+			BlockExecutorFactory[] blockExecutorFactories) {
 		this.executedBy = executedBy;
-		this.blockExecutorFactory = blockExecutorFactory;
+		this.blockExecutorFactories = blockExecutorFactories;
 		// this.eventDispatcher = eventDispatcher;
 		// this.kvStorageProvider = kvStorageProvider;
 		// this.fileStorageProvider = fileStorageProvider;
@@ -57,8 +59,13 @@ public class DefaultBlockExecutionContext implements BlockExecutionContext {
 	}
 
 	@Override
-	public BlockExecutorFactory getBlockExecutorFactory() {
-		return this.blockExecutorFactory;
+	public BlockExecutorFactory getBlockExecutorFactory(String blockType) throws BlockExecutorNotFoundException {
+		for (BlockExecutorFactory fac : this.blockExecutorFactories) {
+			if (fac.supportBlockType(blockType)) {
+				return fac;
+			}
+		}
+		throw new BlockExecutorNotFoundException("No block executor for block, type: " + blockType);
 	}
 
 	@Override
@@ -140,7 +147,7 @@ public class DefaultBlockExecutionContext implements BlockExecutionContext {
 	}
 
 	@Override
-	public String getExecutedBy() {
+	public UserDelegate getExecutedBy() {
 		return this.executedBy;
 	}
 

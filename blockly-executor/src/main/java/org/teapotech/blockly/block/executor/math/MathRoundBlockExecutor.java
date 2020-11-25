@@ -3,6 +3,7 @@
  */
 package org.teapotech.blockly.block.executor.math;
 
+import org.teapotech.blockly.block.def.BlockDefinition;
 import org.teapotech.blockly.block.def.annotation.BlockDef;
 import org.teapotech.blockly.block.executor.AbstractBlockExecutor;
 import org.teapotech.blockly.block.executor.BlockExecutionContext;
@@ -15,7 +16,7 @@ import org.teapotech.blockly.util.BlockExecutorUtils;
  * @author jiangl
  *
  */
-@BlockDef(blockType = "math_round", category = "math")
+@BlockDef(blockType = BlockDefinition.INTERNAL_BLOCK_TYPE_MATH_ROUND, category = "math")
 public class MathRoundBlockExecutor extends AbstractBlockExecutor {
 
 	public MathRoundBlockExecutor(Block block) {

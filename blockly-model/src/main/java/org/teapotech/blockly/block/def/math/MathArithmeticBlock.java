@@ -4,11 +4,11 @@ import org.teapotech.blockly.block.def.CustomBlockDefinition;
 
 public class MathArithmeticBlock extends CustomBlockDefinition {
 
-	public final static String TYPE = "math_arithmetic";
+	public final static String BLOCK_TYPE = "math_arithmetic";
 
 	@Override
 	public String getBlockType() {
-		return TYPE;
+		return BLOCK_TYPE;
 	}
 
 	@Override
@@ -42,11 +42,11 @@ public class MathArithmeticBlock extends CustomBlockDefinition {
 				          "MINUS"
 				        ],
 				        [
-				          "×",
+				          "ï¿½",
 				          "MULTIPLY"
 				        ],
 				        [
-				          "÷",
+				          "ï¿½",
 				          "DIVIDE"
 				        ],
 				        [

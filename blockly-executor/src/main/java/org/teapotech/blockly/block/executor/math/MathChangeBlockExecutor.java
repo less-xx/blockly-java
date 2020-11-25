@@ -3,6 +3,8 @@
  */
 package org.teapotech.blockly.block.executor.math;
 
+import org.teapotech.blockly.block.def.BlockDefinition;
+import org.teapotech.blockly.block.def.annotation.BlockDef;
 import org.teapotech.blockly.block.executor.AbstractBlockExecutor;
 import org.teapotech.blockly.block.executor.BlockExecutionContext;
 import org.teapotech.blockly.model.Block;
@@ -13,6 +15,7 @@ import org.teapotech.blockly.util.BlockExecutorUtils;
  * @author jiangl
  *
  */
+@BlockDef(blockType = BlockDefinition.INTERNAL_BLOCK_TYPE_MATH_CHANGE, category = "math")
 public class MathChangeBlockExecutor extends AbstractBlockExecutor {
 
 	public MathChangeBlockExecutor(Block block) {

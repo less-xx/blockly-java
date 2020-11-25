@@ -9,13 +9,13 @@ public class WatchFileSystemBlock extends CustomBlockDefinition implements FileR
 	public final static String EVENT_CHANGED = "CHANGED";
 	public final static String EVENT_DELETED = "DELETED";
 
-	public final static String TYPE = "watch_file_system";
+	public final static String BLOCK_TYPE = "watch_file_system";
 
 	private FileResource[] fileResources;
 
 	@Override
 	public String getBlockType() {
-		return TYPE;
+		return BLOCK_TYPE;
 	}
 
 	@Override

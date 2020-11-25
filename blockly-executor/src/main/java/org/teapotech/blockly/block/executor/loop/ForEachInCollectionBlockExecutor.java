@@ -56,7 +56,7 @@ public class ForEachInCollectionBlockExecutor extends AbstractBlockExecutor {
 		Object collectionObject = BlockExecutorUtils.execute(collectionBV, context);
 		if (!(collectionObject instanceof Collection<?>)) {
 			throw new InvalidBlockException(this.block.getId(), this.block.getType(),
-					"The input value of " + ForEachInCollectionBlock.TYPE + " block should be a collection.");
+					"The input value of " + ForEachInCollectionBlock.BLOCK_TYPE + " block should be a collection.");
 		}
 		Collection<?> collection = (Collection<?>) collectionObject;
 

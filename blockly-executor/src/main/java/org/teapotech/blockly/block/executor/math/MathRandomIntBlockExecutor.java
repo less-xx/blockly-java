@@ -4,6 +4,7 @@
 package org.teapotech.blockly.block.executor.math;
 
 import org.apache.commons.lang3.RandomUtils;
+import org.teapotech.blockly.block.def.BlockDefinition;
 import org.teapotech.blockly.block.def.annotation.BlockDef;
 import org.teapotech.blockly.block.executor.AbstractBlockExecutor;
 import org.teapotech.blockly.block.executor.BlockExecutionContext;
@@ -16,7 +17,7 @@ import org.teapotech.blockly.util.BlockExecutorUtils;
  * @author jiangl
  *
  */
-@BlockDef(blockType = "math_random_int", category = "math")
+@BlockDef(blockType = BlockDefinition.INTERNAL_BLOCK_TYPE_MATH_RANDOM_INT, category = "math")
 public class MathRandomIntBlockExecutor extends AbstractBlockExecutor {
 
 	/**

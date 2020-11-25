@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.slf4j.Logger;
+import org.teapotech.blockly.exception.BlockExecutorNotFoundException;
+import org.teapotech.user.UserDelegate;
 
 /**
  * @author jiangl
@@ -22,7 +24,7 @@ public interface BlockExecutionContext {
 
 	File getWorkingDir();
 
-	BlockExecutorFactory getBlockExecutorFactory();
+	BlockExecutorFactory getBlockExecutorFactory(String blockType) throws BlockExecutorNotFoundException;
 
 	Object getVariable(String id);
 
@@ -46,7 +48,7 @@ public interface BlockExecutionContext {
 
 	// EventDispatcher getEventDispatcher();
 
-	String getExecutedBy();
+	UserDelegate getExecutedBy();
 
 	Set<String> getBreakPoints();
 

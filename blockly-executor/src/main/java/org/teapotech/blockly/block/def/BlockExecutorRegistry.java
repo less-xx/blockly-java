@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -32,20 +31,27 @@ import org.teapotech.blockly.resource.FileResource;
 import org.teapotech.blockly.resource.FileResourceSupport;
 import org.teapotech.blockly.util.BlockXmlUtils;
 import org.teapotech.blockly.util.JSONUtils;
+import org.teapotech.util.JsonHelper;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 
 public class BlockExecutorRegistry {
 
+	private final JsonHelper jsonHelper;
+
 	private static Logger LOG = LoggerFactory.getLogger(BlockExecutorRegistry.class);
-	private final Map<String, JsonNode> defaultCategories = new HashMap<>();
+	private final Map<String, CategoryDefinition> categories = new HashMap<>();
 	private final Map<BlockDefinition, Class<? extends AbstractBlockExecutor>> blockExecutors = new HashMap<>();
 	private UserFileResourceProvider userFileResourceProvider;
 
 	private static final String[] CATEGORY_ORDERS = { CategoryID.ID_START_EXIT, CategoryID.ID_BASIC,
 			CategoryID.ID_VARIABLES, CategoryID.ID_CONTROL, CategoryID.ID_EVENTS, CategoryID.ID_FILE_OPERATIONS,
 			CategoryID.ID_RESOURCES };
+
+	public BlockExecutorRegistry(JsonHelper jsonHelper) {
+		this.jsonHelper = jsonHelper;
+	}
 
 	public BlockDefinition getBlockDefinition(String blockType) {
 		return blockExecutors.keySet().stream().filter(bdef -> bdef.getBlockType().equals(blockType)).findAny()
@@ -161,12 +167,10 @@ public class BlockExecutorRegistry {
 
 	private void loadDefaultCategories() throws IOException {
 		InputStream in = getClass().getClassLoader().getResourceAsStream("category-definition.json");
-		ArrayNode an = (ArrayNode) JSONUtils.getObject(in);
-		Iterator<JsonNode> it = an.iterator();
-		while (it.hasNext()) {
-			JsonNode n = it.next();
-			String id = n.get("id").asText();
-			defaultCategories.put(id, n);
+		List<CategoryDefinition> list = jsonHelper.getObject(in, new TypeReference<List<CategoryDefinition>>() {
+		});
+		for (CategoryDefinition def : list) {
+			categories.put(def.getId(), def);
 		}
 	}
 
@@ -184,15 +188,15 @@ public class BlockExecutorRegistry {
 				cat = op.get();
 				cl = cat.getCategories();
 			} else {
-				JsonNode n = this.defaultCategories.get(cid);
+				CategoryDefinition n = this.categories.get(cid);
 				if (n == null) {
 					LOG.error("Cannot find category by ID: {}", cid);
 					continue;
 				}
 				cat = new Category();
 				cat.setId(cid);
-				cat.setName(n.get("name").asText());
-				cat.setCategorystyle(n.get("style").asText());
+				cat.setName(n.getName());
+				cat.setCategorystyle(n.getStyle());
 				cl.add(cat);
 				cl = cat.getCategories();
 			}
@@ -227,5 +231,14 @@ public class BlockExecutorRegistry {
 		});
 
 		return result;
+	}
+
+	public void registerCategory(CategoryDefinition catDef) {
+		this.categories.put(catDef.getId(), catDef);
+	}
+
+	public void registerBlockExecutor(BlockDefinition blockDef, Class<? extends AbstractBlockExecutor> executorClass) {
+		this.blockExecutors.put(blockDef, executorClass);
+		LOG.info("Registered block, Type: {}, Executor class: {}", blockDef.getBlockType(), executorClass.getName());
 	}
 }

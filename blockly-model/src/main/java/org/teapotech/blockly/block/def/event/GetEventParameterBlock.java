@@ -4,11 +4,11 @@ import org.teapotech.blockly.block.def.CustomBlockDefinition;
 
 public class GetEventParameterBlock extends CustomBlockDefinition {
 
-	public final static String TYPE = "get_event_param";
+	public final static String BLOCK_TYPE = "get_event_param";
 
 	@Override
 	public String getBlockType() {
-		return TYPE;
+		return BLOCK_TYPE;
 	}
 
 	@Override

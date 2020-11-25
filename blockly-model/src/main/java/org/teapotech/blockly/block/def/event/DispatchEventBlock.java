@@ -4,9 +4,11 @@ import org.teapotech.blockly.block.def.CustomBlockDefinition;
 
 public class DispatchEventBlock extends CustomBlockDefinition {
 
+	public static String BLOCK_TYPE = "dispatch_event";
+
 	@Override
 	public String getBlockType() {
-		return "dispatch_event";
+		return BLOCK_TYPE;
 	}
 
 	@Override

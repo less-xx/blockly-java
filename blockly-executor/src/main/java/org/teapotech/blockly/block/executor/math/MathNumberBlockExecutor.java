@@ -4,6 +4,7 @@
 package org.teapotech.blockly.block.executor.math;
 
 import org.apache.commons.lang3.math.NumberUtils;
+import org.teapotech.blockly.block.def.BlockDefinition;
 import org.teapotech.blockly.block.def.annotation.BlockDef;
 import org.teapotech.blockly.block.executor.AbstractBlockExecutor;
 import org.teapotech.blockly.block.executor.BlockExecutionContext;
@@ -16,7 +17,7 @@ import org.teapotech.blockly.model.Field;
  * @author jiangl
  *
  */
-@BlockDef(blockType = "math_number", category = "math")
+@BlockDef(blockType = BlockDefinition.INTERNAL_BLOCK_TYPE_MATH_NUMBER, category = "math")
 public class MathNumberBlockExecutor extends AbstractBlockExecutor {
 
 	public MathNumberBlockExecutor(Block block) {

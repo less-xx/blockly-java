@@ -3,6 +3,7 @@
  */
 package org.teapotech.blockly.block.executor.loop;
 
+import org.teapotech.blockly.block.def.BlockDefinition;
 import org.teapotech.blockly.block.def.annotation.BlockDef;
 import org.teapotech.blockly.block.executor.AbstractBlockExecutor;
 import org.teapotech.blockly.block.executor.BlockExecutionContext;
@@ -18,7 +19,7 @@ import org.teapotech.blockly.util.BlockExecutorUtils;
  * @author jiangl
  *
  */
-@BlockDef(blockType = "controls_whileUntil", category = "control", style = "control_blocks")
+@BlockDef(blockType = BlockDefinition.INTERNAL_BLOCK_TYPE_CONTROLS_WHILE_UNTIL, category = "control", style = "control_blocks")
 public class ControlsWhileUntilBlockExecutor extends AbstractBlockExecutor {
 
 	/**

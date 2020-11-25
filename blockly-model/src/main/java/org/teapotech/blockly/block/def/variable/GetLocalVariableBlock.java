@@ -4,11 +4,11 @@ import org.teapotech.blockly.block.def.CustomBlockDefinition;
 
 public class GetLocalVariableBlock extends CustomBlockDefinition {
 
-	public final static String TYPE = "get_local_variable";
+	public final static String BLOCK_TYPE = "get_local_variable";
 
 	@Override
 	public String getBlockType() {
-		return TYPE;
+		return BLOCK_TYPE;
 	}
 
 	@Override

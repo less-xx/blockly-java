@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Objects;
 
 import org.apache.commons.lang3.ClassUtils;
+import org.teapotech.blockly.block.def.BlockDefinition;
 import org.teapotech.blockly.block.def.annotation.BlockDef;
 import org.teapotech.blockly.block.executor.AbstractBlockExecutor;
 import org.teapotech.blockly.block.executor.BlockExecutionContext;
@@ -21,7 +22,7 @@ import org.teapotech.blockly.util.BlockExecutorUtils;
  * @author jiangl
  *
  */
-@BlockDef(blockType = "logic_compare", category = "control", style = "control_blocks")
+@BlockDef(blockType = BlockDefinition.INTERNAL_BLOCK_TYPE_LOGIC_COMPARE, category = "control", style = "control_blocks")
 public class LogicCompareBlockExecutor extends AbstractBlockExecutor {
 
 	/**

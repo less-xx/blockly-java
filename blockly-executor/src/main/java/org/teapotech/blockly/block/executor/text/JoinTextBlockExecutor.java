@@ -5,6 +5,7 @@ package org.teapotech.blockly.block.executor.text;
 
 import java.util.List;
 
+import org.teapotech.blockly.block.def.BlockDefinition;
 import org.teapotech.blockly.block.def.annotation.BlockDef;
 import org.teapotech.blockly.block.executor.AbstractBlockExecutor;
 import org.teapotech.blockly.block.executor.BlockExecutionContext;
@@ -18,7 +19,7 @@ import org.teapotech.blockly.util.BlockExecutorUtils;
  * @author jiangl
  *
  */
-@BlockDef(blockType = "text_join", category = "basic", style = "basic_blocks")
+@BlockDef(blockType = BlockDefinition.INTERNAL_BLOCK_TYPE_TEXT_JOIN, category = "basic", style = "basic_blocks")
 public class JoinTextBlockExecutor extends AbstractBlockExecutor {
 
 	/**

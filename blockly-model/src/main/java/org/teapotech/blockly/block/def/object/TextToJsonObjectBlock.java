@@ -4,11 +4,11 @@ import org.teapotech.blockly.block.def.CustomBlockDefinition;
 
 public class TextToJsonObjectBlock extends CustomBlockDefinition {
 
-	public final static String TYPE = "text_to_json";
+	public final static String BLOCK_TYPE = "text_to_json";
 
 	@Override
 	public String getBlockType() {
-		return TYPE;
+		return BLOCK_TYPE;
 	}
 
 	@Override

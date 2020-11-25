@@ -16,6 +16,7 @@ import org.teapotech.blockly.model.Category;
 import org.teapotech.blockly.model.Workspace;
 import org.teapotech.blockly.util.BlockXmlUtils;
 import org.teapotech.blockly.util.JSONUtils;
+import org.teapotech.util.JsonHelper;
 
 public class TestBlockExecutorRegistry {
 
@@ -26,7 +27,7 @@ public class TestBlockExecutorRegistry {
 
 	@BeforeAll
 	static void init() throws Exception {
-		blockDefRegistry = new BlockExecutorRegistry();
+		blockDefRegistry = new BlockExecutorRegistry(JsonHelper.builder().build());
 		blockDefRegistry.setUserFileResourceProvider(new UserFileResourceProvider() {
 
 			@Override

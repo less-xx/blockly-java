@@ -6,12 +6,14 @@ package org.teapotech.blockly.workspace;
 import java.io.File;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.teapotech.blockly.block.def.BlockExecutorRegistry;
 import org.teapotech.blockly.block.executor.BlockExecutorFactory;
 import org.teapotech.blockly.block.executor.DefaultBlockExecutionContext;
+import org.teapotech.blockly.block.executor.DefaultBlockExecutorFactory;
 import org.teapotech.blockly.block.executor.file.UserFileResource;
 import org.teapotech.blockly.entity.WorkspaceExecution;
 import org.teapotech.blockly.entity.WorkspaceExecution.Status;
@@ -29,6 +31,8 @@ import org.teapotech.blockly.model.Workspace;
 import org.teapotech.blockly.util.BlockXmlUtils;
 import org.teapotech.blockly.workspace.TestBlockExecutorRegistry.TestUserFileResource;
 import org.teapotech.blockly.workspace.executor.WorkspaceExecutor;
+import org.teapotech.user.RoleDelegate;
+import org.teapotech.user.UserDelegate;
 import org.teapotech.util.JsonHelper;
 
 /**
@@ -37,7 +41,7 @@ import org.teapotech.util.JsonHelper;
  */
 public class TestWorkspaceExecutor {
 
-	private static BlockExecutorFactory factory;
+	private static BlockExecutorFactory[] factories;
 	private static BlockExecutorRegistry blockDefRegistry;
 	private static JsonHelper jsonHelper = JsonHelper.builder().build();
 	private static KeyValueStorageProvider kvStorageProvider = new InMemoryKeyValueStorageProvider();
@@ -46,7 +50,23 @@ public class TestWorkspaceExecutor {
 	private static SimpleEventExchange eventExchange = new SimpleEventExchange();
 	private static EventDispatcher eventDispatcher = new SimpleEventDispatcher(eventExchange);
 	private static BlockEventListenerFactory blockEventListenerFac = new SimpleBlockEventListenerFactory(eventExchange);
-	private static String executedBy = "UnitTest";
+	private static UserDelegate executedBy = new UserDelegate() {
+
+		@Override
+		public String getUserName() {
+			return "Test User";
+		}
+
+		@Override
+		public String getUserId() {
+			return "test_user";
+		}
+
+		@Override
+		public Set<RoleDelegate> getRoles() {
+			return null;
+		}
+	};
 	private static UserFileResource TEST_USER_FILE_RESOURCE = new TestUserFileResource("test-user-file-resource1",
 			"Test User File Resource 1", "C:\\tmp");
 	private static List<UserFileResource> userFileResources = List.of(TEST_USER_FILE_RESOURCE);
@@ -65,16 +85,17 @@ public class TestWorkspaceExecutor {
 
 	@BeforeAll
 	static void init() throws Exception {
-		blockDefRegistry = new BlockExecutorRegistry();
+		blockDefRegistry = new BlockExecutorRegistry(JsonHelper.builder().build());
 		blockDefRegistry.setUserFileResourceProvider(userFileResourceProvider);
 		blockDefRegistry.loadBlockExecutors();
-		factory = BlockExecutorFactory.build(blockDefRegistry, blockEventListenerFac, jsonHelper);
+		factories = new BlockExecutorFactory[] {
+				DefaultBlockExecutorFactory.build(blockDefRegistry, blockEventListenerFac, jsonHelper) };
 	}
 
 	private DefaultBlockExecutionContext createBlockExecutionContext(Workspace w, long instanceId) {
 		File workingDir = new File(workingDirPath);
 		DefaultBlockExecutionContext context = new DefaultBlockExecutionContext(w.getId(), instanceId, executedBy,
-				workingDir, factory);
+				workingDir, factories);
 		context.setContextObject(EventDispatcher.class, eventDispatcher);
 		context.setContextObject(KeyValueStorageProvider.class, kvStorageProvider);
 		context.setContextObject(FileStorageProvider.class, fileStorageProvider);

@@ -3,6 +3,7 @@
  */
 package org.teapotech.blockly.block.executor.text;
 
+import org.teapotech.blockly.block.def.BlockDefinition;
 import org.teapotech.blockly.block.def.annotation.BlockDef;
 import org.teapotech.blockly.block.executor.AbstractBlockExecutor;
 import org.teapotech.blockly.block.executor.BlockExecutionContext;
@@ -14,7 +15,7 @@ import org.teapotech.blockly.model.Field;
  * @author jiangl
  *
  */
-@BlockDef(blockType = "text", category = "basic", style = "basic_blocks")
+@BlockDef(blockType = BlockDefinition.INTERNAL_BLOCK_TYPE_TEXT, category = "basic", style = "basic_blocks")
 public class TextBlockExecutor extends AbstractBlockExecutor {
 
 	public TextBlockExecutor(Block block) {
