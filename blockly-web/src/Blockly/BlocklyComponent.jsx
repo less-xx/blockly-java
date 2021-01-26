@@ -31,6 +31,7 @@ import toolboxConfigXml from './toolbox';
 import customBlockTemplate from './CustomBlockTemplate.json'
 import './CustomBlockTheme'
 import BlocklyTheme from './CustomBlockTheme';
+import BlocklyService from '../Service/BlockService'
 
 Blockly.setLocale(locale);
 
@@ -43,28 +44,32 @@ class BlocklyComponent extends React.Component {
 
     componentDidMount() {
 
-        var toolboxConfig = this.getToolbox();
-        console.log(customBlockTemplate);
+        const { initialXml, children, ...rest } = this.props;
 
-        customBlockTemplate.forEach(bt=>{
-            this.registerBlock(bt.type, bt.definition);
+        BlocklyService.fetchBlockDefinitions((blockDefs)=>{
+            blockDefs.forEach(bt=>{
+                this.registerBlock(bt.type, bt.definition);
+            })
         })
 
-        const { initialXml, children, ...rest } = this.props;
-        this.primaryWorkspace = Blockly.inject(
-            this.blocklyDiv.current,
-            {
-                toolbox: toolboxConfig.documentElement,
-                theme: BlocklyTheme,
-                ...rest
-            },
-        );
+        //var toolboxConfig = this.getToolbox();
+       
+        BlocklyService.fetchToolbox((toolbox)=>{
+            this.primaryWorkspace = Blockly.inject(
+                this.blocklyDiv.current,
+                {
+                    toolbox: toolbox,
+                    theme: BlocklyTheme,
+                    ...rest
+                },
+            );
+            this.primaryWorkspace.addChangeListener(e => this.onWorkspaceChange(e));
 
-        this.primaryWorkspace.addChangeListener(e => this.onWorkspaceChange(e));
+            if (initialXml) {
+                Blockly.Xml.domToWorkspace(Blockly.Xml.textToDom(initialXml), this.primaryWorkspace);
+            }
+        })
 
-        if (initialXml) {
-            Blockly.Xml.domToWorkspace(Blockly.Xml.textToDom(initialXml), this.primaryWorkspace);
-        }
     }
 
     get workspace() {

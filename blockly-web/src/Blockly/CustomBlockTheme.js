@@ -48,6 +48,11 @@ const BlocklyTheme = {
             "colourPrimary": "#2C73D2",
             "colourSecondary": "#2C73D2",
             "colourTertiary": "#2C73D2"
+        },
+        "resource_blocks": {
+            "colourPrimary": "#69C1F5",
+            "colourSecondary": "#9BD4F5",
+            "colourTertiary": "#9BD4F5"
         }
     },
     'categoryStyles': {
@@ -77,6 +82,9 @@ const BlocklyTheme = {
         },
         "file_operations": {
             "colour": "#2C73D2"
+        },
+        "resources": {
+            "colour": "#69C1F5"
         }
     },
     'componentStyles': {

@@ -50,8 +50,7 @@ public class TestResourceController {
 				StandardCharsets.UTF_8, getClass().getClassLoader()));
 		resConf.setId(TEST_REST_GET_SERVICE_RESOURCE_CONFIG_ID_01);
 		resConf.setName("Test REST Get Service 01");
-		resConf.setType(Type.REST_SERVICE_GET);
+		resConf.setType(Type.REST_SERVICE);
 		return resConf;
 	}
-
 }

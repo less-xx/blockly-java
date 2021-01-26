@@ -218,4 +218,48 @@
 		"tooltip": "The event is an object {'event': 'CREATED|CHANGED|DELETED', 'file':'File object'}",
 		"helpUrl": ""
 	}
+},{
+	"type": "foreach_in_collection",
+	"definition": {
+		"type": "foreach_in_collection",
+		"message0": "foreach %1 in %2 do %3",
+		"args0": [
+			{
+				"type": "field_input",
+				"name": "VAR",
+				"text": "item"
+			},
+			{
+				"type": "input_value",
+				"name": "COLLECTION"
+			},
+			{
+				"type": "input_statement",
+				"name": "DO"
+			}
+		],
+		"previousStatement": null,
+		"nextStatement": null,
+		"style": "control_blocks",
+		"tooltip": "",
+		"helpUrl": ""
+	}
+},{
+	"type": "text_to_json",
+	"definition": {
+		"type": "text_to_json",
+		"message0": "convert text %1 to json",
+		"args0": [
+			{
+				"type": "input_value",
+				"name": "INPUT_TEXT",
+				"check": "String"
+			}
+		],
+		"inputsInline": true,
+		"output": null,
+		"style": "basic_blocks",
+		"tooltip": "",
+		"helpUrl": ""
+	}
 }]

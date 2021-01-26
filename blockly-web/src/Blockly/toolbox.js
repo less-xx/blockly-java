@@ -6,6 +6,7 @@ const toolboxConfigXml = `
 	</category>
 	<category name="Basic" categorystyle="basic">
 		<block type="get_object_property"/>
+		<block type="text_to_json"/>
 		<block type="text_print"/>
 		<block type="text_join"/>
 		<block type="text"/>
@@ -26,6 +27,7 @@ const toolboxConfigXml = `
 		</block>
 		<block type="controls_flow_statements"/>
 		<block type="controls_whileUntil"/>
+		<block type="foreach_in_collection"/>
 		<block type="controls_if"/>
 		<block type="logic_compare"/>
 		<block type="controls_repeat_ext"/>
@@ -52,6 +54,5 @@ const toolboxConfigXml = `
 		<block type="math_arithmetic"/>
 	</category>
 </xml>
-
 `
 export default toolboxConfigXml;
