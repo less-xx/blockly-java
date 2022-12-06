@@ -37,20 +37,20 @@ public class ControlsIfBlockExecutor extends AbstractBlockExecutor {
             hasElse = false;
         }
 
-        Block ifCondBlock = this.block.getInputs().get(InputType.IF + "0").getBlock();
+        Block ifCondBlock = getInputBlockByKey(InputType.IF + "0");
         if (ifCondBlock == null) {
             throw new InvalidBlockException(this.block.getId(), this.block.getType(),
                     "Missing if condition block. Block type: " + this.block.getType() + ", id: " + this.block.getId());
         }
         Boolean ifCondition = (Boolean) BlockExecutionHelper.execute(ifCondBlock, null, context);
         if (ifCondition) {
-            Block doBlock = this.block.getInputs().get(InputType.DO + "0").getBlock();
+            Block doBlock = getInputBlockByKey(InputType.DO + "0");
             if (doBlock != null) {
                 BlockExecutionHelper.execute(doBlock, null, context);
             }
         } else if (elseIfCount > 0) {
             for (int i = 1; i <= elseIfCount; i++) {
-                Block elseIfCondBlock = this.block.getInputs().get(InputType.IF + i).getBlock();
+                Block elseIfCondBlock = getInputBlockByKey(InputType.IF + i);
                 if (elseIfCondBlock == null) {
                     throw new InvalidBlockException(this.block.getId(), this.block.getType(),
                             "Missing elseif condition block. Block type: " + this.block.getType() + ", id: "
@@ -58,7 +58,7 @@ public class ControlsIfBlockExecutor extends AbstractBlockExecutor {
                 }
                 Boolean elseIfCondition = (Boolean) BlockExecutionHelper.execute(elseIfCondBlock, null, context);
                 if (elseIfCondition) {
-                    Block doBlock = this.block.getInputs().get(InputType.DO + i).getBlock();
+                    Block doBlock = getInputBlockByKey(InputType.DO + i);
                     if (doBlock != null) {
                         BlockExecutionHelper.execute(doBlock, null, context);
                     }
@@ -66,7 +66,7 @@ public class ControlsIfBlockExecutor extends AbstractBlockExecutor {
                 }
             }
         } else if (hasElse) {
-            Block doBlock = this.block.getInputs().get(InputType.ELSE).getBlock();
+            Block doBlock = getInputBlockByKey(InputType.ELSE);
             if (doBlock != null) {
                 BlockExecutionHelper.execute(doBlock, null, context);
             }

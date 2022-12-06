@@ -37,8 +37,8 @@ public class LogicCompareBlockExecutor extends AbstractBlockExecutor {
             throw new InvalidBlockException(this.block.getId(), this.block.getType(),
                     "Invalid OP field value. Block type: " + this.block.getType() + ", id: " + this.block.getId());
         }
-        Block A = this.block.getInputs().get("A").getBlock();
-        Block B = this.block.getInputs().get("B").getBlock();
+        Block A = getInputBlockByKey("A");
+        Block B = getInputBlockByKey("B");
         if (A == null || B == null) {
             throw new InvalidBlockException(this.block.getId(), this.block.getType(),
                     "Missing compare element. " + this.block.getType() + ", id: " + this.block.getId());

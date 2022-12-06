@@ -26,7 +26,7 @@ public class PrintTextBlockExecutor extends AbstractBlockExecutor {
     @Override
     protected Object doExecute(BlockExecutionContext context) throws Exception {
 
-        Block inputBlock = this.block.getInputs().get(Block.InputType.TEXT).getBlock();
+        Block inputBlock = getInputBlockByKey(Block.InputType.TEXT);
         Shadow inputShadow = this.block.getInputs().get(Block.InputType.TEXT).getShadow();
 
         if (inputBlock == null && inputShadow == null) {

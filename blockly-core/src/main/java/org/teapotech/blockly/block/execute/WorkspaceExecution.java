@@ -7,7 +7,7 @@ import org.teapotech.blockly.user.UserDelegate;
 public class WorkspaceExecution {
 
     public static enum Status {
-        Waiting, Running, Stopping, Stopped, Succeeded, Failed, Paused
+        Waiting, Running, Stopping, Stopped, Succeeded, Failed, Paused, Timeout
     }
 
     private final long instanceId;

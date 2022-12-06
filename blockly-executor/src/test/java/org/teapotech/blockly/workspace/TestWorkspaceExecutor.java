@@ -3,6 +3,8 @@
  */
 package org.teapotech.blockly.workspace;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.File;
 import java.io.InputStream;
 import java.util.List;
@@ -12,6 +14,8 @@ import org.junit.jupiter.api.Test;
 import org.teapotech.blockly.block.execute.BlockExecutorFactory;
 import org.teapotech.blockly.block.execute.DefaultBlockExecutionContext;
 import org.teapotech.blockly.block.execute.DefaultBlockExecutorFactory;
+import org.teapotech.blockly.block.execute.WorkspaceExecution;
+import org.teapotech.blockly.block.execute.WorkspaceExecution.Status;
 import org.teapotech.blockly.execute.event.BlockEventListenerFactory;
 import org.teapotech.blockly.execute.event.EventDispatcher;
 import org.teapotech.blockly.execute.event.SimpleBlockEventListenerFactory;
@@ -111,6 +115,41 @@ public class TestWorkspaceExecutor {
             WorkspaceExecutor wExecutor = new WorkspaceExecutor(w, context);
             wExecutor.execute();
             wExecutor.waitFor(5000);
+            WorkspaceExecution execution = wExecutor.getWorkspaceExecution();
+            assertEquals(Status.Succeeded, execution.getStatus());
+        }
+    }
+
+    @Test
+    public void testRunWorkspace_02() throws Exception {
+        try (InputStream in = getClass().getClassLoader().getResourceAsStream("workspace02.json");) {
+            long testInstanceId = 1;
+            Workspace w = jsonHelper.getObject(in, Workspace.class);
+            w.setId("testRunWorkspace_02");
+            DefaultBlockExecutionContext context = createBlockExecutionContext(w, testInstanceId);
+            WorkspaceExecutor wExecutor = new WorkspaceExecutor(w, context);
+            wExecutor.setExecutionTimeout(2);
+            wExecutor.execute();
+            wExecutor.waitFor(30000);
+            WorkspaceExecution execution = wExecutor.getWorkspaceExecution();
+            assertEquals(Status.Timeout, execution.getStatus());
+            System.out.println(execution.getMessage());
+        }
+    }
+
+    @Test
+    public void testRunWorkspace_03() throws Exception {
+        try (InputStream in = getClass().getClassLoader().getResourceAsStream("workspace03.json");) {
+            long testInstanceId = 1;
+            Workspace w = jsonHelper.getObject(in, Workspace.class);
+            w.setId("testRunWorkspace_03");
+            DefaultBlockExecutionContext context = createBlockExecutionContext(w, testInstanceId);
+            WorkspaceExecutor wExecutor = new WorkspaceExecutor(w, context);
+            wExecutor.execute();
+            wExecutor.waitFor(5000);
+            WorkspaceExecution execution = wExecutor.getWorkspaceExecution();
+            assertEquals(Status.Failed, execution.getStatus());
+            System.out.println(execution.getMessage());
         }
     }
 

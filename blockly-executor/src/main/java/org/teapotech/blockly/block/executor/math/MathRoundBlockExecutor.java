@@ -33,7 +33,7 @@ public class MathRoundBlockExecutor extends AbstractBlockExecutor {
                             + this.block.getId());
         }
 
-        Block valueBlock = block.getInputs().get(InputType.NUM).getBlock();
+        Block valueBlock = getInputBlockByKey(InputType.NUM);
         Shadow valueShadow = block.getInputs().get(InputType.NUM).getShadow();
         Number numValue = (Number) BlockExecutionHelper.execute(valueBlock, valueShadow, context);
 

@@ -25,7 +25,7 @@ public class TextBlockExecutor extends AbstractBlockExecutor {
 
     @Override
     protected Object doExecute(BlockExecutionContext context) throws Exception {
-        Block inputBlock = this.block.getInputs().get(Block.InputType.TEXT).getBlock();
+        Block inputBlock = getInputBlockByKey(Block.InputType.TEXT);
         if (inputBlock == null) {
             throw new InvalidBlockException(this.block.getId(), this.block.getType(),
                     "Missing value. Block type: " + this.block.getType() + ", id: " + this.block.getId());

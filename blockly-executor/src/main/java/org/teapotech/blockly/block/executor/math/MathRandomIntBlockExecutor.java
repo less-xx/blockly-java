@@ -28,14 +28,14 @@ public class MathRandomIntBlockExecutor extends AbstractBlockExecutor {
     @Override
     protected Object doExecute(BlockExecutionContext context) throws Exception {
 
-        Block fromBlock = this.block.getInputs().get(InputType.FROM).getBlock();
+        Block fromBlock = getInputBlockByKey(InputType.FROM);
         Shadow fromShadow = this.block.getInputs().get(InputType.FROM).getShadow();
         if (fromBlock == null && fromShadow == null) {
             throw new InvalidBlockException(this.block.getId(), this.block.getType(),
                     "Invalid FROM field value. Block type: " + this.block.getType() + ", id: " + this.block.getId());
         }
 
-        Block toBlock = this.block.getInputs().get(InputType.TO).getBlock();
+        Block toBlock = getInputBlockByKey(InputType.TO);
         Shadow toShadow = this.block.getInputs().get(InputType.TO).getShadow();
         if (toBlock == null && toShadow == null) {
             throw new InvalidBlockException(this.block.getId(), this.block.getType(),

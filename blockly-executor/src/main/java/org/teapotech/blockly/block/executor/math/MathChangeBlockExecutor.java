@@ -29,7 +29,7 @@ public class MathChangeBlockExecutor extends AbstractBlockExecutor {
     protected Object doExecute(BlockExecutionContext context) throws Exception {
         Variable var = (Variable) this.block.getFieldValue(FieldType.VAR);
         Number n = (Number) context.getVariableValue("_var_" + var.id());
-        Block deltaValueBlock = this.block.getInputs().get("DELTA").getBlock();
+        Block deltaValueBlock = getInputBlockByKey("DELTA");
         Shadow deltaValueShadow = this.block.getInputs().get("DELTA").getShadow();
         if (deltaValueBlock == null && deltaValueShadow == null) {
             throw new InvalidBlockException(this.block.getId(), this.block.getType(),

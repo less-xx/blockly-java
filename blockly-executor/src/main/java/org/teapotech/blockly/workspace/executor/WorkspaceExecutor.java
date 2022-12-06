@@ -128,9 +128,9 @@ public class WorkspaceExecutor {
                     break;
                 }
             }
-
-            entryPointThread.start();
             startMonitoring();
+            entryPointThread.start();
+
         } else {
             LOG.warn("Cannot find start block");
         }
@@ -151,21 +151,24 @@ public class WorkspaceExecutor {
     }
 
     public void waitFor(long milliSec) {
+        if (monitoringThread == null) {
+            LOG.warn("Monitoring thread didn't start.");
+            return;
+        }
         try {
             monitoringThread.join(milliSec);
         } catch (InterruptedException e) {
-
         }
     }
 
     public void stopExecution() {
-        workspaceExecution.setStatus(Status.Stopping);
         this.context.setStopped(true);
         this.threadGroup.interrupt();
     }
 
     public void stopExecution(UserDelegate stoppedBy) {
         workspaceExecution.setEndBy(stoppedBy);
+        workspaceExecution.setStatus(Status.Stopping);
         this.stopExecution();
     }
 
@@ -186,10 +189,14 @@ public class WorkspaceExecutor {
             try {
                 BlockExecutionHelper.execute(startBlock, null, context);
             } catch (ExitBlockExecutionException e) {
+                workspaceExecution.setStatus(Status.Succeeded);
                 stopExecution();
             } catch (Exception e) {
                 context.getLogger().error(e.getMessage());
                 LOG.error(e.getMessage(), e);
+                workspaceExecution.setStatus(Status.Failed);
+                workspaceExecution.setMessage(e.getMessage());
+                stopExecution();
             }
 
             String name = Thread.currentThread().getName();
@@ -232,6 +239,7 @@ public class WorkspaceExecutor {
                         LOG.warn("Workspace execution time out, instance ID: {}, workspace ID: {}. Duration: {}",
                                 context.getInstanceId(), workspace.getId(), duration);
                         workspaceExecution.setMessage("Workspace execution time out");
+                        workspaceExecution.setStatus(Status.Timeout);
                         stopExecution();
                     }
                 }
@@ -257,9 +265,15 @@ public class WorkspaceExecutor {
             LOG.info("All block execution threads are stopped. Ouput dir: {}",
                     context.getWorkingDir().getAbsolutePath());
             workspaceExecution.setEndTime(new Date());
-            workspaceExecution.setStatus(Status.Stopped);
-            context.getContextObject(EventDispatcher.class).dispatchWorkspaceEvent(
-                    new WorkspaceEvent(context.getWorkspaceId(), context.getInstanceId(), Status.Stopped));
+            if (context.isStopped()) {
+                if (workspaceExecution.getStatus() == Status.Stopping) {
+                    workspaceExecution.setStatus(Status.Stopped);
+                }
+            } else {
+                workspaceExecution.setStatus(Status.Succeeded);
+            }
+            context.getContextObject(EventDispatcher.class).dispatchWorkspaceEvent(new WorkspaceEvent(
+                    context.getWorkspaceId(), context.getInstanceId(), workspaceExecution.getStatus()));
             if (!context.isStopped()) {
                 context.setStopped(true);
             }

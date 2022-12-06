@@ -3,6 +3,8 @@
  */
 package org.teapotech.blockly.block.execute;
 
+import java.util.LinkedHashMap;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.teapotech.blockly.block.execute.BlockExecutionProgress.BlockStatus;
@@ -10,6 +12,7 @@ import org.teapotech.blockly.exception.BlockExecutionException;
 import org.teapotech.blockly.exception.InvalidBlockException;
 import org.teapotech.blockly.execute.event.EventDispatcher;
 import org.teapotech.blockly.model.Block;
+import org.teapotech.blockly.model.Input;
 import org.teapotech.blockly.model.Shadow;
 import org.teapotech.blockly.workspace.event.WorkspaceEvent;
 
@@ -73,9 +76,8 @@ public abstract class AbstractBlockExecutor implements BlockExecutor {
             updateBlockStatus(context, BlockStatus.Enter);
             if (context.shouldPause(getBlockId())) {
                 this.paused = true;
-                context.getContextObject(EventDispatcher.class).dispatchWorkspaceEvent(
-                        new WorkspaceEvent(context.getWorkspaceId(), context.getInstanceId(),
-                                WorkspaceExecution.Status.Paused));
+                context.getContextObject(EventDispatcher.class).dispatchWorkspaceEvent(new WorkspaceEvent(
+                        context.getWorkspaceId(), context.getInstanceId(), WorkspaceExecution.Status.Paused));
                 LOG.debug("Execution paused");
                 pauseExecution();
             }
@@ -118,6 +120,19 @@ public abstract class AbstractBlockExecutor implements BlockExecutor {
         }
         beg.setBlockStatus(status);
         context.getLogger().debug("{} Block [{}], type: [{}]", status, block.getId(), block.getType());
+    }
+
+    protected Block getInputBlockByKey(String key) throws Exception {
+        LinkedHashMap<String, Input> inputs = this.block.getInputs();
+        if (inputs == null) {
+            throw new InvalidBlockException(this.block.getId(), this.block.getType(), "Missing inputs");
+        }
+        Input input = this.block.getInputs().get(key);
+        if (input == null) {
+            throw new InvalidBlockException(this.block.getId(), this.block.getType(),
+                    "Cannot find input '" + key + "'");
+        }
+        return input.getBlock();
     }
 
     abstract protected Object doExecute(BlockExecutionContext context) throws Exception;

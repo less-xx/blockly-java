@@ -29,7 +29,7 @@ public class ControlsRepeatExtBlockExecutor extends AbstractBlockExecutor {
     @Override
     protected Object doExecute(BlockExecutionContext context) throws Exception {
 
-        Block timesBlock = this.block.getInputs().get("TIMES").getBlock();
+        Block timesBlock = getInputBlockByKey("TIMES");
         Shadow timeShadow = this.block.getInputs().get("TIMES").getShadow();
 
         Object times = BlockExecutionHelper.execute(timesBlock, timeShadow, context);
@@ -39,7 +39,7 @@ public class ControlsRepeatExtBlockExecutor extends AbstractBlockExecutor {
         }
         int timesInt = ((Integer) times).intValue();
 
-        Block doBlock = this.block.getInputs().get("DO").getBlock();
+        Block doBlock = getInputBlockByKey("DO");
         if (doBlock == null) {
             throw new InvalidBlockException(this.block.getId(), this.block.getType(),
                     "Missing repeat statements. Block type: " + this.block.getType() + ", id: " + this.block.getId());

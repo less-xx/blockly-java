@@ -42,7 +42,7 @@ public class ControlsWhileUntilBlockExecutor extends AbstractBlockExecutor {
 
         boolean whileTrue = mode.equalsIgnoreCase("while");
 
-        Block doBlock = this.block.getInputs().get("DO").getBlock();
+        Block doBlock = getInputBlockByKey("DO");
         if (doBlock == null) {
             throw new InvalidBlockException(this.block.getId(), this.block.getType(),
                     "Missing repeat statements. Block type: " + this.block.getType() + ", id: " + this.block.getId());

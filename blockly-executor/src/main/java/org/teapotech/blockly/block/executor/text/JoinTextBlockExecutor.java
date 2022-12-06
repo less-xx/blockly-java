@@ -39,7 +39,7 @@ public class JoinTextBlockExecutor extends AbstractBlockExecutor {
         }
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < itemCount; i++) {
-            Block inputBlock = this.block.getInputs().get(InputType.ADD + i).getBlock();
+            Block inputBlock = getInputBlockByKey(InputType.ADD + i);
             if (inputBlock == null) {
                 continue;
             }

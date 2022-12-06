@@ -27,7 +27,7 @@ public class VariableSetBlockExecutor extends AbstractBlockExecutor {
     protected Object doExecute(BlockExecutionContext context) throws Exception {
 
         Variable var = (Variable) this.block.getFieldValue(FieldType.VAR);
-        Block valueBlock = this.block.getInputs().get(InputType.VALUE).getBlock();
+        Block valueBlock = getInputBlockByKey(InputType.VALUE);
         if (valueBlock != null) {
             Object value = BlockExecutionHelper.execute(valueBlock, null, context);
             if (value != null) {
