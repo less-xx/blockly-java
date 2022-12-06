@@ -1,9 +1,10 @@
 /**
  * 
  */
-package org.teapotech.blockly.block.executor.loop;
+package org.teapotech.blockly.block.def.loop;
 
-import org.teapotech.blockly.block.def.BlockDefinition;
+import java.util.Collection;
+
 import org.teapotech.blockly.block.def.annotation.ApplyToBlock;
 import org.teapotech.blockly.block.execute.AbstractBlockExecutor;
 import org.teapotech.blockly.block.execute.BlockExecutionContext;
@@ -12,42 +13,49 @@ import org.teapotech.blockly.exception.BreakLoopException;
 import org.teapotech.blockly.exception.ContinueLoopException;
 import org.teapotech.blockly.exception.InvalidBlockException;
 import org.teapotech.blockly.model.Block;
-import org.teapotech.blockly.model.Block.InputType;
 import org.teapotech.blockly.model.Shadow;
+import org.teapotech.blockly.model.Variable;
 
 /**
  * @author jiangl
  *
  */
-@ApplyToBlock(blockType = BlockDefinition.INTERNAL_BLOCK_TYPE_CONTROLS_WHILE_UNTIL, category = "control", style = "control_blocks")
-public class ControlsWhileUntilBlockExecutor extends AbstractBlockExecutor {
+@ApplyToBlock(value = ForEachInCollectionBlock.class)
+public class ForEachInCollectionBlockExecutor extends AbstractBlockExecutor {
 
     /**
      * @param block
      */
-    public ControlsWhileUntilBlockExecutor(Block block, Shadow shadow) {
+    public ForEachInCollectionBlockExecutor(Block block, Shadow shadow) {
         super(block, shadow);
     }
 
     @Override
     protected Object doExecute(BlockExecutionContext context) throws Exception {
 
-        String mode = (String) this.block.getFieldValue("MODE");
-
-        Block conditionBlock = this.block.getInputs().get(InputType.BOOL).getBlock();
-        if (conditionBlock == null) {
-            throw new InvalidBlockException(this.block.getId(), this.block.getType(), "Missing condition block");
+        Block listBlock = this.block.getInputs().get("LIST").getBlock();
+        if (listBlock == null) {
+            throw new InvalidBlockException(this.block.getId(), this.block.getType(), "Missing COLLECTION block");
         }
-        Boolean conditionValue = (Boolean) BlockExecutionHelper.execute(conditionBlock, null, context);
-
-        boolean whileTrue = mode.equalsIgnoreCase("while");
+        Variable var = (Variable) this.block.getFieldValue("VAR");
+        if (var == null) {
+            throw new InvalidBlockException(this.block.getId(), this.block.getType(), "Variable cannot be empty.");
+        }
 
         Block doBlock = this.block.getInputs().get("DO").getBlock();
         if (doBlock == null) {
-            throw new InvalidBlockException(this.block.getId(), this.block.getType(),
-                    "Missing repeat statements. Block type: " + this.block.getType() + ", id: " + this.block.getId());
+            throw new InvalidBlockException(this.block.getId(), this.block.getType(), "Missing do block");
         }
-        while (!(whileTrue ^ conditionValue)) {
+
+        Object collectionObject = BlockExecutionHelper.execute(listBlock, null, context);
+        if (!(collectionObject instanceof Collection<?>)) {
+            throw new InvalidBlockException(this.block.getId(), this.block.getType(),
+                    "The input value of " + ForEachInCollectionBlock.BLOCK_TYPE + " block should be a collection.");
+        }
+        Collection<?> collection = (Collection<?>) collectionObject;
+
+        for (Object item : collection) {
+            context.setLocalVariableValue("_local_var_" + var.id(), item);
             try {
                 BlockExecutionHelper.execute(doBlock, null, context);
             } catch (BreakLoopException e) {
@@ -56,10 +64,8 @@ public class ControlsWhileUntilBlockExecutor extends AbstractBlockExecutor {
 
             } catch (ContinueLoopException e) {
                 context.getLogger().debug("Continue iteration of {}", block.getType());
-                conditionValue = (Boolean) BlockExecutionHelper.execute(conditionBlock, null, context);
                 continue;
             }
-            conditionValue = (Boolean) BlockExecutionHelper.execute(conditionBlock, null, context);
         }
 
         return null;

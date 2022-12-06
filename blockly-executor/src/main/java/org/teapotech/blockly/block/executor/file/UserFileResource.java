@@ -11,7 +11,6 @@ import org.teapotech.blockly.resource.FileResource;
  */
 public interface UserFileResource extends FileResource {
 
-	@Override
-	String getPath();
+
 
 }

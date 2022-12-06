@@ -1,6 +1,5 @@
-package org.teapotech.blockly.block.executor.variable;
+package org.teapotech.blockly.block.variable;
 
-import org.teapotech.blockly.block.def.BlockDefinition;
 import org.teapotech.blockly.block.def.annotation.ApplyToBlock;
 import org.teapotech.blockly.block.execute.AbstractBlockExecutor;
 import org.teapotech.blockly.block.execute.BlockExecutionContext;
@@ -16,10 +15,10 @@ import org.teapotech.blockly.model.Variable;
  * @author jiangl
  *
  */
-@ApplyToBlock(blockType = BlockDefinition.INTERNAL_BLOCK_TYPE_VARIABLES_SET, category = "variables", style = "variable_blocks")
-public class VariableSetBlockExecutor extends AbstractBlockExecutor {
+@ApplyToBlock(value = SetLocalVariableBlock.class)
+public class LocalVariableSetBlockExecutor extends AbstractBlockExecutor {
 
-    public VariableSetBlockExecutor(Block block, Shadow shadow) {
+    public LocalVariableSetBlockExecutor(Block block, Shadow shadow) {
         super(block, shadow);
     }
 
@@ -31,10 +30,10 @@ public class VariableSetBlockExecutor extends AbstractBlockExecutor {
         if (valueBlock != null) {
             Object value = BlockExecutionHelper.execute(valueBlock, null, context);
             if (value != null) {
-                context.setVariableValue("_var_" + var.id(), value);
-                LOG.info("Set value to variable: {}", var.id());
+                context.setLocalVariableValue("_local_var_" + var.id(), value);
+                LOG.info("Set value to local variable: {}", var.id());
             } else {
-                context.setVariableValue("_var_" + var.id(), Variable.NULL);
+                context.setLocalVariableValue("_local_var_" + var.id(), Variable.NULL);
             }
         }
         return null;

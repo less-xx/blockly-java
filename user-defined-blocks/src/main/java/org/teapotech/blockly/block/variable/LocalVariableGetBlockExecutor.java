@@ -1,6 +1,5 @@
-package org.teapotech.blockly.block.executor.variable;
+package org.teapotech.blockly.block.variable;
 
-import org.teapotech.blockly.block.def.BlockDefinition;
 import org.teapotech.blockly.block.def.annotation.ApplyToBlock;
 import org.teapotech.blockly.block.execute.AbstractBlockExecutor;
 import org.teapotech.blockly.block.execute.BlockExecutionContext;
@@ -15,19 +14,19 @@ import org.teapotech.blockly.model.Variable;
  * @author jiangl
  *
  */
-@ApplyToBlock(blockType = BlockDefinition.INTERNAL_BLOCK_TYPE_VARIABLES_GET, category = "variables", style = "variable_blocks")
-public class VariableGetBlockExecutor extends AbstractBlockExecutor {
+@ApplyToBlock(value = GetLocalVariableBlock.class)
+public class LocalVariableGetBlockExecutor extends AbstractBlockExecutor {
 
-    public VariableGetBlockExecutor(Block block, Shadow shadow) {
+    public LocalVariableGetBlockExecutor(Block block, Shadow shadow) {
         super(block, shadow);
     }
 
     @Override
     protected Object doExecute(BlockExecutionContext context) throws Exception {
         Variable var = (Variable) this.block.getFieldValue(FieldType.VAR);
-        Object value = context.getVariableValue("_var_" + var.id());
+        Object value = context.getLocalVariableValue("_local_var_" + var.id());
         if (value == null) {
-            throw new BlockExecutionException("Variable " + var.name() + " is not defined");
+            throw new BlockExecutionException("Local variable " + var.name() + " is not defined");
         }
         return value;
     }
