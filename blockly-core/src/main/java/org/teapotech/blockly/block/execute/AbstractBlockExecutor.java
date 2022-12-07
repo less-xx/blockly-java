@@ -21,7 +21,7 @@ import org.teapotech.blockly.workspace.event.WorkspaceEvent;
  *
  */
 public abstract class AbstractBlockExecutor implements BlockExecutor {
-    protected Logger LOG = LoggerFactory.getLogger(getClass());
+    protected Logger logger = LoggerFactory.getLogger(getClass());
 
     protected final Block block;
     protected final Shadow shadow;
@@ -36,7 +36,7 @@ public abstract class AbstractBlockExecutor implements BlockExecutor {
         while (paused) {
             Thread.sleep(1000);
         }
-        LOG.debug("Execution resumed");
+        logger.debug("Execution resumed");
     }
 
     public String getBlockId() {

@@ -33,6 +33,7 @@ public class DefaultBlockExecutionContext implements BlockExecutionContext {
     private final Map<Class<?>, Object> contextObjects = new HashMap<>();
     private boolean debug = false;
     private AbstractBlockExecutor currentBlockExecutor;
+    private final Logger workspaceLogger;
 
     private boolean stopped;
     private ThreadLocal<Map<String, Object>> localVariables = new ThreadLocal<Map<String, Object>>() {
@@ -51,6 +52,7 @@ public class DefaultBlockExecutionContext implements BlockExecutionContext {
         this.workspaceId = workspaceId;
         this.instanceId = instanceId;
         this.workingDir = workingDir;
+        this.workspaceLogger = WorkspaceLoggerFactory.createLogger(workspaceId, instanceId, "DEBUG", workingDir);
     }
 
     @Override
@@ -84,7 +86,7 @@ public class DefaultBlockExecutionContext implements BlockExecutionContext {
 
     @Override
     public Logger getLogger() {
-        return LOG;
+        return this.workspaceLogger;
     }
 
     @Override

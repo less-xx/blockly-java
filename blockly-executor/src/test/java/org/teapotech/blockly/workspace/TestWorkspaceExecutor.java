@@ -43,7 +43,7 @@ public class TestWorkspaceExecutor {
     private static BlockRegistry blockDefRegistry;
     private static JsonHelper jsonHelper = JsonHelper.newInstance().build();
     private static KeyValueStorageProvider kvStorageProvider = new InMemoryKeyValueStorageProvider();
-    private static String workingDirPath = System.getProperty("java.io.tmpdir") + "/tmp/workspace/test";
+    private static String workingDirPath = System.getProperty("java.io.tmpdir") + "/workspace/test";
     private static FileStorageProvider fileStorageProvider = new DiskFileStorageProvider(workingDirPath);
     private static SimpleEventExchange eventExchange = new SimpleEventExchange();
     private static EventDispatcher eventDispatcher = new SimpleEventDispatcher(eventExchange);
@@ -94,7 +94,8 @@ public class TestWorkspaceExecutor {
     }
 
     private DefaultBlockExecutionContext createBlockExecutionContext(Workspace w, long instanceId) {
-        File workingDir = new File(workingDirPath);
+        File workingDir = new File(workingDirPath, w.getId() + "-" + instanceId);
+        workingDir.mkdirs();
         DefaultBlockExecutionContext context = new DefaultBlockExecutionContext(w.getId(), instanceId, executedBy,
                 workingDir, factories);
         context.setContextObject(EventDispatcher.class, eventDispatcher);
@@ -123,7 +124,7 @@ public class TestWorkspaceExecutor {
     @Test
     public void testRunWorkspace_02() throws Exception {
         try (InputStream in = getClass().getClassLoader().getResourceAsStream("workspace02.json");) {
-            long testInstanceId = 1;
+            long testInstanceId = 2;
             Workspace w = jsonHelper.getObject(in, Workspace.class);
             w.setId("testRunWorkspace_02");
             DefaultBlockExecutionContext context = createBlockExecutionContext(w, testInstanceId);
@@ -140,7 +141,7 @@ public class TestWorkspaceExecutor {
     @Test
     public void testRunWorkspace_03() throws Exception {
         try (InputStream in = getClass().getClassLoader().getResourceAsStream("workspace03.json");) {
-            long testInstanceId = 1;
+            long testInstanceId = 3;
             Workspace w = jsonHelper.getObject(in, Workspace.class);
             w.setId("testRunWorkspace_03");
             DefaultBlockExecutionContext context = createBlockExecutionContext(w, testInstanceId);

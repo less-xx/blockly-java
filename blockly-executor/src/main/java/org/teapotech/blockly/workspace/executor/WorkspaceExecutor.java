@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.teapotech.blockly.block.def.event.HandleEventBlock;
 import org.teapotech.blockly.block.execute.AbstractBlockExecutor;
 import org.teapotech.blockly.block.execute.BlockExecutionContext;
@@ -33,7 +31,6 @@ import org.teapotech.blockly.workspace.event.WorkspaceEvent;
  */
 public class WorkspaceExecutor {
 
-    private static final Logger LOG = LoggerFactory.getLogger(WorkspaceExecutor.class);
     private static final int WORKSPACE_EXECUTION_TIMEOUT_SECONDS = 10 * 60; // 10 minutes
 
     private final BlockExecutionContext context;
@@ -47,7 +44,8 @@ public class WorkspaceExecutor {
         this.context = context;
         this.workspace = workspace;
         this.threadGroup = new ThreadGroup("wexec-" + context.getWorkspaceId() + "-" + context.getInstanceId());
-        LOG.info("Created workspace executor. ID: {}-{}", context.getWorkspaceId(), context.getInstanceId());
+        context.getLogger().info("Created workspace executor. ID: {}-{}", context.getWorkspaceId(),
+                context.getInstanceId());
         workspaceExecution = new WorkspaceExecution(context.getInstanceId(), context.getWorkspaceId(),
                 context.getExecutedBy());
     }
@@ -87,7 +85,7 @@ public class WorkspaceExecutor {
         if (variables != null) {
             variables.stream().forEach(v -> {
                 context.setVariableValue("_var_" + v.id(), Variable.NULL);
-                LOG.debug("Added variable: {}", v.name());
+                context.getLogger().debug("Added variable: {}", v.name());
             });
         }
 
@@ -132,7 +130,7 @@ public class WorkspaceExecutor {
             entryPointThread.start();
 
         } else {
-            LOG.warn("Cannot find start block");
+            context.getLogger().warn("Cannot find start block");
         }
     }
 
@@ -152,7 +150,7 @@ public class WorkspaceExecutor {
 
     public void waitFor(long milliSec) {
         if (monitoringThread == null) {
-            LOG.warn("Monitoring thread didn't start.");
+            context.getLogger().warn("Monitoring thread didn't start.");
             return;
         }
         try {
@@ -179,7 +177,8 @@ public class WorkspaceExecutor {
         public BlockExecutionThread(Block startBlock, ThreadGroup threadGroup) {
             super(threadGroup, "bet." + startBlock.getId());
             this.startBlock = startBlock;
-            LOG.info("Created block execution thread. Block ID: {}, Type: {}, Group: {}", startBlock.getId(),
+            context.getLogger().info("Created block execution thread. Block ID: {}, Type: {}, Group: {}",
+                    startBlock.getId(),
                     startBlock.getType(), threadGroup.getName());
         }
 
@@ -193,7 +192,7 @@ public class WorkspaceExecutor {
                 stopExecution();
             } catch (Exception e) {
                 context.getLogger().error(e.getMessage());
-                LOG.error(e.getMessage(), e);
+                context.getLogger().error(e.getMessage(), e);
                 workspaceExecution.setStatus(Status.Failed);
                 workspaceExecution.setMessage(e.getMessage());
                 stopExecution();
@@ -205,7 +204,7 @@ public class WorkspaceExecutor {
                 context.getLogger().error("Cannot find block execution thread by name: {}", name);
             }
             context.getLogger().info("Thread {} stopped.", getName());
-            LOG.info("Block execution thread exited. Group: {}, Active: {}", threadGroup.getName(),
+            context.getLogger().info("Block execution thread exited. Group: {}, Active: {}", threadGroup.getName(),
                     threadGroup.activeCount());
         }
     }
@@ -223,7 +222,7 @@ public class WorkspaceExecutor {
                 Thread[] blockExecutionThreads = new Thread[threadGroup.activeCount()];
                 threadGroup.enumerate(blockExecutionThreads);
                 if (blockExecutionThreads.length < 1) {
-                    LOG.warn("The workspace executor {} is not running.",
+                    context.getLogger().warn("The workspace executor {} is not running.",
                             context.getWorkspaceId() + "-" + context.getInstanceId());
                     break;
                 }
@@ -236,7 +235,8 @@ public class WorkspaceExecutor {
                     Date startTime = workspaceExecution.getStartTime();
                     long duration = (System.currentTimeMillis() - startTime.getTime()) / 1000;
                     if (duration > executionTimeout) {
-                        LOG.warn("Workspace execution time out, instance ID: {}, workspace ID: {}. Duration: {}",
+                        context.getLogger().warn(
+                                "Workspace execution time out, instance ID: {}, workspace ID: {}. Duration: {}",
                                 context.getInstanceId(), workspace.getId(), duration);
                         workspaceExecution.setMessage("Workspace execution time out");
                         workspaceExecution.setStatus(Status.Timeout);
@@ -258,11 +258,11 @@ public class WorkspaceExecutor {
                 try {
                     Thread.sleep(1000L);
                 } catch (InterruptedException e) {
-                    LOG.warn("Block monitoring thread is interrupted.");
+                    context.getLogger().warn("Block monitoring thread is interrupted.");
                     break;
                 }
             }
-            LOG.info("All block execution threads are stopped. Ouput dir: {}",
+            context.getLogger().info("All block execution threads are stopped. Ouput dir: {}",
                     context.getWorkingDir().getAbsolutePath());
             workspaceExecution.setEndTime(new Date());
             if (context.isStopped()) {
