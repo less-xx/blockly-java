@@ -41,8 +41,6 @@ public class JsonHelper {
     }
 
     private JsonHelper() {
-        // xmlModule.setDefaultUseWrapper(false);
-        // xmlMapper.registerModule(xmlModule);
     }
 
     public JsonHelper(ObjectMapper mapper) {

@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
 import org.reflections.Reflections;
@@ -43,7 +44,11 @@ public class BlockRegistry {
         return null;
     }
 
-    public void loadBlockExecutors() throws Exception {
+    public Stream<BlockDefinition> getAllBlocks() {
+        return this.blockExecutors.keySet().stream();
+    }
+
+    public void loadBlockExecutors() {
 
         Reflections reflections = new Reflections("org.teapotech");
 
@@ -74,8 +79,9 @@ public class BlockRegistry {
                 try {
                     CustomBlockDefinition blockDef = (CustomBlockDefinition) blockDefClass.getConstructor(null)
                             .newInstance(null);
-                    blockDef.setBlockOptions(blockOptionProvider.getOptions(blockType));
-
+                    if (blockOptionProvider != null) {
+                        blockDef.setBlockOptions(blockOptionProvider.getOptions(blockType));
+                    }
                     blockExecutors.put(blockDef, c);
                     LOG.info("Registered block, Type: {}, Executor class: {}", blockDef.getBlockType(), c.getName());
                 } catch (Exception e) {

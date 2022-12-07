@@ -31,7 +31,7 @@ public class LocalVariableSetBlockExecutor extends AbstractBlockExecutor {
             Object value = BlockExecutionHelper.execute(valueBlock, null, context);
             if (value != null) {
                 context.setLocalVariableValue("_local_var_" + var.id(), value);
-                LOG.info("Set value to local variable: {}", var.id());
+                context.getLogger().info("Set value to local variable: {}", var.id());
             } else {
                 context.setLocalVariableValue("_local_var_" + var.id(), Variable.NULL);
             }
