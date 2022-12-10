@@ -86,5 +86,14 @@
 		</dependency>
 	  </dependencies>
 	</dependencyManagement>
+	
+	<modules>
+		<module>blockly-core</module>
+		<module>blockly-executor</module>
+		<module>user-defined-blocks</module>
+		<module>blockly-datastore</module>
+		<module>blockly-service</module>
+		<module>blockly-application-backend</module>
+	</modules>
 
 </project>

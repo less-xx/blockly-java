@@ -115,7 +115,7 @@ public class TestWorkspaceExecutor {
             DefaultBlockExecutionContext context = createBlockExecutionContext(w, testInstanceId);
             WorkspaceExecutor wExecutor = new WorkspaceExecutor(w, context);
             wExecutor.execute();
-            wExecutor.waitFor(5000);
+            wExecutor.waitFor(2000);
             WorkspaceExecution execution = wExecutor.getWorkspaceExecution();
             assertEquals(Status.Succeeded, execution.getStatus());
         }
@@ -131,7 +131,7 @@ public class TestWorkspaceExecutor {
             WorkspaceExecutor wExecutor = new WorkspaceExecutor(w, context);
             wExecutor.setExecutionTimeout(2);
             wExecutor.execute();
-            wExecutor.waitFor(30000);
+            wExecutor.waitFor(5000);
             WorkspaceExecution execution = wExecutor.getWorkspaceExecution();
             assertEquals(Status.Timeout, execution.getStatus());
             System.out.println(execution.getMessage());
