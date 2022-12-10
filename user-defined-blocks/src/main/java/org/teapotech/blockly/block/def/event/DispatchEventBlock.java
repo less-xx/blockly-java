@@ -25,8 +25,8 @@ public class DispatchEventBlock extends CustomBlockDefinition {
 					"args0": [
 						{
 							"type": "input_value",
-                			"name": "EVENT",
-							"check": "event_with_param"
+                            "name": "EVENT_NAME",
+                			"check": "String"
 						}
 					],
 					"inputsInline": true,

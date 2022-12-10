@@ -26,9 +26,9 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 @EnableWebMvc
 @EnableAutoConfiguration
 @EnableTransactionManagement
-@EntityScan({ "org.teapotech.common.entity", "org.teapotech.blockly.user.entity" })
-@EnableJpaRepositories(basePackages = { "org.teapotech.common.repo", "org.teapotech.blockly.user.repo" })
-@ComponentScan(basePackages = { "org.teapotech" })
+@EntityScan({ "org.teapotech.blockly.entity" })
+@EnableJpaRepositories(basePackages = { "org.teapotech.blockly.repo" })
+@ComponentScan(basePackages = { "org.teapotech.blockly" })
 public class MainApplicationLoader implements ApplicationListener<ContextRefreshedEvent> {
 
 	private static Logger LOG = LoggerFactory.getLogger(MainApplicationLoader.class);

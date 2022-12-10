@@ -3,31 +3,34 @@ package org.teapotech.blockly.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.teapotech.blockly.block.def.BlockExecutorRegistry;
 import org.teapotech.blockly.block.def.CustomBlockConfiguration;
-import org.teapotech.blockly.model.Workspace;
+import org.teapotech.blockly.model.ToolboxItem;
+import org.teapotech.blockly.service.BlockService;
+import org.teapotech.blockly.service.ToolboxService;
 
 @RestController
 @CrossOrigin("*")
 public class BlockController {
 
-	@Autowired
-	BlockExecutorRegistry blockExecutorRegistry;
+    @Autowired
+    BlockService blockService;
 
-	@GetMapping(value = "/block-definitions")
-	@ResponseBody
-	public List<CustomBlockConfiguration> getAllBlockDefinitions() throws Exception {
-		return blockExecutorRegistry.getCustomBlockConfigurations();
-	}
+    @Autowired
+    ToolboxService toolboxService;
 
-	@GetMapping(value = "/toolbox-config", produces = MediaType.APPLICATION_XML_VALUE)
-	@ResponseBody
-	public Workspace getAllBlockRegistries() throws Exception {
-		return blockExecutorRegistry.getToolboxConfiguration();
-	}
+    @GetMapping(value = "/block-definitions")
+    @ResponseBody
+    public List<CustomBlockConfiguration> getAllBlockDefinitions() throws Exception {
+        return blockService.getCustomBlockConfigurations();
+    }
+
+    @GetMapping(value = "/toolbox-config")
+    @ResponseBody
+    public ToolboxItem getAllBlockRegistries() throws Exception {
+        return toolboxService.getToolboxConfiguration(null);
+    }
 }

@@ -1,22 +1,28 @@
 package org.teapotech.blockly.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.teapotech.blockly.block.def.BlockExecutorRegistry;
-import org.teapotech.util.JsonHelper;
+import org.teapotech.blockly.util.BlockRegistry;
+import org.teapotech.blockly.util.JsonHelper;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Configuration
 public class ApplicationBackendConfig {
 
-	@Bean
-	JsonHelper jsonHelper() {
-		return JsonHelper.builder().build();
-	}
+    @Autowired
+    ObjectMapper objectMapper;
 
-	@Bean
-	BlockExecutorRegistry blockExecutorRegistry() throws Exception {
-		BlockExecutorRegistry registry = new BlockExecutorRegistry(jsonHelper());
-		registry.loadBlockExecutors();
-		return registry;
-	}
+    @Bean
+    JsonHelper jsonHelper() {
+        return JsonHelper.newInstance(objectMapper);
+    }
+
+    @Bean
+    BlockRegistry blockRegistry() throws Exception {
+        BlockRegistry registry = new BlockRegistry(null);
+        registry.loadBlockExecutors();
+        return registry;
+    }
 }

@@ -5,9 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.teapotech.blockly.model.Block;
-import org.teapotech.blockly.model.Category;
-import org.teapotech.blockly.model.Toolbox;
+import org.teapotech.blockly.block.def.BlockDefinition;
+import org.teapotech.blockly.block.def.BlockDefinition.CategoryID;
+import org.teapotech.blockly.model.ToolboxItem;
 import org.teapotech.blockly.util.BlockRegistry;
 import org.teapotech.blockly.util.JsonHelper;
 
@@ -28,12 +28,13 @@ public class TestToolboxService {
 
     @Test
     public void test01() {
-        Toolbox toolbox = toolboxService.getToolboxConfiguration(null);
-        assertNotNull(toolbox.getCategories());
-        assertTrue(!toolbox.getCategories().isEmpty());
-        Category cat = toolbox.getCategories().get(0);
-        assertTrue(cat.getBlocks() != null && !cat.getBlocks().isEmpty());
-        Block block = cat.getBlocks().get(0);
+        ToolboxItem toolbox = toolboxService.getToolboxConfiguration(null);
+        ToolboxItem cat = toolbox.findCategoryByName(CategoryID.ID_START_EXIT);
+        assertNotNull(cat);
+        assertTrue(!cat.getContents().isEmpty());
+
+        ToolboxItem block = toolbox.findBlockByType(BlockDefinition.INTERNAL_BLOCK_TYPE_TEXT);
+        assertNotNull(block);
         assertNotNull(block.getType());
     }
 
