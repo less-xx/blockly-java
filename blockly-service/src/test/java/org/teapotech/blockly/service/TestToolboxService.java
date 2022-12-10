@@ -19,7 +19,7 @@ public class TestToolboxService {
     @BeforeAll
     static void init() throws Exception {
         BlockServiceImpl blockService = new BlockServiceImpl();
-        blockService.blockRegistry = new BlockRegistry(null);
+        blockService.blockRegistry = new BlockRegistry(null, jsonHelper);
         blockService.init();
         toolboxService.blockService = blockService;
         toolboxService.jsonHelper = jsonHelper;

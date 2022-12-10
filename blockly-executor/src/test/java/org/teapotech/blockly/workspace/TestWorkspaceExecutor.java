@@ -87,7 +87,7 @@ public class TestWorkspaceExecutor {
 
     @BeforeAll
     static void init() throws Exception {
-        blockDefRegistry = new BlockRegistry(blockOptionProvider);
+        blockDefRegistry = new BlockRegistry(blockOptionProvider, jsonHelper);
         blockDefRegistry.loadBlockExecutors();
         factories = new BlockExecutorFactory[] {
                 DefaultBlockExecutorFactory.build(blockDefRegistry, blockEventListenerFac, jsonHelper) };

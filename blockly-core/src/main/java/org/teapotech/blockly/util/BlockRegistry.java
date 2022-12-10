@@ -15,7 +15,6 @@ import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.teapotech.blockly.block.def.BlockDefinition;
-import org.teapotech.blockly.block.def.CustomBlockConfiguration;
 import org.teapotech.blockly.block.def.CustomBlockDefinition;
 import org.teapotech.blockly.block.def.DefaultBlockDefinition;
 import org.teapotech.blockly.block.def.annotation.ApplyToBlock;
@@ -24,15 +23,19 @@ import org.teapotech.blockly.model.ToolboxItem;
 import org.teapotech.blockly.model.ToolboxItem.Kind;
 import org.teapotech.blockly.resource.BlockOptionProvider;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 public class BlockRegistry {
 
     private static Logger LOG = LoggerFactory.getLogger(BlockRegistry.class);
     private final Map<BlockDefinition, Class<? extends AbstractBlockExecutor>> blockExecutors = new HashMap<>();
     private final BlockOptionProvider blockOptionProvider;
+    private final JsonHelper jsonHelper;
     private final ToolboxItem toolbox = new ToolboxItem();
 
-    public BlockRegistry(BlockOptionProvider blockOptionProvider) {
+    public BlockRegistry(BlockOptionProvider blockOptionProvider, JsonHelper jsonHelper) {
         this.blockOptionProvider = blockOptionProvider;
+        this.jsonHelper = jsonHelper;
     }
 
     public BlockDefinition getBlockDefinition(String blockType) {
@@ -120,8 +123,8 @@ public class BlockRegistry {
         LOG.info("Registered block, Type: {}, Executor class: {}", blockDef.getBlockType(), executorClass.getName());
     }
 
-    public List<CustomBlockConfiguration> getCustomBlockConfigurations() {
-        List<CustomBlockConfiguration> result = new ArrayList<>();
+    public List<JsonNode> getCustomBlockConfigurations() {
+        List<JsonNode> result = new ArrayList<>();
         blockExecutors.keySet().stream().filter(bdef -> bdef instanceof CustomBlockDefinition).forEach(bdef -> {
             CustomBlockDefinition cbDef = (CustomBlockDefinition) bdef;
 
@@ -135,7 +138,7 @@ public class BlockRegistry {
                 if (StringUtils.isBlank(blockConf)) {
                     return;
                 }
-                result.add(new CustomBlockConfiguration(cbDef.getBlockType(), blockConf));
+                result.add(jsonHelper.getObject(blockConf));
             } catch (Exception e) {
                 LOG.error("Invalid block definition. Ignore it. \n{}", e.getMessage());
             }

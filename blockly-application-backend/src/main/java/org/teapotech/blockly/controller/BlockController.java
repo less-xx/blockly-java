@@ -7,10 +7,11 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.teapotech.blockly.block.def.CustomBlockConfiguration;
 import org.teapotech.blockly.model.ToolboxItem;
 import org.teapotech.blockly.service.BlockService;
 import org.teapotech.blockly.service.ToolboxService;
+
+import com.fasterxml.jackson.databind.JsonNode;
 
 @RestController
 @CrossOrigin("*")
@@ -24,7 +25,7 @@ public class BlockController {
 
     @GetMapping(value = "/block-definitions")
     @ResponseBody
-    public List<CustomBlockConfiguration> getAllBlockDefinitions() throws Exception {
+    public List<JsonNode> getAllBlockDefinitions() throws Exception {
         return blockService.getCustomBlockConfigurations();
     }
 

@@ -10,8 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.teapotech.blockly.block.def.BlockDefinition;
-import org.teapotech.blockly.block.def.CustomBlockConfiguration;
 import org.teapotech.blockly.util.BlockRegistry;
+
+import com.fasterxml.jackson.databind.JsonNode;
 
 @Service
 public class BlockServiceImpl implements BlockService {
@@ -31,7 +32,7 @@ public class BlockServiceImpl implements BlockService {
     }
 
     @Override
-    public List<CustomBlockConfiguration> getCustomBlockConfigurations() {
+    public List<JsonNode> getCustomBlockConfigurations() {
         return blockRegistry.getCustomBlockConfigurations();
     }
 }

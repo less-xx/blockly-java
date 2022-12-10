@@ -21,7 +21,7 @@ public class ApplicationBackendConfig {
 
     @Bean
     BlockRegistry blockRegistry() throws Exception {
-        BlockRegistry registry = new BlockRegistry(null);
+        BlockRegistry registry = new BlockRegistry(null, jsonHelper());
         registry.loadBlockExecutors();
         return registry;
     }

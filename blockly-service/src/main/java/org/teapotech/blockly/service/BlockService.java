@@ -2,9 +2,9 @@ package org.teapotech.blockly.service;
 
 import java.util.List;
 
-import org.teapotech.blockly.block.def.CustomBlockConfiguration;
+import com.fasterxml.jackson.databind.JsonNode;
 
 public interface BlockService {
 
-    List<CustomBlockConfiguration> getCustomBlockConfigurations();
+    List<JsonNode> getCustomBlockConfigurations();
 }
