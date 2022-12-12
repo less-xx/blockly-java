@@ -4,51 +4,51 @@
 		"blocks": [
 			{
 				"type": "start",
-				"id": "test-start-block",
-				"x": -112,
-				"y": -87,
+				"id": "|wW^UI-Lti4vB5+,]t}(",
+				"x": 130,
+				"y": 30,
 				"next": {
 					"block": {
 						"type": "dispatch_event",
-						"id": "dispatch_event_1",
-						"inputs": {
-							"EVENT": {
-								"block": {
-									"type": "event_with_param",
-									"id": "event_with_param_1",
-									"fields": {
-										"EVENT_NAME": "Test Event"
-									}
-								}
-							}
+						"id": ";e`/7u={XqnP%%`Wz@Zj",
+						"fields": {
+							"EVENT_NAME": "event1"
 						}
 					}
 				}
 			},
 			{
 				"type": "handle_event",
-				"id": "handle_event_1",
+				"id": "b3f|Ddoe,SE).@B,SKu9",
+				"x": 410,
+				"y": 90,
 				"fields": {
-					"EVENT_NAME": "Test Event"
+					"EVENT_NAME": "event1"
 				},
-				"inputs": {
-					"DELTA": {
-						"shadow": {
-							"type": "math_number",
-							"id": "iWhAz0ne-8|$5VUOKhsF",
-							"fields": {
-								"NUM": -1
+				"next": {
+					"block": {
+						"type": "text_print",
+						"id": "M^?2E=h5.l=9,rM~:5Mf",
+						"inputs": {
+							"TEXT": {
+								"block": {
+									"type": "text",
+									"id": "|jXLy)Y5:-EV=9hyH8xD",
+									"fields": {
+										"TEXT": "Received event: event1"
+									}
+								}
+							}
+						},
+						"next": {
+							"block": {
+								"type": "exit",
+								"id": "O9YKm2+[f[U!X-yFjm?-"
 							}
 						}
 					}
 				}
 			}
 		]
-	},
-	"variables": [
-		{
-			"name": "var1",
-			"id": "Lc^^_~8pT.Yh)*~LMTN2"
-		}
-	]
-}	
+	}
+}

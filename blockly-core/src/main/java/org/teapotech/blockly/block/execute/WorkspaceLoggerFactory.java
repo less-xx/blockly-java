@@ -42,7 +42,7 @@ public class WorkspaceLoggerFactory {
         f.setLayout(layout);
         f.setContext(context);
         f.setFile(workingDir.getAbsolutePath() + File.separator + "workspace-exec.log");
-        f.setAppend(true);
+        f.setAppend(false);
         f.setName("wexec-log-" + workspaceId + "-" + instanceId);
         f.start();
 

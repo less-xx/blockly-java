@@ -50,4 +50,8 @@ public abstract class CustomBlockDefinition implements BlockDefinition {
         this.blockOptions = blockOptions;
     }
 
+    public String getToolboxConfig() {
+        return null;
+    }
+
 }

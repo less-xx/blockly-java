@@ -33,11 +33,30 @@ public class WaitSecondsBlock extends CustomBlockDefinition {
 					"inputsInline": true,
 					"previousStatement": null,
 					"nextStatement": null,
-					"style": "control_blocks",
+                	"style": "control_blocks",
 					"tooltip": "",
 					"helpUrl": ""
 				}
 				""";
 	}
+
+    @Override
+    public String getToolboxConfig() {
+        return """
+                {
+                       "type": "wait_seconds",
+                       "inputs": {
+                           "VALUE": {
+                               "shadow": {
+                                   "type": "math_number",
+                                   "fields": {
+                                       "NUM": 5
+                                   }
+                               }
+                           }
+                       }
+                   }
+                """;
+    }
 
 }

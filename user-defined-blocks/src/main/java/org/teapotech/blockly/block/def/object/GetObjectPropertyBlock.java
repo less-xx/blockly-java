@@ -15,7 +15,7 @@ public class GetObjectPropertyBlock extends CustomBlockDefinition {
 
     @Override
     public String getCategory() {
-        return CategoryID.ID_BASIC;
+        return CategoryID.ID_OPERATORS;
     }
 
     @Override
@@ -39,7 +39,7 @@ public class GetObjectPropertyBlock extends CustomBlockDefinition {
                   ],
                   "inputsInline": false,
                   "output": null,
-                  "style": "basic_blocks",
+                  "style": "operator_blocks",
                   "tooltip": "",
                   "helpUrl": ""
                 }

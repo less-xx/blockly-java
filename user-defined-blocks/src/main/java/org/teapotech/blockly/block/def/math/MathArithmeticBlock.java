@@ -13,7 +13,7 @@ public class MathArithmeticBlock extends CustomBlockDefinition {
 
     @Override
     public String getCategory() {
-        return CategoryID.ID_MATH;
+        return CategoryID.ID_OPERATORS;
     }
 
     @Override

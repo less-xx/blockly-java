@@ -56,7 +56,7 @@ public class WatchFileSystemBlock extends CustomBlockDefinition {
                     }
                   ],
                   "previousStatement": null,
-                  "style": "event_blocks",
+                  "style": "file_operation_blocks",
                   "tooltip": "The event is an object {'event': 'CREATED|CHANGED|DELETED', 'file':'File object'}",
                   "helpUrl": ""
                 }

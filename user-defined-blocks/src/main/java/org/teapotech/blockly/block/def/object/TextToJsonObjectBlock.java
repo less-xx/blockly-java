@@ -13,7 +13,7 @@ public class TextToJsonObjectBlock extends CustomBlockDefinition {
 
 	@Override
 	public String getCategory() {
-		return CategoryID.ID_BASIC;
+        return CategoryID.ID_OPERATORS;
 	}
 
 	@Override
@@ -32,7 +32,7 @@ public class TextToJsonObjectBlock extends CustomBlockDefinition {
 				  ],
 				  "inputsInline": true,
 				  "output": null,
-				  "style": "basic_blocks",
+                  "style": "operator_blocks",
 				  "tooltip": "",
 				  "helpUrl": ""
 				}

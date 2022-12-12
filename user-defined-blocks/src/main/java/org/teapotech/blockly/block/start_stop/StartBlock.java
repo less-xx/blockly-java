@@ -13,7 +13,7 @@ public class StartBlock extends CustomBlockDefinition {
 
 	@Override
 	public String getCategory() {
-		return CategoryID.ID_START_EXIT;
+        return CategoryID.ID_EVENTS;
 	}
 
 	@Override
@@ -25,7 +25,7 @@ public class StartBlock extends CustomBlockDefinition {
 					"nextStatement": null,
 					"tooltip": "",
 					"helpUrl": "",
-					"style": "start_exit_blocks",
+                	"style": "event_blocks",
 					"hat": "cap"
 				}
 				""";

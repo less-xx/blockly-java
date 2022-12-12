@@ -13,7 +13,7 @@ public class ExitBlock extends CustomBlockDefinition {
 
 	@Override
 	public String getCategory() {
-		return CategoryID.ID_START_EXIT;
+        return CategoryID.ID_CONTROL;
 	}
 
 	@Override
@@ -24,8 +24,8 @@ public class ExitBlock extends CustomBlockDefinition {
 					"message0": "Exit",
 					"previousStatement": null,
 					"tooltip": "",
-					"helpUrl": "",
-					"style": "start_exit_blocks"
+                	"helpUrl": "",
+                	"style": "control_blocks"
 				}
 				""";
 	}

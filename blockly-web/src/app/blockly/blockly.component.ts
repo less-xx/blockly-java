@@ -26,10 +26,11 @@ import { Component, OnInit } from '@angular/core';
 import * as Blockly from 'blockly';
 import { BlocklyOptions } from 'blockly';
 import { BlocklyService } from './blockly.service';
-import {ToolboxItem} from '../shared/models/toolbox.model'
-import { Block } from '../shared/models/block.model';
-import { EventBus } from '../shared/event-bus.service';
+import {Block} from '../shared/models/block.model';
+import {EventBus} from '../shared/event-bus.service';
 import {Event} from '../shared/models/event.model';
+import {CustomTheme } from './blockly.theme';
+import {ITheme} from 'blockly/core/theme';
 
 @Component({
   selector: 'app-blockly',
@@ -80,6 +81,8 @@ export class BlocklyComponent implements OnInit {
       });
     });
 
+    const theme = Blockly.Theme.defineTheme(CustomTheme.name, CustomTheme);
+    console.log(theme);
     this.blocklyService.getToolbox().subscribe((toolbox: any)=>{
       console.log(toolbox);
       this.workspace = Blockly.inject(blocklyDiv, {
@@ -97,6 +100,7 @@ export class BlocklyComponent implements OnInit {
           colour: '#ccc',
           snap: true
         },
+        theme:  theme,
         toolbox: toolbox
       } as BlocklyOptions);
       this.eventBus.emit(Event.EVENT_WORKSPACE_RENDERED, this.workspace);

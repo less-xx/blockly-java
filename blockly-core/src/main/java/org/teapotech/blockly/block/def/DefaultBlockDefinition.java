@@ -53,4 +53,9 @@ public class DefaultBlockDefinition implements BlockDefinition {
 		}
 		return super.hashCode();
 	}
+
+    @Override
+    public String getToolboxConfig() {
+        return null;
+    }
 }

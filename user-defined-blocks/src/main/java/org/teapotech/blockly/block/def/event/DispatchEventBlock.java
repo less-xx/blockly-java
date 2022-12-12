@@ -24,9 +24,9 @@ public class DispatchEventBlock extends CustomBlockDefinition {
 					"message0": "broadcast %1",
 					"args0": [
 						{
-							"type": "input_value",
+							"type": "field_input",
                             "name": "EVENT_NAME",
-                			"check": "String"
+                			"text": "event_name"
 						}
 					],
 					"inputsInline": true,
@@ -38,5 +38,4 @@ public class DispatchEventBlock extends CustomBlockDefinition {
 				}
 				""";
 	}
-
 }

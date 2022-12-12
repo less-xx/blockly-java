@@ -4,6 +4,7 @@
 package org.teapotech.blockly.block.executor.math;
 
 import org.teapotech.blockly.block.def.BlockDefinition;
+import org.teapotech.blockly.block.def.BlockDefinition.CategoryID;
 import org.teapotech.blockly.block.def.annotation.ApplyToBlock;
 import org.teapotech.blockly.block.execute.AbstractBlockExecutor;
 import org.teapotech.blockly.block.execute.BlockExecutionContext;
@@ -18,7 +19,7 @@ import org.teapotech.blockly.model.Variable;
  * @author jiangl
  *
  */
-@ApplyToBlock(blockType = BlockDefinition.INTERNAL_BLOCK_TYPE_MATH_CHANGE, category = "math")
+@ApplyToBlock(blockType = BlockDefinition.INTERNAL_BLOCK_TYPE_MATH_CHANGE, category = CategoryID.ID_VARIABLES)
 public class MathChangeBlockExecutor extends AbstractBlockExecutor {
 
     public MathChangeBlockExecutor(Block block, Shadow shadow) {

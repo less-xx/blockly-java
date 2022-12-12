@@ -19,6 +19,7 @@ import org.teapotech.blockly.block.def.CustomBlockDefinition;
 import org.teapotech.blockly.block.def.DefaultBlockDefinition;
 import org.teapotech.blockly.block.def.annotation.ApplyToBlock;
 import org.teapotech.blockly.block.execute.AbstractBlockExecutor;
+import org.teapotech.blockly.model.Block;
 import org.teapotech.blockly.model.ToolboxItem;
 import org.teapotech.blockly.model.ToolboxItem.Kind;
 import org.teapotech.blockly.resource.BlockOptionProvider;
@@ -32,6 +33,7 @@ public class BlockRegistry {
     private final BlockOptionProvider blockOptionProvider;
     private final JsonHelper jsonHelper;
     private final ToolboxItem toolbox = new ToolboxItem();
+    private boolean blockLoaded = false;
 
     public BlockRegistry(BlockOptionProvider blockOptionProvider, JsonHelper jsonHelper) {
         this.blockOptionProvider = blockOptionProvider;
@@ -61,8 +63,10 @@ public class BlockRegistry {
         return this.blockExecutors.keySet().stream();
     }
 
-    public void loadBlockExecutors() {
-
+    public synchronized void loadBlockExecutors() {
+        if (blockLoaded) {
+            return;
+        }
         Reflections reflections = new Reflections("org.teapotech");
 
         Set<Class<? extends AbstractBlockExecutor>> executorClasses = reflections
@@ -109,13 +113,30 @@ public class BlockRegistry {
                     for (String subCat : ss) {
                         tbCategory = findOrInitiateCategory(tbCategory, subCat);
                     }
-                    tbCategory.getContents().add(new ToolboxItem(blockDef));
-                    LOG.info("Registered block, Type: {}, Executor class: {}", blockDef.getBlockType(), c.getName());
+                    tbCategory.getContents().add(buildToolboxItem(blockDef));
+                    LOG.info("Registered user block, Type: {}, Executor class: {}", blockDef.getBlockType(),
+                            c.getName());
                 } catch (Exception e) {
                     LOG.error(e.getMessage(), e);
                 }
             }
         }
+        blockLoaded = true;
+    }
+
+    private ToolboxItem buildToolboxItem(CustomBlockDefinition blockDef) {
+        ToolboxItem item = new ToolboxItem(blockDef);
+        try {
+            if (blockDef.getToolboxConfig() != null) {
+                Block b = jsonHelper.getObject(blockDef.getToolboxConfig(), Block.class);
+                item.setInputs(b.getInputs());
+                item.setFields(b.getFields());
+                item.setExtraState(b.getExtraState());
+            }
+        } catch (Exception e) {
+            LOG.error(e.getMessage());
+        }
+        return item;
     }
 
     private void registerBlockExecutor(BlockDefinition blockDef, Class<? extends AbstractBlockExecutor> executorClass) {
@@ -152,6 +173,7 @@ public class BlockRegistry {
         if (result == null) {
             result = new ToolboxItem(Kind.category);
             result.setName(name);
+            result.setCategorystyle(name);
             LOG.info("Initiate toolbox category: {}", name);
             if (item.getContents() == null) {
                 item.setContents(new ArrayList<>());

@@ -19,14 +19,17 @@ public interface BlockDefinition {
 
     public static class CategoryID {
 
+        // public final static String ID_BASIC = "basic";
         public final static String ID_CONTROL = "control";
+        public final static String ID_DATA_OPERATORS = "data_operations";
         public final static String ID_EVENTS = "events";
         public final static String ID_FILE_OPERATIONS = "file_operations";
-        public final static String ID_MATH = "math";
+        // public final static String ID_MATH = "math";
+        public final static String ID_OPERATORS = "operators";
         public final static String ID_RESOURCES = "resources";
         public final static String ID_START_EXIT = "start_exit";
         public final static String ID_VARIABLES = "variables";
-        public final static String ID_BASIC = "basic";
+
     }
 
     String getConfiguration();
@@ -34,4 +37,6 @@ public interface BlockDefinition {
     String getBlockType();
 
     String getCategory();
+
+    String getToolboxConfig();
 }

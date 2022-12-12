@@ -4,6 +4,7 @@
 package org.teapotech.blockly.block.executor.loop;
 
 import org.teapotech.blockly.block.def.BlockDefinition;
+import org.teapotech.blockly.block.def.BlockDefinition.CategoryID;
 import org.teapotech.blockly.block.def.annotation.ApplyToBlock;
 import org.teapotech.blockly.block.execute.AbstractBlockExecutor;
 import org.teapotech.blockly.block.execute.BlockExecutionContext;
@@ -19,7 +20,7 @@ import org.teapotech.blockly.model.Shadow;
  * @author jiangl
  *
  */
-@ApplyToBlock(blockType = BlockDefinition.INTERNAL_BLOCK_TYPE_CONTROLS_WHILE_UNTIL, category = "control", style = "control_blocks")
+@ApplyToBlock(blockType = BlockDefinition.INTERNAL_BLOCK_TYPE_CONTROLS_WHILE_UNTIL, category = CategoryID.ID_CONTROL, style = "control_blocks")
 public class ControlsWhileUntilBlockExecutor extends AbstractBlockExecutor {
 
     /**

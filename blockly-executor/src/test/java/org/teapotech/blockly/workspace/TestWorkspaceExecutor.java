@@ -154,35 +154,22 @@ public class TestWorkspaceExecutor {
         }
     }
 
-//    @Test
-//    public void testRunWorkspace_02() throws Exception {
-//        try (InputStream in = getClass().getClassLoader().getResourceAsStream("test_workspace_exec_02.xml");) {
-//            long testInstanceId = 1;
-//            Workspace w = BlockXmlUtils.loadWorkspace(in);
-//            DefaultBlockExecutionContext context = createBlockExecutionContext(w, testInstanceId);
-//            WorkspaceExecutor wExecutor = new WorkspaceExecutor(w, context);
-//            wExecutor.execute();
-//            wExecutor.waitFor(5000);
-//        }
-//    }
-//
-//    @Test
-//    public void testRunWorkspace_03() throws Exception {
-//        try (InputStream in = getClass().getClassLoader().getResourceAsStream("test_workspace_exec_03.xml");) {
-//            long testInstanceId = 1;
-//            Workspace w = BlockXmlUtils.loadWorkspace(in);
-//            DefaultBlockExecutionContext context = createBlockExecutionContext(w, testInstanceId);
-//            WorkspaceExecutor wExecutor = new WorkspaceExecutor(w, context);
-//            wExecutor.setExecutionTimeout(1);
-//            wExecutor.execute();
-//            WorkspaceExecution wexec = wExecutor.getWorkspaceExecution();
-//            System.out.println(wexec);
-//            wExecutor.waitFor(5000);
-//            wexec = wExecutor.getWorkspaceExecution();
-//            System.out.println(wexec);
-//        }
-//    }
-//
+    @Test
+    public void testRunWorkspace_04() throws Exception {
+        try (InputStream in = getClass().getClassLoader().getResourceAsStream("workspace04.json");) {
+            long testInstanceId = 4;
+            Workspace w = jsonHelper.getObject(in, Workspace.class);
+            w.setId("testRunWorkspace_04");
+            DefaultBlockExecutionContext context = createBlockExecutionContext(w, testInstanceId);
+            WorkspaceExecutor wExecutor = new WorkspaceExecutor(w, context);
+            wExecutor.execute();
+            wExecutor.waitFor(2000);
+            WorkspaceExecution execution = wExecutor.getWorkspaceExecution();
+            assertEquals(Status.Succeeded, execution.getStatus());
+            System.out.println(execution.getMessage());
+        }
+    }
+
 //    @Test
 //    public void testFindAllPrimesInRange() throws Exception {
 //        try (InputStream in = getClass().getClassLoader().getResourceAsStream("test_workspace_exec_04.xml");) {

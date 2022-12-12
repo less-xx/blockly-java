@@ -1,6 +1,7 @@
 package org.teapotech.blockly.block.executor.variable;
 
 import org.teapotech.blockly.block.def.BlockDefinition;
+import org.teapotech.blockly.block.def.BlockDefinition.CategoryID;
 import org.teapotech.blockly.block.def.annotation.ApplyToBlock;
 import org.teapotech.blockly.block.execute.AbstractBlockExecutor;
 import org.teapotech.blockly.block.execute.BlockExecutionContext;
@@ -16,7 +17,7 @@ import org.teapotech.blockly.model.Variable;
  * @author jiangl
  *
  */
-@ApplyToBlock(blockType = BlockDefinition.INTERNAL_BLOCK_TYPE_VARIABLES_SET, category = "variables", style = "variable_blocks")
+@ApplyToBlock(blockType = BlockDefinition.INTERNAL_BLOCK_TYPE_VARIABLES_SET, category = CategoryID.ID_VARIABLES, style = "variable_blocks")
 public class VariableSetBlockExecutor extends AbstractBlockExecutor {
 
     public VariableSetBlockExecutor(Block block, Shadow shadow) {

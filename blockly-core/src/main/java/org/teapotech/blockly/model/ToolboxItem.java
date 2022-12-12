@@ -18,6 +18,8 @@ public class ToolboxItem extends Block {
     private Kind kind;
     private List<ToolboxItem> contents;
     private String name;
+    private String colour;
+    private String categorystyle;
 
     public ToolboxItem() {
         this.kind = Kind.categoryToolbox;
@@ -65,6 +67,22 @@ public class ToolboxItem extends Block {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getColour() {
+        return colour;
+    }
+
+    public void setColour(String colour) {
+        this.colour = colour;
+    }
+
+    public String getCategorystyle() {
+        return categorystyle;
+    }
+
+    public void setCategorystyle(String categorystyle) {
+        this.categorystyle = categorystyle;
     }
 
     public ToolboxItem findToolboxItem(ToolboxItemFilter filter) {

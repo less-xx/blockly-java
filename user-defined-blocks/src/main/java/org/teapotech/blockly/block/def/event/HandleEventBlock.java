@@ -23,13 +23,12 @@ public class HandleEventBlock extends CustomBlockDefinition {
 					"type": "handle_event",
                 	"message0": "when I receive %1",
 					"args0": [
-						{
-                			"type": "field_dropdown",
-                			"name": "EVENT_NAME",
-                			"options": [
-                			]
-						}
-					],
+                        {
+                            "type": "field_input",
+                            "name": "EVENT_NAME",
+                            "text": "event_name"
+                        }
+                    ],
 					"inputsInline": true,
 					"nextStatement": null,
 					"tooltip": "",
