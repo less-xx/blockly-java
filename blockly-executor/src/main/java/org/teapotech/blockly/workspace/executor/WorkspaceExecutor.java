@@ -191,7 +191,6 @@ public class WorkspaceExecutor {
                 workspaceExecution.setStatus(Status.Succeeded);
                 stopExecution();
             } catch (Exception e) {
-                context.getLogger().error(e.getMessage());
                 context.getLogger().error(e.getMessage(), e);
                 workspaceExecution.setStatus(Status.Failed);
                 workspaceExecution.setMessage(e.getMessage());
@@ -256,7 +255,7 @@ public class WorkspaceExecutor {
                     break;
                 }
                 try {
-                    Thread.sleep(1000L);
+                    Thread.sleep(500L);
                 } catch (InterruptedException e) {
                     context.getLogger().warn("Block monitoring thread is interrupted.");
                     break;
