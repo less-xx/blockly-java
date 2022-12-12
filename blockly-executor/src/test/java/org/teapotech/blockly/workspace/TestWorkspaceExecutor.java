@@ -117,6 +117,7 @@ public class TestWorkspaceExecutor {
             WorkspaceExecutor wExecutor = new WorkspaceExecutor(w, context);
             wExecutor.startExecute();
             wExecutor.waitFor(2000);
+            Thread.sleep(2000);
             WorkspaceExecution execution = wExecutor.getWorkspaceExecution();
             assertEquals(Status.Succeeded, execution.getStatus());
         }
@@ -133,6 +134,7 @@ public class TestWorkspaceExecutor {
             wExecutor.setExecutionTimeout(2);
             wExecutor.startExecute();
             wExecutor.waitFor(5000);
+            Thread.sleep(5000);
             WorkspaceExecution execution = wExecutor.getWorkspaceExecution();
             assertEquals(Status.Timeout, execution.getStatus());
             System.out.println(execution.getMessage());
