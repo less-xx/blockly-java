@@ -236,7 +236,8 @@ public class WorkspaceExecutor {
                     running = running || t.isAlive();
 
                     Date startTime = workspaceExecution.getStartTime();
-                    long duration = (System.currentTimeMillis() - startTime.getTime()) / 1000;
+                    double duration = (System.currentTimeMillis() - startTime.getTime()) / 1000.0;
+                    context.getLogger().debug("Duration: {} seconds", duration);
                     if (duration > executionTimeout) {
                         context.getLogger().warn(
                                 "Workspace execution time out, instance ID: {}, workspace ID: {}. Duration: {}",

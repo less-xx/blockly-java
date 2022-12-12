@@ -131,7 +131,7 @@ public class TestWorkspaceExecutor {
             w.setId("testRunWorkspace_02");
             DefaultBlockExecutionContext context = createBlockExecutionContext(w, testInstanceId);
             WorkspaceExecutor wExecutor = new WorkspaceExecutor(w, context);
-            wExecutor.setExecutionTimeout(2);
+            wExecutor.setExecutionTimeout(1);
             wExecutor.startExecute();
             wExecutor.waitFor(5000);
             Thread.sleep(5000);
