@@ -80,7 +80,7 @@ public class DefaultBlockExecutionContext implements BlockExecutionContext {
     }
 
     @Override
-    public void setStopped(boolean stopped) {
+    public synchronized void setStopped(boolean stopped) {
         this.stopped = stopped;
     }
 

@@ -115,7 +115,7 @@ public class TestWorkspaceExecutor {
             w.setId("testRunWorkspace_01");
             DefaultBlockExecutionContext context = createBlockExecutionContext(w, testInstanceId);
             WorkspaceExecutor wExecutor = new WorkspaceExecutor(w, context);
-            wExecutor.execute();
+            wExecutor.startExecute();
             wExecutor.waitFor(2000);
             WorkspaceExecution execution = wExecutor.getWorkspaceExecution();
             assertEquals(Status.Succeeded, execution.getStatus());
@@ -131,7 +131,7 @@ public class TestWorkspaceExecutor {
             DefaultBlockExecutionContext context = createBlockExecutionContext(w, testInstanceId);
             WorkspaceExecutor wExecutor = new WorkspaceExecutor(w, context);
             wExecutor.setExecutionTimeout(2);
-            wExecutor.execute();
+            wExecutor.startExecute();
             wExecutor.waitFor(5000);
             WorkspaceExecution execution = wExecutor.getWorkspaceExecution();
             assertEquals(Status.Timeout, execution.getStatus());
@@ -147,8 +147,9 @@ public class TestWorkspaceExecutor {
             w.setId("testRunWorkspace_03");
             DefaultBlockExecutionContext context = createBlockExecutionContext(w, testInstanceId);
             WorkspaceExecutor wExecutor = new WorkspaceExecutor(w, context);
-            wExecutor.execute();
+            wExecutor.startExecute();
             wExecutor.waitFor(5000);
+            Thread.sleep(5000);
             WorkspaceExecution execution = wExecutor.getWorkspaceExecution();
             assertEquals(Status.Failed, execution.getStatus());
             System.out.println(execution.getMessage());
@@ -163,8 +164,9 @@ public class TestWorkspaceExecutor {
             w.setId("testRunWorkspace_04");
             DefaultBlockExecutionContext context = createBlockExecutionContext(w, testInstanceId);
             WorkspaceExecutor wExecutor = new WorkspaceExecutor(w, context);
-            wExecutor.execute();
+            wExecutor.startExecute();
             wExecutor.waitFor(2000);
+            Thread.sleep(2000);
             WorkspaceExecution execution = wExecutor.getWorkspaceExecution();
             assertEquals(Status.Succeeded, execution.getStatus());
             System.out.println(execution.getMessage());

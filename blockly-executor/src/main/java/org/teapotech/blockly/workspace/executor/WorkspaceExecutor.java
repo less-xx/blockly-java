@@ -73,7 +73,7 @@ public class WorkspaceExecutor {
         }
     }
 
-    public void execute() {
+    public void startExecute() {
 
         workspaceExecution.setStartTime(new Date());
         workspaceExecution.setStatus(Status.Running);
@@ -127,6 +127,7 @@ public class WorkspaceExecutor {
                 }
             }
             startMonitoring();
+            entryPointThread.monitoringThread = monitoringThread;
             entryPointThread.start();
 
         } else {
@@ -144,7 +145,6 @@ public class WorkspaceExecutor {
         try {
             monitoringThread.join();
         } catch (InterruptedException e) {
-
         }
     }
 
@@ -173,13 +173,13 @@ public class WorkspaceExecutor {
     private class BlockExecutionThread extends Thread {
 
         private final Block startBlock;
+        private BlockExecutionMonitoringThread monitoringThread;
 
         public BlockExecutionThread(Block startBlock, ThreadGroup threadGroup) {
             super(threadGroup, "bet." + startBlock.getId());
             this.startBlock = startBlock;
             context.getLogger().info("Created block execution thread. Block ID: {}, Type: {}, Group: {}",
-                    startBlock.getId(),
-                    startBlock.getType(), threadGroup.getName());
+                    startBlock.getId(), startBlock.getType(), threadGroup.getName());
         }
 
         @Override
@@ -195,6 +195,10 @@ public class WorkspaceExecutor {
                 workspaceExecution.setStatus(Status.Failed);
                 workspaceExecution.setMessage(e.getMessage());
                 stopExecution();
+            }
+
+            if (monitoringThread != null) {
+                monitoringThread.interrupt();
             }
 
             String name = Thread.currentThread().getName();
