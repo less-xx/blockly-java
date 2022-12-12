@@ -41,7 +41,7 @@ public class TestWorkspaceExecutor {
 
     private static BlockExecutorFactory[] factories;
     private static BlockRegistry blockDefRegistry;
-    private static JsonHelper jsonHelper = JsonHelper.newInstance().build();
+    private static JsonHelper jsonHelper;
     private static KeyValueStorageProvider kvStorageProvider = new InMemoryKeyValueStorageProvider();
     private static String workingDirPath = System.getProperty("java.io.tmpdir") + "/workspace/test";
     private static FileStorageProvider fileStorageProvider = new DiskFileStorageProvider(workingDirPath);
@@ -87,6 +87,7 @@ public class TestWorkspaceExecutor {
 
     @BeforeAll
     static void init() throws Exception {
+        jsonHelper = JsonHelper.newInstance().build();
         blockDefRegistry = new BlockRegistry(blockOptionProvider, jsonHelper);
         blockDefRegistry.loadBlockExecutors();
         factories = new BlockExecutorFactory[] {

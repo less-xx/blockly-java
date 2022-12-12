@@ -29,7 +29,7 @@ public class TestToolboxService {
     @Test
     public void test01() {
         ToolboxItem toolbox = toolboxService.getToolboxConfiguration(null);
-        ToolboxItem cat = toolbox.findCategoryByName(CategoryID.ID_START_EXIT);
+        ToolboxItem cat = toolbox.findCategoryByName(CategoryID.ID_CONTROL);
         assertNotNull(cat);
         assertTrue(!cat.getContents().isEmpty());
 
