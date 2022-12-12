@@ -138,6 +138,7 @@ public class WorkspaceExecutor {
     public void startMonitoring() {
         monitoringThread = new BlockExecutionMonitoringThread(
                 "monitoring-" + context.getWorkspaceId() + "-" + context.getInstanceId());
+        monitoringThread.setPriority(Thread.MAX_PRIORITY);
         monitoringThread.start();
     }
 
@@ -260,7 +261,7 @@ public class WorkspaceExecutor {
                     break;
                 }
                 try {
-                    Thread.sleep(500L);
+                    Thread.sleep(200L);
                 } catch (InterruptedException e) {
                     context.getLogger().warn("Block monitoring thread is interrupted.");
                     break;
