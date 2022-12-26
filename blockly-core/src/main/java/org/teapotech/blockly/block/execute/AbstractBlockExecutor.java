@@ -119,7 +119,7 @@ public abstract class AbstractBlockExecutor implements BlockExecutor {
             beg.setExitTimestamp(System.currentTimeMillis());
         }
         beg.setBlockStatus(status);
-        context.getLogger().debug("{} Block [{}], type: [{}]", status, block.getId(), block.getType());
+        context.getLogger().trace("{} Block [{}], type: [{}]", status, block.getId(), block.getType());
     }
 
     protected Block getInputBlockByKey(String key) throws Exception {

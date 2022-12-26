@@ -60,6 +60,7 @@ public class WorkspaceExecutor {
 
     public void setExecutionTimeout(int executionTimeout) {
         this.executionTimeout = executionTimeout;
+        this.context.getLogger().info("set execution timeout={} seconds.", this.executionTimeout);
     }
 
     public int getExecutionTimeout() {
@@ -126,9 +127,9 @@ public class WorkspaceExecutor {
                     break;
                 }
             }
-            startMonitoring();
             entryPointThread.monitoringThread = monitoringThread;
             entryPointThread.start();
+            startMonitoring();
 
         } else {
             context.getLogger().warn("Cannot find start block");
@@ -231,7 +232,7 @@ public class WorkspaceExecutor {
                     break;
                 }
                 for (Thread t : blockExecutionThreads) {
-                    if (t.getName().equals(this.getName())) {
+                    if (t == null || t.getName().equals(this.getName())) {
                         continue;
                     }
                     running = running || t.isAlive();
