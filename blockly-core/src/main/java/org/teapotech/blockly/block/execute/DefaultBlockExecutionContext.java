@@ -145,10 +145,12 @@ public class DefaultBlockExecutionContext implements BlockExecutionContext {
         return debug;
     }
 
+    @Override
     public void setDebugMode(boolean debug) {
         this.debug = debug;
     }
 
+    @Override
     public void addBreakPoint(String blockId) {
         this.breakpoints.add(blockId);
     }

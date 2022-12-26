@@ -67,6 +67,14 @@ public class WorkspaceExecutor {
         return executionTimeout;
     }
 
+    public void addBreakpoint(String blockId) {
+        this.context.addBreakPoint(blockId);
+    }
+
+    public void setDebugMode(boolean debugMode) {
+        this.context.setDebugMode(debugMode);
+    }
+
     public void resumeExecution() {
         AbstractBlockExecutor blockExecutor = context.getCurrentBlockExecutor();
         if (blockExecutor != null) {
@@ -163,12 +171,12 @@ public class WorkspaceExecutor {
 
     public void stopExecution() {
         this.context.setStopped(true);
+        workspaceExecution.setStatus(Status.Stopping);
         this.threadGroup.interrupt();
     }
 
     public void stopExecution(UserDelegate stoppedBy) {
         workspaceExecution.setEndBy(stoppedBy);
-        workspaceExecution.setStatus(Status.Stopping);
         this.stopExecution();
     }
 
@@ -253,6 +261,8 @@ public class WorkspaceExecutor {
                     workspaceExecution.setCurrentBlockId(context.getCurrentBlockExecutor().getBlockId());
                     if (context.getCurrentBlockExecutor().isPaused()) {
                         workspaceExecution.setStatus(Status.Paused);
+                    } else if (workspaceExecution.getStatus() == Status.Paused) {
+                        workspaceExecution.setStatus(Status.Running);
                     }
                 } else {
                     workspaceExecution.setCurrentBlockId(null);

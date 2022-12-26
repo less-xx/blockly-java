@@ -175,19 +175,31 @@ public class TestWorkspaceExecutor {
         }
     }
 
-//    @Test
-//    public void testFindAllPrimesInRange() throws Exception {
-//        try (InputStream in = getClass().getClassLoader().getResourceAsStream("test_workspace_exec_04.xml");) {
-//            long testInstanceId = 1;
-//            Workspace w = BlockXmlUtils.loadWorkspace(in);
-//            DefaultBlockExecutionContext context = createBlockExecutionContext(w, testInstanceId);
-//            WorkspaceExecutor wExecutor = new WorkspaceExecutor(w, context);
-//            wExecutor.execute();
-//            wExecutor.waitFor(30000);
-//            WorkspaceExecution wexec = wExecutor.getWorkspaceExecution();
-//            System.out.println(wexec);
-//        }
-//    }
+    @Test
+    public void testRunWorkspace_05() throws Exception {
+        try (InputStream in = getClass().getClassLoader().getResourceAsStream("workspace02.json");) {
+            long testInstanceId = 2;
+            Workspace w = jsonHelper.getObject(in, Workspace.class);
+            w.setId("testRunWorkspace_05");
+            DefaultBlockExecutionContext context = createBlockExecutionContext(w, testInstanceId);
+            WorkspaceExecutor wExecutor = new WorkspaceExecutor(w, context);
+            wExecutor.addBreakpoint("w*EQof-R`q,4![tqVt_T");
+            wExecutor.setDebugMode(true);
+            wExecutor.startExecute();
+            wExecutor.waitFor(1000);
+            WorkspaceExecution execution = wExecutor.getWorkspaceExecution();
+            assertEquals(Status.Paused, execution.getStatus());
+            wExecutor.getBlockExecutionContext().getBreakPoints().clear();
+            wExecutor.resumeExecution();
+            wExecutor.waitFor(1000);
+            assertEquals(Status.Running, execution.getStatus());
+            wExecutor.waitFor(1000);
+            wExecutor.stopExecution();
+            wExecutor.waitFor();
+            assertEquals(Status.Stopped, execution.getStatus());
+            System.out.println(execution.getMessage());
+        }
+    }
 //
 //    @Test
 //    public void testRunWorkspace_05() throws Exception {

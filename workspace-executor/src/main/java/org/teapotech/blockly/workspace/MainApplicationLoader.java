@@ -146,7 +146,7 @@ public class MainApplicationLoader implements CommandLineRunner {
             }
         };
         DefaultBlockExecutionContext context = new DefaultBlockExecutionContext(w.getId(), instanceId, executedBy,
-                workingDir, blockExecutorFactories);
+                outputDir, blockExecutorFactories);
         context.setContextObject(EventDispatcher.class, eventDispatcher);
         // context.setContextObject(KeyValueStorageProvider.class, kvStorageProvider);
         // context.setContextObject(FileStorageProvider.class, fileStorageProvider);

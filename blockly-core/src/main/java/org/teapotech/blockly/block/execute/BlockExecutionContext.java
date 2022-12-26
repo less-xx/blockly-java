@@ -50,7 +50,11 @@ public interface BlockExecutionContext {
 
     Set<String> getBreakPoints();
 
+    void addBreakPoint(String blockId);
+
     boolean isDebugMode();
+
+    void setDebugMode(boolean debug);
 
     boolean shouldPause(String blockId);
 

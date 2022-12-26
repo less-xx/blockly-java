@@ -78,7 +78,7 @@ public abstract class AbstractBlockExecutor implements BlockExecutor {
                 this.paused = true;
                 context.getContextObject(EventDispatcher.class).dispatchWorkspaceEvent(new WorkspaceEvent(
                         context.getWorkspaceId(), context.getInstanceId(), WorkspaceExecution.Status.Paused));
-                LOG.debug("Execution paused");
+                LOG.debug("Execution paused at block: {}", getBlockId());
                 pauseExecution();
             }
 
