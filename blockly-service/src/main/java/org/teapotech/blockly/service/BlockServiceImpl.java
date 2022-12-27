@@ -3,8 +3,6 @@ package org.teapotech.blockly.service;
 import java.util.List;
 import java.util.stream.Stream;
 
-import javax.annotation.PostConstruct;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +11,8 @@ import org.teapotech.blockly.block.def.BlockDefinition;
 import org.teapotech.blockly.util.BlockRegistry;
 
 import com.fasterxml.jackson.databind.JsonNode;
+
+import jakarta.annotation.PostConstruct;
 
 @Service
 public class BlockServiceImpl implements BlockService {

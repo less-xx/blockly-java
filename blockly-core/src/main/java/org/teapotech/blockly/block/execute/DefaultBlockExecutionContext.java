@@ -165,18 +165,18 @@ public class DefaultBlockExecutionContext implements BlockExecutionContext {
     }
 
     @Override
-    public AbstractBlockExecutor getCurrentBlockExecutor() {
+    public synchronized AbstractBlockExecutor getCurrentBlockExecutor() {
         return currentBlockExecutor;
     }
 
     @Override
-    public void setCurrentBlockExecutor(AbstractBlockExecutor blockExecutor) {
+    public synchronized void setCurrentBlockExecutor(AbstractBlockExecutor blockExecutor) {
         this.currentBlockExecutor = blockExecutor;
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T> T getContextObject(Class<T> objectType) {
+    public synchronized <T> T getContextObject(Class<T> objectType) {
         T object = (T) contextObjects.get(objectType);
         if (object == null) {
             throw new IllegalArgumentException("Cannot find context object of type " + objectType);
@@ -184,7 +184,7 @@ public class DefaultBlockExecutionContext implements BlockExecutionContext {
         return object;
     }
 
-    public <T> void setContextObject(Class<T> objectType, T object) {
+    public synchronized <T> void setContextObject(Class<T> objectType, T object) {
         if (contextObjects.containsKey(objectType)) {
             LOG.warn("Object of type {} already exists in the context. Reset will be ignored.", objectType);
             return;

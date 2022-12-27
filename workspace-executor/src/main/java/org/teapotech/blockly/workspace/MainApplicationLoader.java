@@ -118,7 +118,7 @@ public class MainApplicationLoader implements CommandLineRunner {
             }
             w.setId(workspaceId);
             DefaultBlockExecutionContext context = createBlockExecutionContext(w, instanceId);
-            WorkspaceExecutor wExecutor = new WorkspaceExecutor(w, context);
+            WorkspaceExecutor wExecutor = new WorkspaceExecutor(w, context, jsonHelper);
             if (this.timeoutSec > 0) {
                 wExecutor.setExecutionTimeout(this.timeoutSec);
             }

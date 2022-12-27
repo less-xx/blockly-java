@@ -3,10 +3,14 @@
  */
 package org.teapotech.blockly.workspace.executor;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.io.IOUtils;
 import org.teapotech.blockly.block.def.event.HandleEventBlock;
 import org.teapotech.blockly.block.execute.AbstractBlockExecutor;
 import org.teapotech.blockly.block.execute.BlockExecutionContext;
@@ -23,6 +27,7 @@ import org.teapotech.blockly.model.Variable;
 import org.teapotech.blockly.model.Workspace;
 import org.teapotech.blockly.model.Workspace.Blocks;
 import org.teapotech.blockly.user.UserDelegate;
+import org.teapotech.blockly.util.JsonHelper;
 import org.teapotech.blockly.workspace.event.WorkspaceEvent;
 
 /**
@@ -36,14 +41,16 @@ public class WorkspaceExecutor {
     private final BlockExecutionContext context;
     private final Workspace workspace;
     private final ThreadGroup threadGroup;
+    private final JsonHelper jsonHelper;
     private BlockExecutionMonitoringThread monitoringThread;
     private final WorkspaceExecution workspaceExecution;
     private int executionTimeout = WORKSPACE_EXECUTION_TIMEOUT_SECONDS;
 
-    public WorkspaceExecutor(Workspace workspace, BlockExecutionContext context) {
+    public WorkspaceExecutor(Workspace workspace, BlockExecutionContext context, JsonHelper jsonHelper) {
         this.context = context;
         this.workspace = workspace;
         this.threadGroup = new ThreadGroup("wexec-" + context.getWorkspaceId() + "-" + context.getInstanceId());
+        this.jsonHelper = jsonHelper;
         context.getLogger().info("Created workspace executor. ID: {}-{}", context.getWorkspaceId(),
                 context.getInstanceId());
         workspaceExecution = new WorkspaceExecution(context.getInstanceId(), context.getWorkspaceId(),
@@ -199,12 +206,14 @@ public class WorkspaceExecutor {
                 BlockExecutionHelper.execute(startBlock, null, context);
             } catch (ExitBlockExecutionException e) {
                 workspaceExecution.setStatus(Status.Succeeded);
-                stopExecution();
+                context.setStopped(true);
+                threadGroup.interrupt();
             } catch (Exception e) {
                 context.getLogger().error(e.getMessage(), e);
                 workspaceExecution.setStatus(Status.Failed);
                 workspaceExecution.setMessage(e.getMessage());
-                stopExecution();
+                context.setStopped(true);
+                threadGroup.interrupt();
             }
 
             if (monitoringThread != null) {
@@ -254,7 +263,8 @@ public class WorkspaceExecutor {
                                 context.getInstanceId(), workspace.getId(), duration);
                         workspaceExecution.setMessage("Workspace execution time out");
                         workspaceExecution.setStatus(Status.Timeout);
-                        stopExecution();
+                        context.setStopped(true);
+                        threadGroup.interrupt();
                     }
                 }
                 if (context.getCurrentBlockExecutor() != null) {
@@ -278,6 +288,13 @@ public class WorkspaceExecutor {
                     break;
                 }
             }
+
+            if (context.getCurrentBlockExecutor() != null) {
+                workspaceExecution.setCurrentBlockId(context.getCurrentBlockExecutor().getBlockId());
+            } else {
+                workspaceExecution.setCurrentBlockId(null);
+            }
+
             context.getLogger().info("All block execution threads are stopped. Ouput dir: {}",
                     context.getWorkingDir().getAbsolutePath());
             workspaceExecution.setEndTime(new Date());
@@ -293,6 +310,15 @@ public class WorkspaceExecutor {
             if (!context.isStopped()) {
                 context.setStopped(true);
             }
+
+            File wexecFile = new File(context.getWorkingDir(), "workspace-execution.json");
+            try (FileOutputStream fos = new FileOutputStream(wexecFile);) {
+                IOUtils.write(jsonHelper.getPrettyJSON(workspaceExecution), fos, StandardCharsets.UTF_8);
+                context.getLogger().info("Saved workspace execution to {}", wexecFile.getAbsolutePath());
+            } catch (Exception e) {
+                context.getLogger().error("Failed to save workspace execution. {}, {}", e.getMessage(), e);
+            }
+
             context.destroy();
         }
     }

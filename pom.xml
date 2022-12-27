@@ -114,6 +114,7 @@
 		<module>blockly-datastore</module>
 		<module>blockly-service</module>
 		<module>blockly-application-backend</module>
+		<module>workspace-executor</module>
 	</modules>
 
 </project>

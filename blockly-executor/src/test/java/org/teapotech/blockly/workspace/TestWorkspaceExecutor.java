@@ -114,7 +114,7 @@ public class TestWorkspaceExecutor {
             Workspace w = jsonHelper.getObject(in, Workspace.class);
             w.setId("testRunWorkspace_01");
             DefaultBlockExecutionContext context = createBlockExecutionContext(w, testInstanceId);
-            WorkspaceExecutor wExecutor = new WorkspaceExecutor(w, context);
+            WorkspaceExecutor wExecutor = new WorkspaceExecutor(w, context, jsonHelper);
             wExecutor.startExecute();
             wExecutor.waitFor(2000);
             Thread.sleep(2000);
@@ -130,7 +130,7 @@ public class TestWorkspaceExecutor {
             Workspace w = jsonHelper.getObject(in, Workspace.class);
             w.setId("testRunWorkspace_02");
             DefaultBlockExecutionContext context = createBlockExecutionContext(w, testInstanceId);
-            WorkspaceExecutor wExecutor = new WorkspaceExecutor(w, context);
+            WorkspaceExecutor wExecutor = new WorkspaceExecutor(w, context, jsonHelper);
             wExecutor.setExecutionTimeout(1);
             wExecutor.startExecute();
             wExecutor.waitFor(5000);
@@ -148,7 +148,7 @@ public class TestWorkspaceExecutor {
             Workspace w = jsonHelper.getObject(in, Workspace.class);
             w.setId("testRunWorkspace_03");
             DefaultBlockExecutionContext context = createBlockExecutionContext(w, testInstanceId);
-            WorkspaceExecutor wExecutor = new WorkspaceExecutor(w, context);
+            WorkspaceExecutor wExecutor = new WorkspaceExecutor(w, context, jsonHelper);
             wExecutor.startExecute();
             wExecutor.waitFor(5000);
             Thread.sleep(5000);
@@ -165,7 +165,7 @@ public class TestWorkspaceExecutor {
             Workspace w = jsonHelper.getObject(in, Workspace.class);
             w.setId("testRunWorkspace_04");
             DefaultBlockExecutionContext context = createBlockExecutionContext(w, testInstanceId);
-            WorkspaceExecutor wExecutor = new WorkspaceExecutor(w, context);
+            WorkspaceExecutor wExecutor = new WorkspaceExecutor(w, context, jsonHelper);
             wExecutor.startExecute();
             wExecutor.waitFor(2000);
             Thread.sleep(2000);
@@ -182,7 +182,7 @@ public class TestWorkspaceExecutor {
             Workspace w = jsonHelper.getObject(in, Workspace.class);
             w.setId("testRunWorkspace_05");
             DefaultBlockExecutionContext context = createBlockExecutionContext(w, testInstanceId);
-            WorkspaceExecutor wExecutor = new WorkspaceExecutor(w, context);
+            WorkspaceExecutor wExecutor = new WorkspaceExecutor(w, context, jsonHelper);
             wExecutor.addBreakpoint("w*EQof-R`q,4![tqVt_T");
             wExecutor.setDebugMode(true);
             wExecutor.startExecute();
