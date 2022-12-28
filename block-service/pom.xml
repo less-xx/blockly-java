@@ -1,13 +1,35 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>blockly-datastore</artifactId>
+	<artifactId>block-service</artifactId>
+	
 	<parent>
 		<groupId>org.teapotech.blockly</groupId>
 		<artifactId>blockly-java-parent-pom</artifactId>
 		<version>0.1.0-SNAPSHOT</version>
 	</parent>
-	<properties></properties>
+
+	<properties>
+	</properties>
+
 	<dependencies>
+		<dependency>
+			<groupId>org.teapotech.blockly</groupId>
+			<artifactId>block-executor</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.teapotech.blockly</groupId>
+		    <artifactId>user-defined-blocks</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.reflections</groupId>
+			<artifactId>reflections</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -25,5 +47,11 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency> 
 	</dependencies>
-</project>
+	
+</project> 

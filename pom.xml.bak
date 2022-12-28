@@ -109,11 +109,12 @@
 	
 	<modules>
 		<module>blockly-core</module>
-		<module>block-executor</module>
+		<module>blockly-executor</module>
 		<module>user-defined-blocks</module>
-		<module>block-service</module>
-		<module>pipeline-builder-backend</module>
-		<module>pipeline-executor-docker</module>
+		<module>blockly-datastore</module>
+		<module>blockly-service</module>
+		<module>blockly-application-backend</module>
+		<module>workspace-executor</module>
 	</modules>
 
 </project>

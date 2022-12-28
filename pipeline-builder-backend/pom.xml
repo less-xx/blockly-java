@@ -1,6 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>blockly-application-backend</artifactId>
+	<artifactId>pipeline-builder-backend</artifactId>
 
 	<parent>
 		<groupId>org.teapotech.blockly</groupId>
@@ -11,7 +11,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.teapotech.blockly</groupId>
-			<artifactId>blockly-service</artifactId>
+			<artifactId>block-service</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
