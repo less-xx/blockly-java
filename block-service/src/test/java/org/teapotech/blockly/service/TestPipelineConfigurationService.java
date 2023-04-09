@@ -8,6 +8,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.teapotech.blockly.TestAppConfig;
 import org.teapotech.blockly.entity.PipelineConfiguration;
 import org.teapotech.blockly.repo.PipelineConfigRepo;
+import org.teapotech.blockly.util.BlockRegistry;
 
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.when;
@@ -19,6 +20,9 @@ public class TestPipelineConfigurationService {
 
     @MockBean
     PipelineConfigRepo pipelineConfRepo;
+
+    @MockBean
+    BlockRegistry blockRegistry;
 
     @Autowired
     PipelineDatastoreService pipelineDatastoreService;
