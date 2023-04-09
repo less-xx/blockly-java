@@ -10,15 +10,15 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.0.0</version>
+		<version>3.0.5</version>
 	</parent>
 	
 	<properties>
 	    <logback.version>1.2.11</logback.version>
-		<jackson-version>2.14.1</jackson-version>
-		<hibernate-version>6.1.5.Final</hibernate-version>
+		<jackson-version>2.14.2</jackson-version>
+		<hibernate-version>6.2.0.Final</hibernate-version>
 		<junit-version>5.9.1</junit-version>
-		<java.version>17</java.version>
+		<java.version>20</java.version>
 	</properties>
 	
 	<dependencyManagement>
@@ -74,14 +74,14 @@
 			<version>${jackson-version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.hibernate</groupId>
+			<groupId>org.hibernate.orm</groupId>
 			<artifactId>hibernate-core</artifactId>
 			<version>${hibernate-version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-annotations</artifactId>
-			<version>${hibernate-version}</version>
+			<groupId>org.hibernate.validator</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>8.0.0.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>org.reflections</groupId>

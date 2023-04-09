@@ -1,33 +1,40 @@
 package org.teapotech.blockly.entity;
 
-import java.util.Date;
-
-import org.hibernate.annotations.UpdateTimestamp;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.teapotech.blockly.block.execute.WorkspaceExecution;
+
+import java.util.Date;
 
 @Entity
-@Table(name = "workspace_execution")
-public class WorkspaceExecutionEntity {
+@Table(name = "pipeline_execution")
+public class PipelineExecution {
 
     @Id
-    @SequenceGenerator(name = "workspace_execution_id_seq")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "workspace_execution_id_seq")
+    @SequenceGenerator(name = "pipeline_execution_id_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pipeline_execution_id_seq")
     @Column(name = "id", columnDefinition = "serial")
     private Long id;
 
-    @Column(name = "workspace_id", nullable = false)
-    private String workspaceId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "pipeline_id", nullable = false)
+    private PipelineConfiguration pipelineConfig;
 
     @Column(name = "status", nullable = false)
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private WorkspaceExecution.Status status = WorkspaceExecution.Status.Waiting;
 
     @Column(name = "start_time", nullable = true)
     private Date startTime;
@@ -66,19 +73,19 @@ public class WorkspaceExecutionEntity {
         this.id = id;
     }
 
-    public String getWorkspaceId() {
-        return workspaceId;
+    public PipelineConfiguration getPipelineConfig() {
+        return pipelineConfig;
     }
 
-    public void setWorkspaceId(String workspaceId) {
-        this.workspaceId = workspaceId;
+    public void setPipelineConfig(PipelineConfiguration pipelineConfig) {
+        this.pipelineConfig = pipelineConfig;
     }
 
-    public String getStatus() {
+    public WorkspaceExecution.Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(WorkspaceExecution.Status status) {
         this.status = status;
     }
 
@@ -159,14 +166,15 @@ public class WorkspaceExecutionEntity {
         String s = """
                 {
                 	id: %d,
-                	workspaceId: %s,
+                	pipelineId: %s,
                 	status: %s,
                 	startTime: %s,
                 	endTime: %s,
                 	message: %s
                 }
                 """;
-        return s.formatted(this.id, this.workspaceId, this.status, this.startTime, this.endTime, this.message);
+        return s.formatted(this.id, this.pipelineConfig.getId(), this.status, this.startTime, this.endTime,
+                this.message);
     }
 
 }

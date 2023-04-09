@@ -26,7 +26,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 @EnableWebMvc
 @EnableAutoConfiguration
 @EnableTransactionManagement
-@EntityScan({ "org.teapotech.blockly.entity" })
+@EntityScan(basePackages = { "org.teapotech.blockly.entity" })
 @EnableJpaRepositories(basePackages = { "org.teapotech.blockly.repo" })
 @ComponentScan(basePackages = { "org.teapotech.blockly" })
 public class MainApplicationLoader implements ApplicationListener<ContextRefreshedEvent> {
