@@ -1,3 +1,3 @@
-FROM openjdk:20-jre-slim
+FROM openjdk:19-jdk-alpine
 
 WORKDIR application
