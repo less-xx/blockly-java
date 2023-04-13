@@ -1,0 +1,153 @@
+{
+  "kind": "categoryToolbox",
+  "contents": [
+    {
+      "kind": "category",
+      "contents": [
+        {
+          "type": "variables_get",
+          "kind": "block"
+        },
+        {
+          "type": "variables_set",
+          "kind": "block"
+        },
+        {
+          "type": "set_local_variable",
+          "kind": "block"
+        },
+        {
+          "type": "math_change",
+          "kind": "block"
+        },
+        {
+          "type": "get_local_variable",
+          "kind": "block"
+        }
+      ],
+      "name": "variables",
+      "categorystyle": "variables"
+    },
+    {
+      "kind": "category",
+      "contents": [
+        {
+          "type": "math_random_int",
+          "kind": "block"
+        },
+        {
+          "type": "text_print",
+          "kind": "block"
+        },
+        {
+          "type": "get_object_property",
+          "kind": "block"
+        },
+        {
+          "type": "text",
+          "kind": "block"
+        },
+        {
+          "type": "text_join",
+          "kind": "block"
+        },
+        {
+          "type": "math_round",
+          "kind": "block"
+        },
+        {
+          "type": "text_to_json",
+          "kind": "block"
+        },
+        {
+          "type": "math_number",
+          "kind": "block"
+        },
+        {
+          "type": "math_arithmetic",
+          "kind": "block"
+        }
+      ],
+      "name": "operators",
+      "categorystyle": "operators"
+    },
+    {
+      "kind": "category",
+      "contents": [
+        {
+          "type": "handle_event",
+          "kind": "block"
+        },
+        {
+          "type": "dispatch_event",
+          "kind": "block"
+        },
+        {
+          "type": "get_event_param",
+          "kind": "block"
+        },
+        {
+          "type": "start",
+          "kind": "block"
+        },
+        {
+          "type": "event_with_param",
+          "kind": "block"
+        }
+      ],
+      "name": "events",
+      "categorystyle": "events"
+    },
+    {
+      "kind": "category",
+      "contents": [
+        {
+          "type": "controls_whileUntil",
+          "kind": "block"
+        },
+        {
+          "type": "controls_repeat_ext",
+          "kind": "block"
+        },
+        {
+          "type": "controls_if",
+          "kind": "block"
+        },
+        {
+          "type": "exit",
+          "kind": "block"
+        },
+        {
+          "type": "foreach_in_collection",
+          "kind": "block"
+        },
+        {
+          "type": "logic_compare",
+          "kind": "block"
+        },
+        {
+          "type": "wait_seconds",
+          "inputs": {
+            "VALUE": {
+              "shadow": {
+                "type": "math_number",
+                "fields": {
+                  "NUM": 5
+                },
+                "fieldcValue": 5
+              },
+              "block": null
+            }
+          },
+          "kind": "block"
+        },
+        {
+          "type": "controls_flow_statements",
+          "kind": "block"
+        }
+      ],
+      "name": "control",
+      "categorystyle": "control"
+    }
+  ]
+}

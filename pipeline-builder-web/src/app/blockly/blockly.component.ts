@@ -22,12 +22,12 @@
  */
 
 import { Component, OnInit } from '@angular/core';
+import { MetaData, NgEventBus } from 'ng-event-bus';  
 
 import * as Blockly from 'blockly';
 import { BlocklyOptions } from 'blockly';
 import { BlocklyService } from './blockly.service';
 import {Block} from '../shared/models/block.model';
-import {EventBus} from '../shared/event-bus.service';
 import {Event} from '../shared/models/event.model';
 import {CustomTheme } from './blockly.theme';
 import {ITheme} from 'blockly/core/theme';
@@ -41,34 +41,30 @@ export class BlocklyComponent implements OnInit {
 
   workspace: Blockly.Workspace;
 
-  onWorkspaceRendered = ()=> {
-    console.log("Workspace rendered");
-    const evtBus = this.eventBus;
-    this.workspace.addChangeListener((event, evtBus)=>{
-      if(event.type === Blockly.Events.BLOCK_CREATE || 
-        event.type === Blockly.Events.BLOCK_CHANGE||
-        event.type === Blockly.Events.BLOCK_DELETE||
-        event.type === Blockly.Events.BLOCK_MOVE){
-          this.eventBus.emit(Event.EVENT_WORKSPACE_UPDATED, event);
-      }
-    });
-  }
-
-  onWorkspaceEvent = (event)=>{
-    console.log(event);
-    let json = Blockly.serialization.workspaces.save(this.workspace);
-    console.log(json);
-  }
-
   constructor(
     private blocklyService: BlocklyService,
-    private eventBus: EventBus
+    private eventBus: NgEventBus
   ) { }
 
   ngOnInit() {
     const blocklyDiv = document.getElementById('blocklyDiv');
-    this.eventBus.on(Event.EVENT_WORKSPACE_RENDERED, this.onWorkspaceRendered);
-    this.eventBus.on(Event.EVENT_WORKSPACE_UPDATED, this.onWorkspaceEvent);
+    this.eventBus.on(Event.EVENT_WORKSPACE_RENDERED).subscribe((meta: MetaData) => {
+      console.log("Workspace rendered");
+      this.workspace.addChangeListener((event, evtBus)=>{
+        if(event.type === Blockly.Events.BLOCK_CREATE || 
+          event.type === Blockly.Events.BLOCK_CHANGE||
+          event.type === Blockly.Events.BLOCK_DELETE||
+          event.type === Blockly.Events.BLOCK_MOVE){
+            this.eventBus.cast(Event.EVENT_WORKSPACE_UPDATED, event);
+        }
+      });
+    });
+    
+    this.eventBus.on(Event.EVENT_WORKSPACE_UPDATED) .subscribe((meta: MetaData) => {
+      console.log("Workspace updated");
+      let json = Blockly.serialization.workspaces.save(this.workspace);
+      this.eventBus.cast(Event.EVENT_WORKSPACE_CONFIG_UPDATED, json);
+    });
 
     this.blocklyService.getBlockDefinitions().subscribe((blockDefs: Block[])=>{
       blockDefs.forEach((bdef)=>{
@@ -103,7 +99,7 @@ export class BlocklyComponent implements OnInit {
         theme:  theme,
         toolbox: toolbox
       } as BlocklyOptions);
-      this.eventBus.emit(Event.EVENT_WORKSPACE_RENDERED, this.workspace);
+      this.eventBus.cast(Event.EVENT_WORKSPACE_RENDERED, this.workspace);
     });
   }
   

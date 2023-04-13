@@ -7,3 +7,4 @@ export const environment = {
 };
 
 export const API_HOST = 'http://localhost:8080/blockly-backend';
+export const FRONTEND_ONLY = true; // true to use frontend default resources, no communication with backend

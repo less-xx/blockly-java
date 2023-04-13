@@ -6,8 +6,8 @@ import {
   HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse
 } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { NgEventBus } from 'ng-event-bus';
 import { API_HOST } from '../../environments/environment';
-import { EventBus } from './event-bus.service';
 
 export const BASE_URL = `${API_HOST}`;
 
@@ -17,7 +17,7 @@ export class AppInterceptor implements HttpInterceptor {
 
   constructor(
     private router: Router,
-    private eventBus: EventBus
+    private eventBus: NgEventBus
   ) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

@@ -5,7 +5,13 @@ import { AppInterceptor } from './shared/http-interceptor.service';
 import { AppComponent } from './app.component';
 import { BlocklyComponent } from './blockly/blockly.component';
 import { BlocklyService } from './blockly/blockly.service';
-import { EventBus } from './shared/event-bus.service';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import {MatDialogModule} from "@angular/material/dialog";
+import { FormsModule } from '@angular/forms'; 
+import {MatFormFieldModule} from "@angular/material/form-field";
+import { NgEventBus } from 'ng-event-bus';
 
 /** Http interceptor providers in outside-in order */
 // export const httpInterceptorProviders = [
@@ -20,11 +26,17 @@ import { EventBus } from './shared/event-bus.service';
   imports: [
     BrowserModule,
     HttpClientModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatCardModule,
+    MatDialogModule,
+    FormsModule,
+    MatFormFieldModule
   ],
   providers: [
     //httpInterceptorProviders,
     BlocklyService,
-    EventBus
+    NgEventBus
   ],
   bootstrap: [AppComponent],
   exports: [BlocklyComponent]
