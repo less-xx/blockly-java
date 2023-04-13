@@ -9,11 +9,10 @@
 
 <ng-template #workspaceConfDialog let-dialogRef>
   <h2 mat-dialog-title>Workspace Configuration</h2>
-  <mat-dialog-content class="mat-dialog-content">
+  <div class="mat-dialog-content">
       <textarea matInput [(ngModel)]="workspaceConfig"  readonly></textarea>
-  </mat-dialog-content>
-  <div mat-dialog-actions>
+  </div>
+  <div class="mat-dialog-actions">
     <button mat-button mat-dialog-close (click)="onClose()">Close</button>
-    
   </div>
 </ng-template>

@@ -3,11 +3,20 @@
 }
 
 .mat-dialog-content {
-    height: 95%;
+    height: 80%;
 }
 
 .mat-dialog-content textarea {
-    height: 95%;
-    width: 95%;
+    width: 98%;
+    height: 98%;
     resize: none;
+    margin: 0px 5px 0px 5px;
+}
+.mat-dialog-actions{
+    float: right;
+    margin: 0px;
+    padding: 0px;
+}
+#workspaceConfDialog {
+    overflow: hidden !important;
 }
