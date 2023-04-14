@@ -1,7 +1,7 @@
 <mat-toolbar color="primary">
   <h2>Pipeline Builder</h2>
   <span class="nav-spacer"></span>
-  <button mat-raised-button (click)="showWorkspaceConfig()">Save</button>
+  <button mat-raised-button (click)="showWorkspaceConfig()">View Configuration</button>
 
 </mat-toolbar>
 
@@ -10,9 +10,10 @@
 <ng-template #workspaceConfDialog let-dialogRef>
   <h2 mat-dialog-title>Workspace Configuration</h2>
   <div class="mat-dialog-content">
-      <textarea matInput [(ngModel)]="workspaceConfig"  readonly></textarea>
+      <textarea matInput [(ngModel)]="workspaceConfig"></textarea>
   </div>
   <div class="mat-dialog-actions">
+    <button mat-button mat-dialog-close (click)="updateWorkspaceConfig()">Update</button>
     <button mat-button mat-dialog-close (click)="onClose()">Close</button>
   </div>
 </ng-template>

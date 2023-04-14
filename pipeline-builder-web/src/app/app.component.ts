@@ -1,6 +1,6 @@
 import { Component,ViewChild, TemplateRef, OnInit } from '@angular/core';
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
-import { NgEventBus } from 'ng-event-bus';
+import { MetaData, NgEventBus } from 'ng-event-bus';
 import {Event} from './shared/models/event.model';
 
 @Component({
@@ -36,10 +36,15 @@ export class AppComponent implements OnInit{
     } 
   }
 
+  updateWorkspaceConfig() {
+    this.eventBus.cast(Event.EVENT_WORKSPACE_CONFIG_UPDATED_BY_CODE, JSON.parse(this.workspaceConfig));
+    this.onClose();
+  }
+
   ngOnInit() {
-    this.eventBus.on(Event.EVENT_WORKSPACE_CONFIG_UPDATED).subscribe((data: any) => {
+    this.eventBus.on(Event.EVENT_WORKSPACE_CONFIG_UPDATED_BY_EDITOR).subscribe((meta: MetaData) => {
       //console.log(data);
-      this.workspaceConfig = JSON.stringify(data, null, 4);
+      this.workspaceConfig = JSON.stringify(meta.data, null, 4);
     });
   }
 }

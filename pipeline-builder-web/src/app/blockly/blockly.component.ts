@@ -50,7 +50,7 @@ export class BlocklyComponent implements OnInit {
     const blocklyDiv = document.getElementById('blocklyDiv');
     this.eventBus.on(Event.EVENT_WORKSPACE_RENDERED).subscribe((meta: MetaData) => {
       console.log("Workspace rendered");
-      this.workspace.addChangeListener((event, evtBus)=>{
+      this.workspace.addChangeListener((event)=>{
         if(event.type === Blockly.Events.BLOCK_CREATE || 
           event.type === Blockly.Events.BLOCK_CHANGE||
           event.type === Blockly.Events.BLOCK_DELETE||
@@ -63,7 +63,12 @@ export class BlocklyComponent implements OnInit {
     this.eventBus.on(Event.EVENT_WORKSPACE_UPDATED) .subscribe((meta: MetaData) => {
       console.log("Workspace updated");
       let json = Blockly.serialization.workspaces.save(this.workspace);
-      this.eventBus.cast(Event.EVENT_WORKSPACE_CONFIG_UPDATED, json);
+      this.eventBus.cast(Event.EVENT_WORKSPACE_CONFIG_UPDATED_BY_EDITOR, json);
+    });
+
+    this.eventBus.on(Event.EVENT_WORKSPACE_CONFIG_UPDATED_BY_CODE).subscribe((meta: MetaData) => { 
+      //console.log(meta);
+      Blockly.serialization.workspaces.load(meta.data, this.workspace);  
     });
 
     this.blocklyService.getBlockDefinitions().subscribe((blockDefs: Block[])=>{
