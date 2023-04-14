@@ -1,8 +1,5 @@
 package org.teapotech.blockly.workspace;
 
-import java.io.File;
-import java.io.FileInputStream;
-
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -28,6 +25,9 @@ import org.teapotech.blockly.user.UserDelegate;
 import org.teapotech.blockly.util.JsonHelper;
 import org.teapotech.blockly.workspace.executor.WorkspaceExecutor;
 
+import java.io.File;
+import java.io.FileInputStream;
+
 @SpringBootApplication
 @ComponentScan(basePackages = { "org.teapotech.blockly" })
 public class MainApplicationLoader implements CommandLineRunner {
@@ -41,12 +41,12 @@ public class MainApplicationLoader implements CommandLineRunner {
     @Autowired
     JsonHelper jsonHelper;
 
-    private String userId = "system";
+    private String userId = "unknown";
+    private String userName = "Unknown";
     private String workspaceId;
     private long instanceId = 1L;
     private File workingDir;
     private File workspaceConfigFile;
-    private UserDelegate executedBy;
     private int timeoutSec = -1;
 
     /**
@@ -64,11 +64,12 @@ public class MainApplicationLoader implements CommandLineRunner {
         final Options options = new Options();
         options.addOption(new Option("d", "dir", true, "Working directory"));
         options.addOption(new Option("f", "file", true, "Workspace configuration file"));
-        options.addOption(new Option("h", "help", false, "Pring command usage"));
-        options.addOption(new Option("u", "user", true, "User ID that execute this workspace"));
+        options.addOption(new Option("h", "help", false, "Print command usage"));
+        options.addOption(Option.builder().longOpt("user-id").desc("User ID who run this workspace").hasArg().build());
+        options.addOption(Option.builder().longOpt("user-name").desc("User name who run this workspace").hasArg().build());
         options.addOption(Option.builder("w").longOpt("workspaceId").desc("workspace ID. Default is random value")
                 .hasArg().build());
-        options.addOption(Option.builder("i").longOpt("instanceId").desc("instance ID. Default is 1").hasArg().build());
+        options.addOption(Option.builder("i").longOpt("instance-id").desc("instance ID. Default is 1").hasArg().build());
         options.addOption(Option.builder().longOpt("timeout").desc("execution timeout in seconds.").hasArg().build());
         CommandLineParser parser = new DefaultParser();
         try {
@@ -87,8 +88,14 @@ public class MainApplicationLoader implements CommandLineRunner {
                             workspaceConfigFile.getAbsolutePath() + " doesn't exist or is not readable.");
                 }
             }
-            if (line.hasOption("u")) {
-                this.userId = line.getOptionValue("u");
+            if(line.hasOption("i")){
+                this.instanceId = Long.parseLong(line.getOptionValue("i"));
+            }
+            if (line.hasOption("user-id")) {
+                this.userId = line.getOptionValue("user-id");
+            }
+            if (line.hasOption("user-name")) {
+                this.userName = line.getOptionValue("user-name");
             }
             if (line.hasOption("timeout")) {
                 this.timeoutSec = Integer.parseInt(line.getOptionValue("timeout"));
@@ -131,13 +138,14 @@ public class MainApplicationLoader implements CommandLineRunner {
     private DefaultBlockExecutionContext createBlockExecutionContext(Workspace w, long instanceId) {
 
         File outputDir = new File(workingDir, w.getId() + "-" + instanceId);
-        outputDir.mkdirs();
-        LOG.info("Created output dir: {}", outputDir.getAbsolutePath());
-        executedBy = new UserDelegate() {
+        if(outputDir.mkdirs()) {
+            LOG.info("Created output dir: {}", outputDir.getAbsolutePath());
+        }
+        UserDelegate executedBy = new UserDelegate() {
 
             @Override
             public String getUserName() {
-                return userId;
+                return userName;
             }
 
             @Override
