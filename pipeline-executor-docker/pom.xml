@@ -18,6 +18,14 @@
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.reflections</groupId>
 			<artifactId>reflections</artifactId>
 		</dependency>
@@ -43,27 +51,69 @@
 	<build>
 		<plugins>
 			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.2.0</version>
+				<executions>
+					<execution>
+						<id>copy-resources</id>
+						<!-- here the phase you need -->
+						<phase>process-sources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}</outputDirectory>
+							<delimiters>
+								<delimiter>MAVEN_VAR_*_END</delimiter>
+							</delimiters>
+							<resources>
+								<resource>
+									<directory>${project.basedir}</directory>
+									<filtering>true</filtering>
+									<includes>
+										<include>Dockerfile</include>
+										<include>scripts/</include>
+									</includes>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<version>3.0.5</version>
-				<configuration>
-					<layers>
-						<enabled>true</enabled>
-						<includeLayerTools>true</includeLayerTools>
-						<configuration>${project.basedir}/src/layers.xml</configuration>
-					</layers>
-					<image>
-						<pullPolicy>IF_NOT_PRESENT</pullPolicy>
-						<bindings>
-                            <binding>${basedir}/bindings/ca-certificates:/platform/bindings/ca-certificates</binding>
-                        </bindings>
-					</image>
-				</configuration>
 				<executions>
 					<execution>
+						<id>repackage-launchable-package</id>
 						<goals>
-							<goal>build-image-no-fork</goal>
-						</goals>	
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>3.1.0</version>
+				<executions>
+					<execution>
+						<id>build-docker-image</id>
+						<phase>package</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<exec executable="docker">
+									<arg value="build" />
+									<arg value="-t" />
+									<arg value="pipeline-executor" />
+									<arg value="target" />
+								</exec>
+							</target>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>

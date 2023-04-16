@@ -1,0 +1,42 @@
+<configuration>
+	<springProfile name="local">
+		<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+			<encoder>
+				<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight(%-5level) [%thread] %cyan(%logger{15}) - %msg%n</pattern>
+			</encoder>
+		</appender>
+		<root level="DEBUG">
+			<appender-ref ref="STDOUT" />
+		</root>
+	</springProfile>
+	<springProfile name="dev">
+		<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+			<file>/var/log/myapp/myapp.log</file>
+			<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+				<fileNamePattern>/var/log/myapp/myapp.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+				<maxHistory>7</maxHistory>
+			</rollingPolicy>
+			<encoder>
+				<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight(%-5level) [%thread] %cyan(%logger{15}) - %msg%n</pattern>
+			</encoder>
+		</appender>
+		<root level="INFO">
+			<appender-ref ref="FILE" />
+		</root>
+	</springProfile>
+	<springProfile name="prod">
+		<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+			<file>/var/log/myapp/myapp.log</file>
+			<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+				<fileNamePattern>/var/log/myapp/myapp.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+				<maxHistory>30</maxHistory>
+			</rollingPolicy>
+			<encoder>
+				<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{15} - %msg%n</pattern>
+			</encoder>
+		</appender>
+		<root level="INFO">
+			<appender-ref ref="FILE" />
+		</root>
+	</springProfile>
+</configuration>
