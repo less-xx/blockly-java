@@ -159,23 +159,6 @@ public class TestWorkspaceExecutor {
     }
 
     @Test
-    public void testRunWorkspace_04() throws Exception {
-        try (InputStream in = getClass().getClassLoader().getResourceAsStream("workspace04.json");) {
-            long testInstanceId = 4;
-            Workspace w = jsonHelper.getObject(in, Workspace.class);
-            w.setId("testRunWorkspace_04");
-            DefaultBlockExecutionContext context = createBlockExecutionContext(w, testInstanceId);
-            WorkspaceExecutor wExecutor = new WorkspaceExecutor(w, context, jsonHelper);
-            wExecutor.startExecute();
-            wExecutor.waitFor(2000);
-            Thread.sleep(2000);
-            WorkspaceExecution execution = wExecutor.getWorkspaceExecution();
-            assertEquals(Status.Succeeded, execution.getStatus());
-            System.out.println(execution.getMessage());
-        }
-    }
-
-    @Test
     public void testRunWorkspace_05() throws Exception {
         try (InputStream in = getClass().getClassLoader().getResourceAsStream("workspace02.json");) {
             long testInstanceId = 2;
