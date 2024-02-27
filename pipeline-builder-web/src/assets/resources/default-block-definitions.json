@@ -179,9 +179,9 @@
     "message0": "broadcast %1",
     "args0": [
       {
-        "type": "field_input",
-        "name": "EVENT_NAME",
-        "text": "event_name"
+        "type": "input_value",
+        "name": "event",
+        "check": ["event_with_param","string"]
       }
     ],
     "inputsInline": true,

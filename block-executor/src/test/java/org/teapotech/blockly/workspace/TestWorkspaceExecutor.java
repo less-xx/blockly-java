@@ -200,21 +200,24 @@ public class TestWorkspaceExecutor {
             System.out.println(execution.getMessage());
         }
     }
-//
-//    @Test
-//    public void testRunWorkspace_05() throws Exception {
-//        try (InputStream in = getClass().getClassLoader().getResourceAsStream("test_workspace_exec_05.xml");) {
-//            long testInstanceId = 1;
-//            Workspace w = BlockXmlUtils.loadWorkspace(in);
-//            DefaultBlockExecutionContext context = createBlockExecutionContext(w, testInstanceId);
-//            WorkspaceExecutor wExecutor = new WorkspaceExecutor(w, context);
-//            wExecutor.setExecutionTimeout(1);
-//            wExecutor.execute();
-//            wExecutor.waitFor(5000);
-//            WorkspaceExecution wexec = wExecutor.getWorkspaceExecution();
-//            System.out.println(wexec);
-//        }
-//    }
+
+    @Test
+    public void testRunWorkspace_event() throws Exception {
+        try (InputStream in = getClass().getClassLoader().getResourceAsStream("workspace_event01.json");) {
+            long testInstanceId = 6;
+            Workspace w = jsonHelper.getObject(in, Workspace.class);
+            w.setId("testRunWorkspace_event");
+            DefaultBlockExecutionContext context = createBlockExecutionContext(w, testInstanceId);
+            WorkspaceExecutor wExecutor = new WorkspaceExecutor(w, context, jsonHelper);
+            //wExecutor.addBreakpoint("w*EQof-R`q,4![tqVt_T");
+            wExecutor.setDebugMode(true);
+            wExecutor.startExecute();
+            wExecutor.waitFor(1000);
+            WorkspaceExecution execution = wExecutor.getWorkspaceExecution();
+
+            System.out.println(execution.getMessage());
+        }
+    }
 //
 //    @Test
 //    public void testFindAllPrimesInRangeWithEvent() throws Exception {

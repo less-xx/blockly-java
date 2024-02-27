@@ -20,7 +20,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.teapotech.blockly</groupId>
-		    <artifactId>user-defined-blocks</artifactId>
+		    <artifactId>basic-blocks</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>

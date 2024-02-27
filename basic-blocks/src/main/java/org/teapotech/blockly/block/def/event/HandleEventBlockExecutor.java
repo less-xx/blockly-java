@@ -61,8 +61,8 @@ public class HandleEventBlockExecutor extends AbstractBlockExecutor implements B
                 }
                 LOG.info("Received event: {}", evt);
 
-                context.setVariableValue("_event." + evt.getEventName(), evt);
-                LOG.info("Set variable: {}", evt.getEventName());
+                context.setLocalVariableValue("_event." + evt.getEventName(), evt);
+                LOG.info("Set local variable: {}", evt.getEventName());
 
                 Next next = this.block.getNext();
                 if (next != null && next.getBlock() != null) {
