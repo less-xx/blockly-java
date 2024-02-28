@@ -5,6 +5,8 @@ public interface BlockDefinition {
     public static String INTERNAL_BLOCK_TYPE_VARIABLES_SET = "variables_set";
     public static String INTERNAL_BLOCK_TYPE_VARIABLES_GET = "variables_get";
     public static String INTERNAL_BLOCK_TYPE_TEXT = "text";
+
+    public static String INTERNAL_BLOCK_TYPE_MULTILINE_TEXT = "multiline_text";
     public static String INTERNAL_BLOCK_TYPE_TEXT_PRINT = "text_print";
     public static String INTERNAL_BLOCK_TYPE_TEXT_JOIN = "text_join";
     public static String INTERNAL_BLOCK_TYPE_MATH_ROUND = "math_round";

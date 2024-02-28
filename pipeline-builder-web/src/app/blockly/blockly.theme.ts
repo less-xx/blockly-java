@@ -45,7 +45,12 @@ export const  CustomTheme = {
          colourPrimary: "#ff8c1a",
          colourSecondary:"#ff8c00",
          colourTertiary:"#ee8c1a"
-      }
+      },
+      file_blocks: {
+         colourPrimary: "#4c97ff",
+         colourSecondary:"#4c9700",
+         colourTertiary:"#ec97ff"
+      },
    },
    categoryStyles : {
       file_operations: {

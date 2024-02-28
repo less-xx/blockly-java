@@ -31,7 +31,7 @@ public class MathNumberBlockExecutor extends AbstractBlockExecutor {
         if (this.block != null) {
             return this.block.getFieldValue(FieldType.NUM);
         } else {
-            return this.shadow.getFieldcValue(FieldType.NUM);
+            return this.shadow.getFieldValue(FieldType.NUM);
         }
     }
 

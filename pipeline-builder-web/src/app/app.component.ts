@@ -41,6 +41,24 @@ export class AppComponent implements OnInit{
     this.onClose();
   }
 
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+
+    if (file) {
+      const fileReader = new FileReader();
+      fileReader.onload = (e) => {
+        try {
+          const jsonData = JSON.parse(fileReader.result as string);
+          this.eventBus.cast(Event.EVENT_WORKSPACE_CONFIG_UPDATED_BY_CODE, jsonData);
+        } catch (error) {
+          console.error('Error parsing JSON:', error);
+          alert('Error parsing JSON. Please check the console for more details.');
+        }
+      };
+      fileReader.readAsText(file);
+    }
+  }
+
   ngOnInit() {
     this.eventBus.on(Event.EVENT_WORKSPACE_CONFIG_UPDATED_BY_EDITOR).subscribe((meta: MetaData) => {
       //console.log(data);

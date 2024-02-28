@@ -185,14 +185,31 @@ public class TestWorkspaceExecutor {
     }
 
     @Test
-    public void testRunWorkspace_event() throws Exception {
+    public void testRunWorkspace_event01() throws Exception {
         try (InputStream in = getClass().getClassLoader().getResourceAsStream("workspace_event01.json");) {
             long testInstanceId = 6;
             Workspace w = jsonHelper.getObject(in, Workspace.class);
-            w.setId("testRunWorkspace_event");
+            w.setId("testRunWorkspace_event01");
             DefaultBlockExecutionContext context = createBlockExecutionContext(w, testInstanceId);
             WorkspaceExecutor wExecutor = new WorkspaceExecutor(w, context, jsonHelper);
             //wExecutor.addBreakpoint("w*EQof-R`q,4![tqVt_T");
+            wExecutor.setDebugMode(true);
+            wExecutor.startExecute();
+            wExecutor.waitFor(1000);
+            WorkspaceExecution execution = wExecutor.getWorkspaceExecution();
+
+            System.out.println(execution.getMessage());
+        }
+    }
+
+    @Test
+    public void testRunWorkspace_event02() throws Exception {
+        try (InputStream in = getClass().getClassLoader().getResourceAsStream("workspace_event02.json");) {
+            long testInstanceId = 7;
+            Workspace w = jsonHelper.getObject(in, Workspace.class);
+            w.setId("testRunWorkspace_event02");
+            DefaultBlockExecutionContext context = createBlockExecutionContext(w, testInstanceId);
+            WorkspaceExecutor wExecutor = new WorkspaceExecutor(w, context, jsonHelper);
             wExecutor.setDebugMode(true);
             wExecutor.startExecute();
             wExecutor.waitFor(1000);

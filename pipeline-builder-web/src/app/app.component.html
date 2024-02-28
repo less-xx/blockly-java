@@ -2,6 +2,8 @@
   <h2>Pipeline Builder</h2>
   <span class="nav-spacer"></span>
   <button mat-raised-button (click)="showWorkspaceConfig()">View Configuration</button>
+  <input type="file" #fileInput style="display: none" (change)="onFileSelected($event)" accept=".json" />
+  <button mat-raised-button (click)="fileInput.click()">Upload Configuration</button>
 
 </mat-toolbar>
 

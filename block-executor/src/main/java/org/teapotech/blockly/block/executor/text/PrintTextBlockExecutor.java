@@ -3,6 +3,7 @@
  */
 package org.teapotech.blockly.block.executor.text;
 
+import org.slf4j.Logger;
 import org.teapotech.blockly.block.def.BlockDefinition;
 import org.teapotech.blockly.block.def.BlockDefinition.CategoryID;
 import org.teapotech.blockly.block.def.annotation.ApplyToBlock;
@@ -35,7 +36,8 @@ public class PrintTextBlockExecutor extends AbstractBlockExecutor {
                     "Missing value. Block type: " + this.block.getType() + ", id: " + this.block.getId());
         }
         Object value = BlockExecutionHelper.execute(inputBlock, inputShadow, context);
-        System.out.println(value);
+        //System.out.println(value);
+        context.getLogger().info("PrintTextBlock output: \n{}", value);
         return null;
     }
 

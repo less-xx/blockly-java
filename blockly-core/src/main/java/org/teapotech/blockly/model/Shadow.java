@@ -47,7 +47,7 @@ public class Shadow {
         this.fields = fields;
     }
 
-    public Serializable getFieldcValue() {
+    public Serializable getFieldValue() {
         if (this.fields == null) {
             return null;
         }
@@ -58,7 +58,7 @@ public class Shadow {
         return it.next().getValue();
     }
 
-    public Serializable getFieldcValue(String field) {
+    public Serializable getFieldValue(String field) {
         if (this.fields == null) {
             return null;
         }

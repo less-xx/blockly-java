@@ -48,6 +48,10 @@
           "kind": "block"
         },
         {
+          "type": "multiline_text",
+          "kind": "block"
+        },
+        {
           "type": "text_join",
           "kind": "block"
         },
@@ -148,6 +152,39 @@
       ],
       "name": "control",
       "categorystyle": "control"
+    },
+    {
+      "kind": "category",
+      "contents": [
+        {
+          "type": "save_to_file",
+          "inputs": {
+            "FILE_NAME": {
+              "shadow": {
+                "type": "text",
+                "fields": {
+                  "TEXT": "output.txt"
+                },
+                "fieldcValue": 5
+              },
+              "block": null
+            },
+            "FILE_CONTENT": {
+              "shadow": {
+                "type": "multiline_text",
+                "fields": {
+                  "TEXT": "file content here"
+                },
+                "fieldcValue": 5
+              },
+              "block": null
+            }
+          },
+          "kind": "block"
+        }
+      ],
+      "name": "files",
+      "categorystyle": "file_operations"
     }
   ]
 }

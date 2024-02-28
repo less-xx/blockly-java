@@ -16,10 +16,10 @@ import org.teapotech.blockly.model.Shadow;
  * @author jiangl
  *
  */
-@ApplyToBlock(blockType = BlockDefinition.INTERNAL_BLOCK_TYPE_TEXT, category = CategoryID.ID_OPERATORS, style = "basic_blocks")
-public class TextBlockExecutor extends AbstractBlockExecutor {
+@ApplyToBlock(blockType = BlockDefinition.INTERNAL_BLOCK_TYPE_MULTILINE_TEXT, category = CategoryID.ID_OPERATORS, style = "basic_blocks")
+public class MultilineTextBlockExecutor extends AbstractBlockExecutor {
 
-    public TextBlockExecutor(Block block, Shadow shadow) {
+    public MultilineTextBlockExecutor(Block block, Shadow shadow) {
         super(block, shadow);
     }
 

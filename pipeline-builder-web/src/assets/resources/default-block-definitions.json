@@ -90,6 +90,22 @@
     "helpUrl": ""
   },
   {
+    "type": "multiline_text",
+    "message0": "multiline text:\n %1",
+    "args0": [
+      {
+        "type": "field_multilinetext",
+        "name": "TEXT",
+        "text": "default text\n with newline character",
+        "spellcheck": false
+      }
+    ],
+    "output": null,
+    "style": "operator_blocks",
+    "tooltip": "",
+    "helpUrl": ""
+  },
+  {
     "type": "get_object_property",
     "message0": "Get %1 of %2",
     "args0": [
@@ -275,6 +291,31 @@
     "helpUrl": "",
     "style": "event_blocks",
     "hat": "cap"
+  },
+  {
+    "type": "save_to_file",
+    "message0": "save to file: %1 %2 content: %3",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "FILE_NAME",
+        "check": "String"
+      },
+      {
+        "type": "input_end_row"
+      },
+      {
+        "type": "input_value",
+        "name": "FILE_CONTENT",
+        "check": "String"
+      }
+    ],
+    "inputsInline": true,
+    "previousStatement": null,
+    "nextStatement": null,
+    "style": "file_blocks",
+    "tooltip": "",
+    "helpUrl": ""
   }
 ]
 
