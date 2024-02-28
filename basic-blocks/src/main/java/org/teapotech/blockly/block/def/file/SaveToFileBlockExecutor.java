@@ -5,6 +5,7 @@ package org.teapotech.blockly.block.def.file;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.text.StringSubstitutor;
 import org.slf4j.Logger;
 import org.teapotech.blockly.block.def.annotation.ApplyToBlock;
 import org.teapotech.blockly.block.def.event.DispatchEventBlock;
@@ -16,8 +17,13 @@ import org.teapotech.blockly.execute.event.EventDispatcher;
 import org.teapotech.blockly.execute.event.NamedBlockEvent;
 import org.teapotech.blockly.model.Block;
 import org.teapotech.blockly.model.Shadow;
+import org.teapotech.blockly.model.Variable;
+import org.teapotech.blockly.util.ObjectValueExtractor;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author jiangl
@@ -52,6 +58,21 @@ public class SaveToFileBlockExecutor extends AbstractBlockExecutor {
         if(StringUtils.isBlank(fileContent)) {
             throw new InvalidBlockException(this.block.getId(), this.block.getType(), "File content cannot be empty");
         }
+
+        Map<String, Object> templateValues = new HashMap<>();
+        context.getAllVariableIds().forEach(id -> {
+            String orignialId = id;
+            if(id.startsWith("_var_")) {
+                orignialId = id.substring(5);
+            }
+            String name = context.getVariableName(orignialId);
+            Object value = context.getVariableValue(id);
+            if(name!=null && value != null && !Objects.equals(Variable.NULL, value)) {
+                templateValues.put(name, value);
+            }
+        });
+
+        fileContent = StringSubstitutor.replace(fileContent, templateValues);
 
         File workingDir = context.getWorkingDir();
         File outputDir = new File(workingDir, "output");

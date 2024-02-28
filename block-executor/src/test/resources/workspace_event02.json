@@ -9,23 +9,73 @@
                 "y": 90,
                 "next": {
                     "block": {
-                        "type": "dispatch_event",
-                        "id": ",I@_N:KTdM-B;7J!g8}t",
+                        "type": "variables_set",
+                        "id": "J`N*$b}b%5yX]!~LbI~5",
+                        "fields": {
+                            "VAR": {
+                                "id": "sx_|!ZH_r.3kW^SK@4[P"
+                            }
+                        },
                         "inputs": {
-                            "event": {
+                            "VALUE": {
                                 "block": {
-                                    "type": "event_with_param",
-                                    "id": ")=_;3Os$R)Q_~u+dL)X|",
+                                    "type": "math_number",
+                                    "id": "C-{A@;a9:rW8e%oJ~@1M",
                                     "fields": {
-                                        "EVENT_NAME": "event2"
-                                    },
-                                    "inputs": {
-                                        "PARAMETER": {
-                                            "block": {
-                                                "type": "text",
-                                                "id": "re_[]ivUo@uAb(skN~]*",
-                                                "fields": {
-                                                    "TEXT": "event2_value"
+                                        "NUM": 0
+                                    }
+                                }
+                            }
+                        },
+                        "next": {
+                            "block": {
+                                "type": "dispatch_event",
+                                "id": "4z-dz4.Daz-.[(~_,|_G",
+                                "inputs": {
+                                    "event": {
+                                        "block": {
+                                            "type": "event_with_param",
+                                            "id": "CX?o@op/NOs~?Vi{ey7j",
+                                            "fields": {
+                                                "EVENT_NAME": "event"
+                                            },
+                                            "inputs": {
+                                                "PARAMETER": {
+                                                    "block": {
+                                                        "type": "text",
+                                                        "id": ")%k6cTA#}l^?5KYf41Q~",
+                                                        "fields": {
+                                                            "TEXT": "event1_value"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "next": {
+                                    "block": {
+                                        "type": "dispatch_event",
+                                        "id": ",I@_N:KTdM-B;7J!g8}t",
+                                        "inputs": {
+                                            "event": {
+                                                "block": {
+                                                    "type": "event_with_param",
+                                                    "id": ")=_;3Os$R)Q_~u+dL)X|",
+                                                    "fields": {
+                                                        "EVENT_NAME": "event"
+                                                    },
+                                                    "inputs": {
+                                                        "PARAMETER": {
+                                                            "block": {
+                                                                "type": "text",
+                                                                "id": "re_[]ivUo@uAb(skN~]*",
+                                                                "fields": {
+                                                                    "TEXT": "event2_value"
+                                                                }
+                                                            }
+                                                        }
+                                                    }
                                                 }
                                             }
                                         }
@@ -39,75 +89,205 @@
             {
                 "type": "handle_event",
                 "id": "JjBA$EwYf{cCW5a]Q:mt",
-                "x": 250,
-                "y": 230,
+                "x": 230,
+                "y": 290,
                 "fields": {
-                    "EVENT_NAME": "event2"
+                    "EVENT_NAME": "event"
                 },
                 "next": {
                     "block": {
-                        "type": "variables_set",
-                        "id": "JSG8`*:idWvem%*n__Fy",
+                        "type": "math_change",
+                        "id": "z`/uh)UpI,@|^xS`P=0b",
                         "fields": {
                             "VAR": {
-                                "id": "dF{mI2JXoo_AEJ$PC:6I"
+                                "id": "sx_|!ZH_r.3kW^SK@4[P"
                             }
                         },
                         "inputs": {
-                            "VALUE": {
+                            "DELTA": {
                                 "block": {
-                                    "type": "get_event_param",
-                                    "id": "cPH*D5RE?LRD}}Yri@0J",
+                                    "type": "math_number",
+                                    "id": "nv;w.Han,icTt8TV#cCt",
                                     "fields": {
-                                        "EVENT_NAME": "event2"
+                                        "NUM": 1
                                     }
                                 }
                             }
                         },
                         "next": {
                             "block": {
-                                "type": "text_print",
-                                "id": "eP=-Pp4K(s3=r)clkY,8",
+                                "type": "variables_set",
+                                "id": "JSG8`*:idWvem%*n__Fy",
+                                "fields": {
+                                    "VAR": {
+                                        "id": "dF{mI2JXoo_AEJ$PC:6I"
+                                    }
+                                },
                                 "inputs": {
-                                    "TEXT": {
+                                    "VALUE": {
                                         "block": {
-                                            "type": "variables_get",
-                                            "id": "ud`Y~v?0:QEHMx?embrs",
+                                            "type": "get_event_param",
+                                            "id": "cPH*D5RE?LRD}}Yri@0J",
                                             "fields": {
-                                                "VAR": {
-                                                    "id": "dF{mI2JXoo_AEJ$PC:6I"
-                                                }
+                                                "EVENT_NAME": "event"
                                             }
                                         }
                                     }
                                 },
                                 "next": {
                                     "block": {
-                                        "type": "save_to_file",
-                                        "id": "E;@QWT3iXdJLj0ub00th",
+                                        "type": "text_print",
+                                        "id": "eP=-Pp4K(s3=r)clkY,8",
                                         "inputs": {
-                                            "FILE_NAME": {
-                                                "shadow": {
-                                                    "type": "text",
-                                                    "id": "MdUM)-J56ysx%-^((Hz$",
-                                                    "fields": {
-                                                        "TEXT": "output.txt"
+                                            "TEXT": {
+                                                "block": {
+                                                    "type": "text_join",
+                                                    "id": "H]Dbd.|_I-nE(ttt{|y/",
+                                                    "extraState": {
+                                                        "itemCount": 2
+                                                    },
+                                                    "inputs": {
+                                                        "ADD0": {
+                                                            "block": {
+                                                                "type": "text",
+                                                                "id": "HL4FX!O3KCu*aT9}+_gs",
+                                                                "fields": {
+                                                                    "TEXT": "b="
+                                                                }
+                                                            }
+                                                        },
+                                                        "ADD1": {
+                                                            "block": {
+                                                                "type": "variables_get",
+                                                                "id": "ud`Y~v?0:QEHMx?embrs",
+                                                                "fields": {
+                                                                    "VAR": {
+                                                                        "id": "dF{mI2JXoo_AEJ$PC:6I"
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
                                                     }
                                                 }
-                                            },
-                                            "FILE_CONTENT": {
-                                                "shadow": {
-                                                    "type": "multiline_text",
-                                                    "id": "$icZ;`q70K#4UsDJhhl;",
-                                                    "fields": {
-                                                        "TEXT": "file content here"
+                                            }
+                                        },
+                                        "next": {
+                                            "block": {
+                                                "type": "text_print",
+                                                "id": "qKi~85rW[HOp|aBD[6+!",
+                                                "inputs": {
+                                                    "TEXT": {
+                                                        "block": {
+                                                            "type": "text_join",
+                                                            "id": "UV2PGDN$+d~#e3_cPuny",
+                                                            "extraState": {
+                                                                "itemCount": 2
+                                                            },
+                                                            "inputs": {
+                                                                "ADD0": {
+                                                                    "block": {
+                                                                        "type": "text",
+                                                                        "id": "D;j5*dUY=[{_W:0djTh3",
+                                                                        "fields": {
+                                                                            "TEXT": "n="
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "ADD1": {
+                                                                    "block": {
+                                                                        "type": "variables_get",
+                                                                        "id": "{Qr5ejf-3O[l,JD|9w3z",
+                                                                        "fields": {
+                                                                            "VAR": {
+                                                                                "id": "sx_|!ZH_r.3kW^SK@4[P"
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
                                                     }
                                                 },
-                                                "block": {
-                                                    "type": "multiline_text",
-                                                    "id": "Z.xMJg0x1BTYy4ae6b-M",
-                                                    "fields": {
-                                                        "TEXT": "default text\n with newline character"
+                                                "next": {
+                                                    "block": {
+                                                        "type": "save_to_file",
+                                                        "id": "E;@QWT3iXdJLj0ub00th",
+                                                        "inputs": {
+                                                            "FILE_NAME": {
+                                                                "shadow": {
+                                                                    "type": "text",
+                                                                    "id": "MdUM)-J56ysx%-^((Hz$",
+                                                                    "fields": {
+                                                                        "TEXT": "output.txt"
+                                                                    }
+                                                                },
+                                                                "block": {
+                                                                    "type": "text_join",
+                                                                    "id": "YEpg!:}`vzO+KyAc872%",
+                                                                    "extraState": {
+                                                                        "itemCount": 3
+                                                                    },
+                                                                    "inputs": {
+                                                                        "ADD0": {
+                                                                            "block": {
+                                                                                "type": "text",
+                                                                                "id": ".RnBH{)5KoGOys2wM9M^",
+                                                                                "fields": {
+                                                                                    "TEXT": "output_"
+                                                                                }
+                                                                            }
+                                                                        },
+                                                                        "ADD1": {
+                                                                            "block": {
+                                                                                "type": "math_round",
+                                                                                "id": "XU;Yp_wSS-qfsPfTcUYh",
+                                                                                "fields": {
+                                                                                    "OP": "ROUND"
+                                                                                },
+                                                                                "inputs": {
+                                                                                    "NUM": {
+                                                                                        "block": {
+                                                                                            "type": "variables_get",
+                                                                                            "id": "Bf.QPEm$qGxnNCf~VHsS",
+                                                                                            "fields": {
+                                                                                                "VAR": {
+                                                                                                    "id": "sx_|!ZH_r.3kW^SK@4[P"
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        },
+                                                                        "ADD2": {
+                                                                            "block": {
+                                                                                "type": "text",
+                                                                                "id": "$@q+F],_oV3k-!q=|byX",
+                                                                                "fields": {
+                                                                                    "TEXT": ".json"
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            },
+                                                            "FILE_CONTENT": {
+                                                                "shadow": {
+                                                                    "type": "multiline_text",
+                                                                    "id": "$icZ;`q70K#4UsDJhhl;",
+                                                                    "fields": {
+                                                                        "TEXT": "file content here"
+                                                                    }
+                                                                },
+                                                                "block": {
+                                                                    "type": "multiline_text",
+                                                                    "id": "Z.xMJg0x1BTYy4ae6b-M",
+                                                                    "fields": {
+                                                                        "TEXT": "{\n  \"value\": \"${b}\"\n}"
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
                                                     }
                                                 }
                                             }
@@ -133,6 +313,14 @@
         {
             "name": "b",
             "id": "dF{mI2JXoo_AEJ$PC:6I"
+        },
+        {
+            "name": "n",
+            "id": "sx_|!ZH_r.3kW^SK@4[P"
+        },
+        {
+            "name": "item",
+            "id": "njm(pXY.FAV/%o[JOBgq"
         }
     ]
 }

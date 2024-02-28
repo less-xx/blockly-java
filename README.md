@@ -4,6 +4,9 @@
 
 ## Overview
 
+## basic-blocks
+The implementation of basic blocks and block executors for the pipeline.
+
 ## pipeline-build-web
 This module is a web application that provides a web-based interface for creating the pipeline.
 
@@ -13,7 +16,7 @@ This module is a web application that provides a web-based interface for creatin
 ## pipeline-executor-docker
 This module will build a docker image that contains the pipeline execution environment.
 ```
-docker run -ti --rm pipeline-executor
+docker run -ti --rm -v C:\tmp\pipelines\workspace-1:/workspace pipeline-executor -d /workspace -f /workspace/workspace_event02.json
 
 usage: run-workspace
  -d,--dir <arg>           Working directory

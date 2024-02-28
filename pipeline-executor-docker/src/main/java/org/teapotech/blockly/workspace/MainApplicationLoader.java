@@ -153,7 +153,7 @@ public class MainApplicationLoader implements CommandLineRunner {
                 return userId;
             }
         };
-        DefaultBlockExecutionContext context = new DefaultBlockExecutionContext(w.getId(), instanceId, executedBy,
+        DefaultBlockExecutionContext context = new DefaultBlockExecutionContext(w, instanceId, executedBy,
                 outputDir, blockExecutorFactories);
         context.setContextObject(EventDispatcher.class, eventDispatcher);
         // context.setContextObject(KeyValueStorageProvider.class, kvStorageProvider);

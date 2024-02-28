@@ -310,7 +310,7 @@
         "check": "String"
       }
     ],
-    "inputsInline": true,
+    "inputsInline": false,
     "previousStatement": null,
     "nextStatement": null,
     "style": "file_blocks",

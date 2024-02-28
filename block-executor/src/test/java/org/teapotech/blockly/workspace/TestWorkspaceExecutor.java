@@ -43,12 +43,12 @@ public class TestWorkspaceExecutor {
     private static BlockRegistry blockDefRegistry;
     private static JsonHelper jsonHelper;
     private static KeyValueStorageProvider kvStorageProvider = new InMemoryKeyValueStorageProvider();
-    private static String workingDirPath = System.getProperty("java.io.tmpdir") + "/workspace/test";
-    private static FileStorageProvider fileStorageProvider = new DiskFileStorageProvider(workingDirPath);
-    private static SimpleEventExchange eventExchange = new SimpleEventExchange();
-    private static EventDispatcher eventDispatcher = new SimpleEventDispatcher(eventExchange);
+    private static final String workingDirPath = System.getProperty("java.io.tmpdir") + "/workspace/test";
+    private static final FileStorageProvider fileStorageProvider = new DiskFileStorageProvider(workingDirPath);
+    private static final SimpleEventExchange eventExchange = new SimpleEventExchange();
+    private static final EventDispatcher eventDispatcher = new SimpleEventDispatcher(eventExchange);
     private static BlockEventListenerFactory blockEventListenerFac = new SimpleBlockEventListenerFactory(eventExchange);
-    private static UserDelegate executedBy = new UserDelegate() {
+    private static final UserDelegate executedBy = new UserDelegate() {
 
         @Override
         public String getUserName() {
@@ -97,7 +97,7 @@ public class TestWorkspaceExecutor {
     private DefaultBlockExecutionContext createBlockExecutionContext(Workspace w, long instanceId) {
         File workingDir = new File(workingDirPath, w.getId() + "-" + instanceId);
         workingDir.mkdirs();
-        DefaultBlockExecutionContext context = new DefaultBlockExecutionContext(w.getId(), instanceId, executedBy,
+        DefaultBlockExecutionContext context = new DefaultBlockExecutionContext(w, instanceId, executedBy,
                 workingDir, factories);
         context.setContextObject(EventDispatcher.class, eventDispatcher);
         context.setContextObject(KeyValueStorageProvider.class, kvStorageProvider);
@@ -212,7 +212,7 @@ public class TestWorkspaceExecutor {
             WorkspaceExecutor wExecutor = new WorkspaceExecutor(w, context, jsonHelper);
             wExecutor.setDebugMode(true);
             wExecutor.startExecute();
-            wExecutor.waitFor(1000);
+            wExecutor.waitFor(1500);
             WorkspaceExecution execution = wExecutor.getWorkspaceExecution();
 
             System.out.println(execution.getMessage());

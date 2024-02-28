@@ -26,15 +26,17 @@ public interface BlockExecutionContext {
 
     BlockExecutorFactory getBlockExecutorFactory(String blockType) throws BlockExecutorNotFoundException;
 
-    Object getVariableValue(String key);
+    Object getVariableValue(String id);
 
-    void setVariableValue(String key, Object value);
+    String getVariableName(String id);
 
-    void setLocalVariableValue(String key, Object value);
+    void setVariableValue(String id, Object value);
 
-    Object getLocalVariableValue(String key);
+    void setLocalVariableValue(String id, Object value);
 
-    Collection<String> getAllVariableNames();
+    Object getLocalVariableValue(String id);
+
+    Collection<String> getAllVariableIds();
 
     void destroy();
 

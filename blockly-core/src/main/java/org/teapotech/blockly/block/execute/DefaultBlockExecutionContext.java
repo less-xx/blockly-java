@@ -14,6 +14,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.teapotech.blockly.exception.BlockExecutorNotFoundException;
+import org.teapotech.blockly.model.Workspace;
 import org.teapotech.blockly.user.UserDelegate;
 
 /**
@@ -36,23 +37,26 @@ public class DefaultBlockExecutionContext implements BlockExecutionContext {
     private final Logger workspaceLogger;
 
     private boolean stopped;
-    private ThreadLocal<Map<String, Object>> localVariables = new ThreadLocal<Map<String, Object>>() {
+    private final ThreadLocal<Map<String, Object>> localVariables = new ThreadLocal<Map<String, Object>>() {
         @Override
         protected Map<String, Object> initialValue() {
             return new HashMap<>();
         }
     };
-    private Map<String, Object> globalVariables = new ConcurrentHashMap<>();
+    private final Map<String, Object> globalVariables = new ConcurrentHashMap<>();
     private final Map<String, BlockExecutionProgress> executionThreadInfo = new HashMap<>();
 
-    public DefaultBlockExecutionContext(String workspaceId, long instanceId, UserDelegate executedBy, File workingDir,
-            BlockExecutorFactory[] blockExecutorFactories) {
+    private final Map<String, String> variableDefs = new ConcurrentHashMap<>();
+
+    public DefaultBlockExecutionContext(Workspace workspace, long instanceId, UserDelegate executedBy, File workingDir,
+                                        BlockExecutorFactory[] blockExecutorFactories) {
         this.executedBy = executedBy;
         this.blockExecutorFactories = blockExecutorFactories;
-        this.workspaceId = workspaceId;
+        this.workspaceId = workspace.getId();
         this.instanceId = instanceId;
         this.workingDir = workingDir;
         this.workspaceLogger = WorkspaceLoggerFactory.createLogger(workspaceId, instanceId, "DEBUG", workingDir);
+        workspace.getVariables().forEach(v -> variableDefs.put(v.id(), v.name()));
     }
 
     @Override
@@ -90,8 +94,8 @@ public class DefaultBlockExecutionContext implements BlockExecutionContext {
     }
 
     @Override
-    public void setLocalVariableValue(String key, Object value) {
-        localVariables.get().put(key, value);
+    public void setLocalVariableValue(String id, Object value) {
+        localVariables.get().put(id, value);
 
     }
 
@@ -106,17 +110,22 @@ public class DefaultBlockExecutionContext implements BlockExecutionContext {
     }
 
     @Override
-    public Object getVariableValue(String key) {
-        return globalVariables.get(key);
+    public String getVariableName(String id) {
+        return variableDefs.get(id);
     }
 
     @Override
-    public void setVariableValue(String key, Object value) {
-        globalVariables.put(key, value);
+    public Object getVariableValue(String id) {
+        return globalVariables.get(id);
     }
 
     @Override
-    public Collection<String> getAllVariableNames() {
+    public void setVariableValue(String id, Object value) {
+        globalVariables.put(id, value);
+    }
+
+    @Override
+    public Collection<String> getAllVariableIds() {
         return globalVariables.keySet();
     }
 
