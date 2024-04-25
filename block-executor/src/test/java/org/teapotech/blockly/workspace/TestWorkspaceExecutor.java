@@ -218,20 +218,24 @@ public class TestWorkspaceExecutor {
             System.out.println(execution.getMessage());
         }
     }
-//
-//    @Test
-//    public void testFindAllPrimesInRangeWithEvent() throws Exception {
-//        try (InputStream in = getClass().getClassLoader().getResourceAsStream("test_workspace_exec_06.xml");) {
-//            long testInstanceId = 1;
-//            Workspace w = BlockXmlUtils.loadWorkspace(in);
-//            DefaultBlockExecutionContext context = createBlockExecutionContext(w, testInstanceId);
-//            WorkspaceExecutor wExecutor = new WorkspaceExecutor(w, context);
-//            wExecutor.execute();
-//            wExecutor.waitFor(30000);
-//            WorkspaceExecution wexec = wExecutor.getWorkspaceExecution();
-//            System.out.println(wexec);
-//        }
-//    }
+
+    @Test
+    public void testRunWorkspace04() throws Exception {
+        try (InputStream in = getClass().getClassLoader().getResourceAsStream("workspace04.json");) {
+            long testInstanceId = 8;
+            Workspace w = jsonHelper.getObject(in, Workspace.class);
+            w.setId("testRunWorkspace04");
+            DefaultBlockExecutionContext context = createBlockExecutionContext(w, testInstanceId);
+            WorkspaceExecutor wExecutor = new WorkspaceExecutor(w, context, jsonHelper);
+            wExecutor.setDebugMode(true);
+            wExecutor.startExecute();
+            wExecutor.waitFor(5000);
+            WorkspaceExecution execution = wExecutor.getWorkspaceExecution();
+
+            System.out.println(execution.getMessage());
+        }
+    }
+
 //
 //    @Test
 //    public void testPauseResumeExecution() throws Exception {

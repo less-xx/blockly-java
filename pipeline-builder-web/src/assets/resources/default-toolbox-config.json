@@ -185,6 +185,17 @@
       ],
       "name": "files",
       "categorystyle": "file_operations"
+    },
+    {
+      "kind": "category",
+      "name": "http",
+      "categorystyle": "http",
+      "contents": [
+        {
+          "type": "simple_http_get",
+          "kind": "block"
+        }
+      ]
     }
   ]
 }

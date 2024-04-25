@@ -316,6 +316,24 @@
     "style": "file_blocks",
     "tooltip": "",
     "helpUrl": ""
+  },
+  {
+    "type": "simple_http_get",
+    "implicitAlign0": "RIGHT",
+    "message0": "Get from address %1",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "URL",
+        "check": "String",
+        "align": "RIGHT"
+      }
+    ],
+    "inputsInline": false,
+    "style": "http_blocks",
+    "output": null,
+    "tooltip": "",
+    "helpUrl": ""
   }
 ]
 

@@ -38,6 +38,8 @@ public interface BlockExecutionContext {
 
     Collection<String> getAllVariableIds();
 
+    Collection<String> getAllLocalVariableIds();
+
     void destroy();
 
     boolean isStopped();
@@ -65,4 +67,6 @@ public interface BlockExecutionContext {
     void setCurrentBlockExecutor(AbstractBlockExecutor blockExecutor);
 
     <T> T getContextObject(Class<T> objectType);
+
+    Map<String, Object> getVariableValueMap();
 }

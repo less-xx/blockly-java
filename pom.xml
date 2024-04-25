@@ -17,6 +17,7 @@
         <logback.version>1.4.14</logback.version>
         <jackson-version>2.16.1</jackson-version>
         <hibernate-version>6.4.4.Final</hibernate-version>
+        <netty.version>4.1.109.Final</netty.version>
         <junit-version>5.10.2</junit-version>
         <java.version>17</java.version>
         <snakeyaml.version>2.2</snakeyaml.version>
@@ -88,6 +89,16 @@
                 <groupId>org.hibernate.validator</groupId>
                 <artifactId>hibernate-validator</artifactId>
                 <version>8.0.1.Final</version>
+            </dependency>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-all</artifactId>
+                <version>${netty.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.projectreactor.netty</groupId>
+                <artifactId>reactor-netty-http</artifactId>
+                <version>1.1.18</version>
             </dependency>
             <dependency>
                 <groupId>org.yaml</groupId>

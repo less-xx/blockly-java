@@ -99,6 +99,10 @@ public class DefaultBlockExecutionContext implements BlockExecutionContext {
 
     }
 
+    public Collection<String> getAllLocalVariableIds() {
+        return localVariables.get().keySet();
+    }
+
     @Override
     public Object getLocalVariableValue(String key) {
         return localVariables.get().get(key);
@@ -112,6 +116,23 @@ public class DefaultBlockExecutionContext implements BlockExecutionContext {
     @Override
     public String getVariableName(String id) {
         return variableDefs.get(id);
+    }
+
+    public Map<String, Object> getVariableValueMap(){
+        Map<String, Object> result = new HashMap<>();
+        this.globalVariables.forEach((key, value) -> {
+            if(key.startsWith("_var_")) {
+                key = key.substring(5);
+            }
+            result.put(variableDefs.get(key), value);
+        });
+        this.localVariables.get().forEach((key, value) -> {
+            if(key.startsWith("_var_")) {
+                key = key.substring(5);
+            }
+            result.put(variableDefs.get(key), value);
+        });
+        return result;
     }
 
     @Override

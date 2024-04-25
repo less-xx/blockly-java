@@ -32,6 +32,8 @@ public interface BlockDefinition {
         public final static String ID_START_EXIT = "start_exit";
         public final static String ID_VARIABLES = "variables";
 
+        public final static String ID_HTTP = "http";
+
     }
 
     String getConfiguration();

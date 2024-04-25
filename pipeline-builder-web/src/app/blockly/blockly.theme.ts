@@ -51,6 +51,11 @@ export const  CustomTheme = {
          colourSecondary:"#4c9700",
          colourTertiary:"#ec97ff"
       },
+      http_blocks: {
+         colourPrimary: "#ad60d2",
+         colourSecondary: "#ad6000",
+         colourTertiary: "#7d60d2"
+      }
    },
    categoryStyles : {
       file_operations: {
@@ -70,6 +75,9 @@ export const  CustomTheme = {
       },
       variables: {
          colour: "#ff8c1a"
+      },
+      http: {
+         colour: "#ad60d2"
       }
    },
    componentStyles : {

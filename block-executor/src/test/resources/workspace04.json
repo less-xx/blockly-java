@@ -1,0 +1,109 @@
+{
+  "blocks": {
+    "languageVersion": 0,
+    "blocks": [
+      {
+        "type": "start",
+        "id": "k`+K:D(3jS01[;rvPLcS",
+        "x": 130,
+        "y": 70,
+        "next": {
+          "block": {
+            "type": "variables_set",
+            "id": "rYi/`_iaFKJ7o2c~er6j",
+            "fields": {
+              "VAR": {
+                "id": "tClJwLXW3jMu5vS9tBh3"
+              }
+            },
+            "inputs": {
+              "VALUE": {
+                "block": {
+                  "type": "text",
+                  "id": "jN%lN=aEr!fg/K@siQ)z",
+                  "fields": {
+                    "TEXT": "ISBN:0201558025"
+                  }
+                }
+              }
+            },
+            "next": {
+              "block": {
+                "type": "variables_set",
+                "id": "AQ|f~^ShxNVvyWf_f,17",
+                "fields": {
+                  "VAR": {
+                    "id": "kl}*Uj%pAT?VpWxS@JHv"
+                  }
+                },
+                "inputs": {
+                  "VALUE": {
+                    "block": {
+                      "type": "simple_http_get",
+                      "id": "tXGOq5sP5`L[ur^?KIXD",
+                      "fields": {
+                        "ACCEPT": "JSON"
+                      },
+                      "inputs": {
+                        "URL": {
+                          "block": {
+                            "type": "text",
+                            "id": "K7`EM4/rXDkAEbYpJDym",
+                            "fields": {
+                              "TEXT": "https://openlibrary.org/api/books?bibkeys=${bibkeys}&format=json"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "next": {
+                  "block": {
+                    "type": "text_print",
+                    "id": "BCOLBuimm/ea]%ZKk)@O",
+                    "inputs": {
+                      "TEXT": {
+                        "block": {
+                          "type": "variables_get",
+                          "id": "iD~emykPhG{:Kij9{4l?",
+                          "fields": {
+                            "VAR": {
+                              "id": "kl}*Uj%pAT?VpWxS@JHv"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "variables": [
+    {
+      "name": "bibkeys",
+      "id": "tClJwLXW3jMu5vS9tBh3"
+    },
+    {
+      "name": "format",
+      "id": "jVYz}cNxQzuMI(,Zd*.r"
+    },
+    {
+      "name": "json_text",
+      "id": "kl}*Uj%pAT?VpWxS@JHv"
+    },
+    {
+      "name": "base_url",
+      "id": "w2ZB_nI_6wp,3PW#Y)HT"
+    },
+    {
+      "name": "item",
+      "id": "ee]%{YoNh_@P8,{z9%,?"
+    }
+  ]
+}
