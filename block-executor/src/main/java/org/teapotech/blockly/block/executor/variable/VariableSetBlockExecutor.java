@@ -32,10 +32,10 @@ public class VariableSetBlockExecutor extends AbstractBlockExecutor {
         if (valueBlock != null) {
             Object value = BlockExecutionHelper.execute(valueBlock, null, context);
             if (value != null) {
-                context.setVariableValue("_var_" + var.id(), value);
+                context.setWorkspaceVariableValue("_var_" + var.id(), value);
                 context.getLogger().info("Set value to variable: {}", var.id());
             } else {
-                context.setVariableValue("_var_" + var.id(), Variable.NULL);
+                context.setWorkspaceVariableValue("_var_" + var.id(), Variable.NULL);
             }
         }
         return null;

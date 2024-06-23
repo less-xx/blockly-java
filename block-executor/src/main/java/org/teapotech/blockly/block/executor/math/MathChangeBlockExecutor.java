@@ -29,7 +29,7 @@ public class MathChangeBlockExecutor extends AbstractBlockExecutor {
     @Override
     protected Object doExecute(BlockExecutionContext context) throws Exception {
         Variable var = (Variable) this.block.getFieldValue(FieldType.VAR);
-        Number n = (Number) context.getVariableValue("_var_" + var.id());
+        Number n = (Number) context.getWorkspaceVariableValue("_var_" + var.id());
         Block deltaValueBlock = getInputBlockByKey("DELTA");
         Shadow deltaValueShadow = this.block.getInputs().get("DELTA").getShadow();
         if (deltaValueBlock == null && deltaValueShadow == null) {
@@ -41,10 +41,10 @@ public class MathChangeBlockExecutor extends AbstractBlockExecutor {
         if ((n instanceof Integer || n instanceof Long)
                 && (deltaValue instanceof Integer || deltaValue instanceof Long)) {
             Long newValue = n.longValue() + deltaValue.longValue();
-            context.setVariableValue("_var_" + var.id(), newValue);
+            context.setWorkspaceVariableValue("_var_" + var.id(), newValue);
         } else {
             Double newValue = n.doubleValue() + deltaValue.doubleValue();
-            context.setVariableValue("_var_" + var.id(), newValue);
+            context.setWorkspaceVariableValue("_var_" + var.id(), newValue);
         }
         return null;
     }

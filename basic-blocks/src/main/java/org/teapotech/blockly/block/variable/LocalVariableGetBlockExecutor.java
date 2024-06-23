@@ -23,10 +23,10 @@ public class LocalVariableGetBlockExecutor extends AbstractBlockExecutor {
 
     @Override
     protected Object doExecute(BlockExecutionContext context) throws Exception {
-        Variable var = (Variable) this.block.getFieldValue(FieldType.VAR);
-        Object value = context.getLocalVariableValue("_local_var_" + var.id());
+        String var = (String) this.block.getFieldValue(FieldType.VAR);
+        Object value = context.getLocalVariableValue(var);
         if (value == null) {
-            throw new BlockExecutionException("Local variable " + var.name() + " is not defined");
+            throw new BlockExecutionException("Local variable " + var + " is not defined");
         }
         return value;
     }

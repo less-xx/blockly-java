@@ -1,0 +1,283 @@
+{
+  "blocks": {
+    "languageVersion": 0,
+    "blocks": [
+      {
+        "type": "start",
+        "id": "-Apm1rau(pa#2%;mPxTd",
+        "x": 90,
+        "y": 50,
+        "next": {
+          "block": {
+            "type": "variables_set",
+            "id": "/O$nZe^ALx.X6n#XS.=D",
+            "fields": {
+              "VAR": {
+                "id": "G|Yke4Hp5aiQ-)ta{-)%"
+              }
+            },
+            "inputs": {
+              "VALUE": {
+                "block": {
+                  "type": "text",
+                  "id": "yH2X;{-N!bW|{.Ca:+/G",
+                  "fields": {
+                    "TEXT": "GBP"
+                  }
+                }
+              }
+            },
+            "next": {
+              "block": {
+                "type": "variables_set",
+                "id": "(O+%mF5u~S(O6wqxgZZJ",
+                "fields": {
+                  "VAR": {
+                    "id": "/vdf}X?C?R%4xA7%09To"
+                  }
+                },
+                "inputs": {
+                  "VALUE": {
+                    "block": {
+                      "type": "text",
+                      "id": "DC!|*f_S/!nsNR=I4mO(",
+                      "fields": {
+                        "TEXT": "CNY"
+                      }
+                    }
+                  }
+                },
+                "next": {
+                  "block": {
+                    "type": "variables_set",
+                    "id": "Ps8FExa3{5;#}q*G1Mnb",
+                    "fields": {
+                      "VAR": {
+                        "id": "kS}Aspoy.4IsFoxiH@RB"
+                      }
+                    },
+                    "inputs": {
+                      "VALUE": {
+                        "block": {
+                          "type": "temporary_file",
+                          "id": "7HL5j.XxS-Z?#n2RWI19",
+                          "inputs": {
+                            "FILE_NAME": {
+                              "shadow": {
+                                "type": "text",
+                                "id": "7|vaL~VPNlCnu-7UtREV",
+                                "fields": {
+                                  "TEXT": "${SRC_CURRENCY}-${TARGET_CURRENCY}.html"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "next": {
+                      "block": {
+                        "type": "save_to_file",
+                        "id": "Sl0SH:Wh~i_cfsrR,n)i",
+                        "inputs": {
+                          "FILE": {
+                            "block": {
+                              "type": "variables_get",
+                              "id": "QqzvS*CXgvdT4kR+?,rB",
+                              "fields": {
+                                "VAR": {
+                                  "id": "kS}Aspoy.4IsFoxiH@RB"
+                                }
+                              }
+                            }
+                          },
+                          "FILE_CONTENT": {
+                            "shadow": {
+                              "type": "multiline_text",
+                              "id": "YLL)-|NwnRvCG#Y7lmdM",
+                              "fields": {
+                                "TEXT": "file content here"
+                              }
+                            },
+                            "block": {
+                              "type": "simple_http_get",
+                              "id": "C~-b8)cE`lc]HUf,2}^H",
+                              "inputs": {
+                                "URL": {
+                                  "shadow": {
+                                    "type": "text",
+                                    "id": "^,S,8b5{j8[?3|PZs@:(",
+                                    "fields": {
+                                      "TEXT": "https://www.google.com/finance/quote/${SRC_CURRENCY}-${TARGET_CURRENCY}"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "next": {
+                          "block": {
+                            "type": "html_select",
+                            "id": "IZ+M,1M|r`h?M~`Q2,6;",
+                            "fields": {
+                              "VAR": "item"
+                            },
+                            "inputs": {
+                              "SELECT": {
+                                "block": {
+                                  "type": "text",
+                                  "id": ";sm7N.*+GM^/NVgrif7#",
+                                  "fields": {
+                                    "TEXT": "main c-wiz div div div"
+                                  }
+                                }
+                              },
+                              "FILE_OR_TEXT": {
+                                "block": {
+                                  "type": "variables_get",
+                                  "id": "(QC$KT3gj6`nS9Z$e5T8",
+                                  "fields": {
+                                    "VAR": {
+                                      "id": "kS}Aspoy.4IsFoxiH@RB"
+                                    }
+                                  }
+                                }
+                              },
+                              "DO": {
+                                "block": {
+                                  "type": "variables_set",
+                                  "id": "J|_XPrf0kL))SD9~ya:1",
+                                  "fields": {
+                                    "VAR": {
+                                      "id": "!^H5kgI|GpH9Bki7A=$P"
+                                    }
+                                  },
+                                  "inputs": {
+                                    "VALUE": {
+                                      "block": {
+                                        "type": "html_get_element_attr",
+                                        "id": "]}rT^%DTKKr|Uut%!5M@",
+                                        "fields": {
+                                          "VAR": "item"
+                                        },
+                                        "inputs": {
+                                          "ATTRIBUTE_NAME": {
+                                            "block": {
+                                              "type": "text",
+                                              "id": "u56M9}?A$(2Lk|K01$1?",
+                                              "fields": {
+                                                "TEXT": "data-last-price"
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "next": {
+                                    "block": {
+                                      "type": "controls_if",
+                                      "id": "N7GqA$LH2ctSKJNwM#TF",
+                                      "inputs": {
+                                        "IF0": {
+                                          "block": {
+                                            "type": "logic_compare",
+                                            "id": "ZzA`=H*%W^tS^r,|@A{7",
+                                            "fields": {
+                                              "OP": "NEQ"
+                                            },
+                                            "inputs": {
+                                              "A": {
+                                                "block": {
+                                                  "type": "variables_get",
+                                                  "id": "H%=vBwr@t12ClW5VQ=m{",
+                                                  "fields": {
+                                                    "VAR": {
+                                                      "id": "!^H5kgI|GpH9Bki7A=$P"
+                                                    }
+                                                  }
+                                                }
+                                              },
+                                              "B": {
+                                                "block": {
+                                                  "type": "text",
+                                                  "id": "0i8`qMq$vQF?z6b(H^Xx",
+                                                  "fields": {
+                                                    "TEXT": ""
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        },
+                                        "DO0": {
+                                          "block": {
+                                            "type": "text_print",
+                                            "id": ":+Q{Cr;qqQ|KA)rkV.#j",
+                                            "inputs": {
+                                              "TEXT": {
+                                                "block": {
+                                                  "type": "variables_get",
+                                                  "id": "kSJ%?xq/E*7I2%r1Aj]i",
+                                                  "fields": {
+                                                    "VAR": {
+                                                      "id": "!^H5kgI|GpH9Bki7A=$P"
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            },
+                                            "next": {
+                                              "block": {
+                                                "type": "controls_flow_statements2",
+                                                "id": "-L=A`^-r?LT/*hYG`s{s",
+                                                "fields": {
+                                                  "FLOW": "break"
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "variables": [
+    {
+      "name": "SRC_CURRENCY",
+      "id": "G|Yke4Hp5aiQ-)ta{-)%"
+    },
+    {
+      "name": "TARGET_CURRENCY",
+      "id": "/vdf}X?C?R%4xA7%09To"
+    },
+    {
+      "name": "TMP_FILE",
+      "id": "kS}Aspoy.4IsFoxiH@RB"
+    },
+    {
+      "name": "LAST_PRICE",
+      "id": "!^H5kgI|GpH9Bki7A=$P"
+    },
+    {
+      "name": "item",
+      "id": "Uh1JmuSnCD@=DC*mlUy4"
+    }
+  ]
+}

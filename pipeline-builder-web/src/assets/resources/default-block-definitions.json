@@ -66,6 +66,31 @@
     "helpUrl": ""
   },
   {
+    "type": "controls_flow_statements2",
+    "message0": "%1 of loop",
+    "args0": [
+    {
+      "type": "field_dropdown",
+      "name": "FLOW",
+      "options": [
+      [
+        "break out",
+        "break"
+      ],
+      [
+        "continue with next iteration",
+        "continue"
+      ]
+      ]
+    }
+    ],
+    "previousStatement": null,
+    "nextStatement": null,
+    "style": "control_blocks",
+    "tooltip": "",
+    "helpUrl": ""
+  },
+  {
     "type": "foreach_in_collection",
     "message0": "foreach %1 in %2 do %3",
     "args0": [
@@ -294,20 +319,19 @@
   },
   {
     "type": "save_to_file",
-    "message0": "save to file: %1 %2 content: %3",
+    "message0": "save to file %1 content %2",
     "args0": [
       {
         "type": "input_value",
-        "name": "FILE_NAME",
-        "check": "String"
-      },
-      {
-        "type": "input_end_row"
+        "name": "FILE",
+        "check": "temporary_file",
+        "align": "RIGHT"
       },
       {
         "type": "input_value",
         "name": "FILE_CONTENT",
-        "check": "String"
+        "check": "String",
+        "align": "RIGHT"
       }
     ],
     "inputsInline": false,
@@ -318,9 +342,24 @@
     "helpUrl": ""
   },
   {
+    "type": "temporary_file",
+    "message0": "temp file named: %1",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "FILE_NAME",
+        "check": "String"
+      }
+    ],
+    "output": null,
+    "style": "file_blocks",
+    "tooltip": "",
+    "helpUrl": ""
+  },
+  {
     "type": "simple_http_get",
     "implicitAlign0": "RIGHT",
-    "message0": "Get from address %1",
+    "message0": "Download %1",
     "args0": [
       {
         "type": "input_value",
@@ -332,6 +371,78 @@
     "inputsInline": false,
     "style": "http_blocks",
     "output": null,
+    "tooltip": "",
+    "helpUrl": ""
+  },
+  {
+    "type": "html_select",
+    "message0": "select: %2 from file/text: %1  foreach %3 %4",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "FILE_OR_TEXT",
+        "check": [
+          "String",
+          "temporary_file"
+        ],
+        "align": "RIGHT"
+      },
+      {
+        "type": "input_value",
+        "name": "SELECT",
+        "check": "String",
+        "align": "RIGHT"
+      },
+      {
+        "type": "field_input",
+        "name": "VAR",
+        "text": "item"
+      },
+      {
+        "type": "input_statement",
+        "name": "DO"
+      }
+    ],
+    "inputsInline": true,
+    "previousStatement": null,
+    "nextStatement": null,
+    "style": "file_blocks",
+    "tooltip": "",
+    "helpUrl": ""
+  },
+  {
+    "type": "html_get_element_text",
+    "message0": "get text of %1",
+    "args0": [
+      {
+        "type": "field_input",
+        "name": "VAR",
+        "text": "item"
+      }
+    ],
+    "output": null,
+    "style": "file_blocks",
+    "tooltip": "",
+    "helpUrl": ""
+  },
+  {
+    "type": "html_get_element_attr",
+    "message0": "get attribute %1 from %2",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "ATTRIBUTE_NAME",
+        "check": "String",
+        "align": "RIGHT"
+      },
+      {
+        "type": "field_input",
+        "name": "VAR",
+        "text": "item"
+      }
+    ],
+    "output": null,
+    "style": "file_blocks",
     "tooltip": "",
     "helpUrl": ""
   }

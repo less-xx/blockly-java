@@ -3,8 +3,11 @@
  */
 package org.teapotech.blockly.block.execute;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
+import org.apache.commons.text.StringSubstitutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.teapotech.blockly.block.execute.BlockExecutionProgress.BlockStatus;
@@ -14,6 +17,7 @@ import org.teapotech.blockly.execute.event.EventDispatcher;
 import org.teapotech.blockly.model.Block;
 import org.teapotech.blockly.model.Input;
 import org.teapotech.blockly.model.Shadow;
+import org.teapotech.blockly.model.Variable;
 import org.teapotech.blockly.workspace.event.WorkspaceEvent;
 
 /**
@@ -133,6 +137,20 @@ public abstract class AbstractBlockExecutor implements BlockExecutor {
                     "Cannot find input '" + key + "'");
         }
         return input.getBlock();
+    }
+
+    protected String replaceMacro(String input, BlockExecutionContext context) {
+        Map<String,Object> varValues = context.getWorkspaceVariableValueMap();
+        Map<String, String> valueMap = new HashMap<>();
+
+        for(Map.Entry<String,Object> entry: varValues.entrySet()){
+            String key = entry.getKey();
+            Object value = entry.getValue();
+            if(Variable.NULL != value) {
+                valueMap.put(key, value.toString());
+            }
+        }
+        return StringSubstitutor.replace(input, valueMap);
     }
 
     abstract protected Object doExecute(BlockExecutionContext context) throws Exception;

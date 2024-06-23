@@ -153,8 +153,11 @@ public class Block {
             return null;
         }
         if (FieldType.VAR.equals(field)) {
-            Map<String, Object> vars = (Map<String, Object>) this.fields.get(field);
-            return new Variable((String) vars.get("id"), (String) vars.get("name"));
+            Object fieldObj = this.fields.get(field);
+            if( fieldObj instanceof Map<?,?>) {
+                Map<String, Object> vars = (Map<String, Object>) this.fields.get(field);
+                return new Variable((String) vars.get("id"), (String) vars.get("name"));
+            }
         }
         return this.fields.get(field);
     }

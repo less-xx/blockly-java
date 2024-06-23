@@ -8,12 +8,12 @@ export const  CustomTheme = {
    blockStyles : {
       math_blocks: {
          colourPrimary: "#40bf4a",
-         colourSecondary:"#40bf00",
+         colourSecondary:"#c6e7ba",
          colourTertiary:"#3abf4a"
       },
       text_blocks: {
          colourPrimary: "#40bf4a",
-         colourSecondary:"#40bf00",
+         colourSecondary:"#c6e7ba",
          colourTertiary:"#3abf4a"
       },
       event_blocks: {
@@ -38,7 +38,7 @@ export const  CustomTheme = {
       },
       operator_blocks: {
          colourPrimary: "#40bf4a",
-         colourSecondary:"#40bf00",
+         colourSecondary:"#c6e7ba",
          colourTertiary:"#3abf4a"
       },
       variable_blocks: {
@@ -48,13 +48,18 @@ export const  CustomTheme = {
       },
       file_blocks: {
          colourPrimary: "#4c97ff",
-         colourSecondary:"#4c9700",
+         colourSecondary:"#a2c3f2",
          colourTertiary:"#ec97ff"
       },
       http_blocks: {
          colourPrimary: "#ad60d2",
-         colourSecondary: "#ad6000",
+         colourSecondary: "#d2b1e2",
          colourTertiary: "#7d60d2"
+      },
+      html_blocks: {
+         colourPrimary: "#4169e1",
+         colourSecondary: "#416900",
+         colourTertiary: "#3169e1"
       }
    },
    categoryStyles : {
@@ -78,7 +83,10 @@ export const  CustomTheme = {
       },
       http: {
          colour: "#ad60d2"
-      }
+      },
+      html: {
+         colour: "#4169e1"
+      },
    },
    componentStyles : {
       workspaceBackgroundColour: '#efefef',

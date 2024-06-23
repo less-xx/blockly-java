@@ -65,7 +65,7 @@ public class LogicCompareBlockExecutor extends AbstractBlockExecutor {
                 return Objects.equals(v1, v2);
             }
 
-        } else if (operator.equalsIgnoreCase("ne")) {
+        } else if (operator.equalsIgnoreCase("neq")) {
             return !Objects.equals(v1, v2);
         } else {
             if (ClassUtils.isAssignable(v1.getClass(), Number.class)
@@ -99,6 +99,8 @@ public class LogicCompareBlockExecutor extends AbstractBlockExecutor {
                     return c1.compareTo(c2) < 0;
                 } else if (operator.equalsIgnoreCase("lte")) {
                     return c1.compareTo(c2) <= 0;
+                }else if (operator.equalsIgnoreCase("neq")) {
+                    return !c1.equals(c2);
                 }
                 throw new InvalidBlockExecutorException("Unknown comparision operator " + operator);
             }

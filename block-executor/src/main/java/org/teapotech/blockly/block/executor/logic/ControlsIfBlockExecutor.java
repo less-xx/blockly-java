@@ -29,14 +29,8 @@ public class ControlsIfBlockExecutor extends AbstractBlockExecutor {
     @Override
     protected Object doExecute(BlockExecutionContext context) throws Exception {
 
-        Integer elseIfCount = (Integer) this.block.getExtraState().get(ExtraState.ELSE_IF_COUNT);
-        if (elseIfCount == null) {
-            elseIfCount = 0;
-        }
-        Boolean hasElse = (Boolean) this.block.getExtraState().get(ExtraState.hasElse);
-        if (hasElse == null) {
-            hasElse = false;
-        }
+        int elseIfCount = (this.block.getExtraState()==null) ? 0 : (Integer) this.block.getExtraState().get(ExtraState.ELSE_IF_COUNT);
+        boolean hasElse = this.block.getExtraState() != null && (Boolean) this.block.getExtraState().get(ExtraState.hasElse);
 
         Block ifCondBlock = getInputBlockByKey(InputType.IF + "0");
         if (ifCondBlock == null) {

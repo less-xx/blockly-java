@@ -4,7 +4,6 @@
 package org.teapotech.blockly.block.executor.text;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.text.StringSubstitutor;
 import org.teapotech.blockly.block.def.BlockDefinition;
 import org.teapotech.blockly.block.def.BlockDefinition.CategoryID;
 import org.teapotech.blockly.block.def.annotation.ApplyToBlock;
@@ -13,9 +12,6 @@ import org.teapotech.blockly.block.execute.BlockExecutionContext;
 import org.teapotech.blockly.model.Block;
 import org.teapotech.blockly.model.Block.FieldType;
 import org.teapotech.blockly.model.Shadow;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author jiangl
@@ -38,8 +34,7 @@ public class TextBlockExecutor extends AbstractBlockExecutor {
             result = (String)this.shadow.getFieldValue(FieldType.TEXT);
         }
         if(StringUtils.isNoneBlank(result)){
-            Map<String,Object> varValues = context.getVariableValueMap();
-            result = StringSubstitutor.replace(result, varValues);
+            result = replaceMacro(result, context);
         }
         return result;
     }

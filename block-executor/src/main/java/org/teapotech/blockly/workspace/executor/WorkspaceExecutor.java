@@ -99,8 +99,8 @@ public class WorkspaceExecutor {
 
         List<Variable> variables = workspace.getVariables();
         if (variables != null) {
-            variables.stream().forEach(v -> {
-                context.setVariableValue("_var_" + v.id(), Variable.NULL);
+            variables.forEach(v -> {
+                context.setWorkspaceVariableValue("_var_" + v.id(), Variable.NULL);
                 context.getLogger().debug("Added variable: {}", v.name());
             });
         }
@@ -248,6 +248,7 @@ public class WorkspaceExecutor {
                             context.getWorkspaceId() + "-" + context.getInstanceId());
                     break;
                 }
+                context.getLogger().debug("Workspace active thread count: {}", threadGroup.activeCount());
                 for (Thread t : blockExecutionThreads) {
                     if (t == null || t.getName().equals(this.getName())) {
                         continue;

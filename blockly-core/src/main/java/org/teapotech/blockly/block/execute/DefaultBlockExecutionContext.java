@@ -37,13 +37,15 @@ public class DefaultBlockExecutionContext implements BlockExecutionContext {
     private final Logger workspaceLogger;
 
     private boolean stopped;
+    // Accessible only by the same thread where it gets defined. Reference only by name:
     private final ThreadLocal<Map<String, Object>> localVariables = new ThreadLocal<Map<String, Object>>() {
         @Override
         protected Map<String, Object> initialValue() {
             return new HashMap<>();
         }
     };
-    private final Map<String, Object> globalVariables = new ConcurrentHashMap<>();
+    // Accessible within the workspace. It's defined by user.
+    private final Map<String, Object> workspaceVariables = new ConcurrentHashMap<>();
     private final Map<String, BlockExecutionProgress> executionThreadInfo = new HashMap<>();
 
     private final Map<String, String> variableDefs = new ConcurrentHashMap<>();
@@ -56,7 +58,9 @@ public class DefaultBlockExecutionContext implements BlockExecutionContext {
         this.instanceId = instanceId;
         this.workingDir = workingDir;
         this.workspaceLogger = WorkspaceLoggerFactory.createLogger(workspaceId, instanceId, "DEBUG", workingDir);
-        workspace.getVariables().forEach(v -> variableDefs.put(v.id(), v.name()));
+        if(workspace.getVariables()!=null) {
+            workspace.getVariables().forEach(v -> variableDefs.put(v.id(), v.name()));
+        }
     }
 
     @Override
@@ -99,7 +103,7 @@ public class DefaultBlockExecutionContext implements BlockExecutionContext {
 
     }
 
-    public Collection<String> getAllLocalVariableIds() {
+    public Collection<String> getLocalVariableIds() {
         return localVariables.get().keySet();
     }
 
@@ -114,13 +118,13 @@ public class DefaultBlockExecutionContext implements BlockExecutionContext {
     }
 
     @Override
-    public String getVariableName(String id) {
+    public String getWorkspaceVariableName(String id) {
         return variableDefs.get(id);
     }
 
-    public Map<String, Object> getVariableValueMap(){
+    public Map<String, Object> getWorkspaceVariableValueMap(){
         Map<String, Object> result = new HashMap<>();
-        this.globalVariables.forEach((key, value) -> {
+        this.workspaceVariables.forEach((key, value) -> {
             if(key.startsWith("_var_")) {
                 key = key.substring(5);
             }
@@ -136,18 +140,18 @@ public class DefaultBlockExecutionContext implements BlockExecutionContext {
     }
 
     @Override
-    public Object getVariableValue(String id) {
-        return globalVariables.get(id);
+    public Object getWorkspaceVariableValue(String id) {
+        return workspaceVariables.get(id);
     }
 
     @Override
-    public void setVariableValue(String id, Object value) {
-        globalVariables.put(id, value);
+    public void setWorkspaceVariableValue(String id, Object value) {
+        workspaceVariables.put(id, value);
     }
 
     @Override
-    public Collection<String> getAllVariableIds() {
-        return globalVariables.keySet();
+    public Collection<String> getWorkspaceVariableIds() {
+        return workspaceVariables.keySet();
     }
 
     @Override

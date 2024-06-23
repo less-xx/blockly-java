@@ -1,22 +1,38 @@
 package org.teapotech.blockly.block.def.http;
 
+import org.apache.commons.io.IOUtils;
+import org.apache.hc.client5.http.classic.methods.HttpGet;
+import org.apache.hc.client5.http.config.RequestConfig;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
+import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
+import org.apache.hc.core5.http.HttpEntity;
 import org.slf4j.Logger;
 import org.teapotech.blockly.block.def.annotation.ApplyToBlock;
 import org.teapotech.blockly.block.execute.AbstractBlockExecutor;
 import org.teapotech.blockly.block.execute.BlockExecutionContext;
 import org.teapotech.blockly.block.execute.BlockExecutionHelper;
+import org.teapotech.blockly.exception.BlockExecutionException;
 import org.teapotech.blockly.exception.InvalidBlockException;
 import org.teapotech.blockly.model.Block;
 import org.teapotech.blockly.model.Shadow;
-import reactor.netty.http.client.HttpClient;
 
 import java.net.URI;
-import java.time.Duration;
+import java.nio.charset.StandardCharsets;
+import java.util.concurrent.TimeUnit;
 
 @ApplyToBlock(value = SimpleHttpGetBlock.class)
 public class SimpleHttpGetBlockExecutor extends AbstractBlockExecutor {
 
-    ThreadLocal<HttpClient> localHttpClient = ThreadLocal.withInitial(HttpClient::create);
+    final static int REQUEST_TIMEOUT = 5;
+
+    ThreadLocal<CloseableHttpClient> localHttpClient = ThreadLocal.withInitial(()->{
+        RequestConfig config = RequestConfig.custom()
+                .setResponseTimeout(REQUEST_TIMEOUT, TimeUnit.SECONDS)
+                .setConnectionRequestTimeout(REQUEST_TIMEOUT, TimeUnit.SECONDS)
+                .setRedirectsEnabled(true).build();
+        return HttpClientBuilder.create().setDefaultRequestConfig(config).build();
+    });
 
     public SimpleHttpGetBlockExecutor(Block block, Shadow shadow) {
         super(block, shadow);
@@ -36,6 +52,9 @@ public class SimpleHttpGetBlockExecutor extends AbstractBlockExecutor {
         if (url == null || url.isEmpty()) {
             throw new InvalidBlockException(this.block.getId(), this.block.getType(), "URL cannot be empty");
         }
+
+        url = replaceMacro(url, context);
+
         URI uri = new URI(url);
         String query = uri.getQuery();
         if (query != null) {
@@ -45,21 +64,21 @@ public class SimpleHttpGetBlockExecutor extends AbstractBlockExecutor {
                 int idx = pair.indexOf("=");
                 String key = pair.substring(0, idx);
                 String value = pair.substring(idx + 1);
-                sb.append(key).append("=").append(java.net.URLEncoder.encode(value, "UTF-8")).append("&");
+                sb.append(key).append("=").append(java.net.URLEncoder.encode(value, StandardCharsets.UTF_8)).append("&");
             }
-            url = uri.getScheme() + "://" + uri.getAuthority() + uri.getPath() + "?" + sb.toString();
+            url = uri.getScheme() + "://" + uri.getAuthority() + uri.getPath() + "?" + sb;
         } else {
             url = uri.getScheme() + "://" + uri.getAuthority() + uri.getPath();
         }
-
-        HttpClient client = localHttpClient.get();
-        String result = client.get()
-                .uri(url)
-                .responseContent()
-                .aggregate()
-                .asString()
-                .block(Duration.ofSeconds(10));
-        return result;
-
+        HttpGet request = new HttpGet(url);
+        CloseableHttpClient client = localHttpClient.get();
+        CloseableHttpResponse response = client.execute(request);
+        LOG.debug("HTTP Status {}", response.getReasonPhrase());
+        final HttpEntity entity = response.getEntity();
+        String contentType = entity.getContentType();
+        if(contentType.startsWith("text")){
+            return IOUtils.toString(entity.getContent(),entity.getContentEncoding());
+        }
+        throw new BlockExecutionException("Only text content type is supported.");
     }
 }

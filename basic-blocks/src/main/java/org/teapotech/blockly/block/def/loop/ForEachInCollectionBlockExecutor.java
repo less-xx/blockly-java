@@ -5,6 +5,7 @@ package org.teapotech.blockly.block.def.loop;
 
 import java.util.Collection;
 
+import org.apache.commons.lang3.StringUtils;
 import org.teapotech.blockly.block.def.annotation.ApplyToBlock;
 import org.teapotech.blockly.block.execute.AbstractBlockExecutor;
 import org.teapotech.blockly.block.execute.BlockExecutionContext;
@@ -37,14 +38,14 @@ public class ForEachInCollectionBlockExecutor extends AbstractBlockExecutor {
         if (listBlock == null) {
             throw new InvalidBlockException(this.block.getId(), this.block.getType(), "Missing COLLECTION block");
         }
-        Variable var = (Variable) this.block.getFieldValue("VAR");
-        if (var == null) {
+        String var = (String) this.block.getFieldValue("VAR");
+        if (StringUtils.isBlank(var)) {
             throw new InvalidBlockException(this.block.getId(), this.block.getType(), "Variable cannot be empty.");
         }
 
         Block doBlock = this.block.getInputs().get("DO").getBlock();
         if (doBlock == null) {
-            throw new InvalidBlockException(this.block.getId(), this.block.getType(), "Missing do block");
+            throw new InvalidBlockException(this.block.getId(), this.block.getType(), "Missing loop statement body");
         }
 
         Object collectionObject = BlockExecutionHelper.execute(listBlock, null, context);
@@ -55,7 +56,7 @@ public class ForEachInCollectionBlockExecutor extends AbstractBlockExecutor {
         Collection<?> collection = (Collection<?>) collectionObject;
 
         for (Object item : collection) {
-            context.setLocalVariableValue("_local_var_" + var.id(), item);
+            context.setLocalVariableValue(var, item);
             try {
                 BlockExecutionHelper.execute(doBlock, null, context);
             } catch (BreakLoopException e) {

@@ -26,19 +26,19 @@ public interface BlockExecutionContext {
 
     BlockExecutorFactory getBlockExecutorFactory(String blockType) throws BlockExecutorNotFoundException;
 
-    Object getVariableValue(String id);
+    Object getWorkspaceVariableValue(String id);
 
-    String getVariableName(String id);
+    String getWorkspaceVariableName(String id);
 
-    void setVariableValue(String id, Object value);
+    void setWorkspaceVariableValue(String id, Object value);
 
     void setLocalVariableValue(String id, Object value);
 
     Object getLocalVariableValue(String id);
 
-    Collection<String> getAllVariableIds();
+    Collection<String> getWorkspaceVariableIds();
 
-    Collection<String> getAllLocalVariableIds();
+    Collection<String> getLocalVariableIds();
 
     void destroy();
 
@@ -68,5 +68,5 @@ public interface BlockExecutionContext {
 
     <T> T getContextObject(Class<T> objectType);
 
-    Map<String, Object> getVariableValueMap();
+    Map<String, Object> getWorkspaceVariableValueMap();
 }

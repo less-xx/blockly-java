@@ -27,8 +27,8 @@ public class SaveToFileBlock extends CustomBlockDefinition {
                  "args0": [
                    {
                      "type": "input_value",
-                     "name": "FILE_NAME",
-                     "check": "String"
+                     "name": "FILE",
+                     "check": "temporary_file"
                    },
                    {
                      "type": "input_end_row"
@@ -46,7 +46,6 @@ public class SaveToFileBlock extends CustomBlockDefinition {
                  "tooltip": "",
                  "helpUrl": ""
                }
-
-                """;
+               """;
     }
 }

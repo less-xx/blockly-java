@@ -236,6 +236,25 @@ public class TestWorkspaceExecutor {
         }
     }
 
+    @Test
+    public void testRunWorkspace05() throws Exception {
+        try (InputStream in = getClass().getClassLoader().getResourceAsStream("workspace05.json");) {
+            long testInstanceId = 8;
+            Workspace w = jsonHelper.getObject(in, Workspace.class);
+            w.setId("testRunWorkspace05");
+            DefaultBlockExecutionContext context = createBlockExecutionContext(w, testInstanceId);
+            WorkspaceExecutor wExecutor = new WorkspaceExecutor(w, context, jsonHelper);
+            wExecutor.setDebugMode(true);
+            wExecutor.startExecute();
+            wExecutor.waitFor(50000);
+            WorkspaceExecution execution = wExecutor.getWorkspaceExecution();
+
+            System.out.println(execution.getMessage());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
 //
 //    @Test
 //    public void testPauseResumeExecution() throws Exception {

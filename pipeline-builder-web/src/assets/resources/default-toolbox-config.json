@@ -146,7 +146,7 @@
           "kind": "block"
         },
         {
-          "type": "controls_flow_statements",
+          "type": "controls_flow_statements2",
           "kind": "block"
         }
       ],
@@ -159,15 +159,20 @@
         {
           "type": "save_to_file",
           "inputs": {
-            "FILE_NAME": {
-              "shadow": {
-                "type": "text",
-                "fields": {
-                  "TEXT": "output.txt"
-                },
-                "fieldcValue": 5
-              },
-              "block": null
+            "FILE": {
+              "block": {
+                "type": "temporary_file",
+                "inputs": {
+                  "FILE_NAME": {
+                    "shadow": {
+                      "type": "text",
+                      "fields": {
+                        "TEXT": "filename.txt"
+                      }
+                    }
+                  }
+                }
+              }
             },
             "FILE_CONTENT": {
               "shadow": {
@@ -181,6 +186,20 @@
             }
           },
           "kind": "block"
+        },
+        {
+          "type": "temporary_file",
+          "kind": "block",
+          "inputs": {
+            "FILE_NAME": {
+              "shadow": {
+                "type": "text",
+                "fields": {
+                  "TEXT": "filename.txt"
+                }
+              }
+            }
+          }
         }
       ],
       "name": "files",
@@ -193,6 +212,35 @@
       "contents": [
         {
           "type": "simple_http_get",
+          "kind": "block",
+          "inputs": {
+            "URL": {
+              "shadow": {
+                "type": "text",
+                "fields": {
+                  "TEXT": "https://"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "kind": "category",
+      "name": "html",
+      "categorystyle": "html",
+      "contents": [
+        {
+          "type": "html_select",
+          "kind": "block"
+        },
+        {
+          "type": "html_get_element_attr",
+          "kind": "block"
+        },
+        {
+          "type": "html_get_element_text",
           "kind": "block"
         }
       ]

@@ -26,9 +26,12 @@ public class VariableGetBlockExecutor extends AbstractBlockExecutor {
     @Override
     protected Object doExecute(BlockExecutionContext context) throws Exception {
         Variable var = (Variable) this.block.getFieldValue(FieldType.VAR);
-        Object value = context.getVariableValue("_var_" + var.id());
+        Object value = context.getWorkspaceVariableValue("_var_" + var.id());
         if (value == null) {
             throw new BlockExecutionException("Variable " + var.name() + " is not defined");
+        }
+        if (Variable.NULL == value){
+            context.getLogger().info("Variable "+var.name()+" has null value.");
         }
         return value;
     }

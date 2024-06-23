@@ -15,7 +15,7 @@ public interface BlockDefinition {
     public static String INTERNAL_BLOCK_TYPE_MATH_CHANGE = "math_change";
     public static String INTERNAL_BLOCK_TYPE_CONTROLS_WHILE_UNTIL = "controls_whileUntil";
     public static String INTERNAL_BLOCK_TYPE_CONTROLS_REPEAT_EXT = "controls_repeat_ext";
-    public static String INTERNAL_BLOCK_TYPE_CONTROLS_FLOW_STATEMENTS = "controls_flow_statements";
+    //public static String INTERNAL_BLOCK_TYPE_CONTROLS_FLOW_STATEMENTS = "controls_flow_statements";
     public static String INTERNAL_BLOCK_TYPE_CONTROLS_IF = "controls_if";
     public static String INTERNAL_BLOCK_TYPE_LOGIC_COMPARE = "logic_compare";
 
@@ -33,6 +33,7 @@ public interface BlockDefinition {
         public final static String ID_VARIABLES = "variables";
 
         public final static String ID_HTTP = "http";
+        public final static String ID_PARSER = "parser";
 
     }
 

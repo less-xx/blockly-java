@@ -11,7 +11,7 @@ public class SimpleHttpGetBlock extends CustomBlockDefinition {
                 {
                    "type": "simple_http_get",
                    "implicitAlign0": "RIGHT",
-                   "message0": "Get from address %1",
+                   "message0": "Download %1",
                    "args0": [
                      {
                        "type": "input_value",
